@@ -51,5 +51,5 @@ class WandbVisualizer:
 def get_visualizer(config):
     return WandbVisualizer(config)
 
-from config import config_wdb
-get_visualizer(config_wdb)
+# from config import config_wdb
+# get_visualizer(config_wdb)

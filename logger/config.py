@@ -4,7 +4,7 @@ import logging
 from logging import config
 import logging.handlers
 
-config_wdb = {"project_name": "hse-m4xig1", "run_name": "test spex+", "config": {}}
+config_wdb = {"project_name": "hse-m4xig1", "run_name": "test SpEx+", "config": {}}
 
 config_log = {
     "formatters": {
