@@ -20,7 +20,7 @@ class Trainer(nn.Module):
         dataloader,
         crit,
         *args,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(self, Trainer)
 
@@ -44,7 +44,7 @@ class Trainer(nn.Module):
         self.save_dir = config["save_dir"]  # dir for saving weights, TODO
         start_log()  # load config to logger
 
-    def save_checkpoint(self, name = "checkpoint", best=True):
+    def _save_checkpoint(self, name="checkpoint", best=True):
         check = {
             "epoch": self.cur_epoch,
             "model_state_dict": self.nnet.state_dict(),
@@ -52,14 +52,19 @@ class Trainer(nn.Module):
         }
         torch.save(check, self.save_dir.join(f"{name}.pt.tar"))
 
+    def _load_checkpoint(self, id):
+        pass
+
     def train(self, dataloader):
-        self.model.train()
-        
+        pass
 
     def _train_epoch(self):
         pass
 
-    def validate(self, dataloader):
+    def run(self):
+        pass
+
+    def validate(self, dataloader):  # inference
         pass
 
     # 4 log

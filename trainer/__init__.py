@@ -1,1 +1,2 @@
-from trainer import *
+from .trainer import *
+from .config import *

@@ -7,6 +7,7 @@ import numpy as np
 
 class WandbVisualizer:
     def __init__(self, config):
+
         wandb.login()
         wandb.init(
             project=config["project_name"],
@@ -48,8 +49,8 @@ class WandbVisualizer:
         )
 
 
-def get_visualizer(config):
-    return WandbVisualizer(config)
+# def get_visualizer(config):
+#     return WandbVisualizer(config)
 
 # from config import config_wdb
 # get_visualizer(config_wdb)
