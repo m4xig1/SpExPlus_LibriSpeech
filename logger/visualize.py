@@ -3,7 +3,7 @@ from operator import imod
 from matplotlib.pyplot import step
 import wandb
 import numpy as np
-
+from config import config_wdb
 
 class WandbVisualizer:
     def __init__(self, config):
@@ -49,8 +49,8 @@ class WandbVisualizer:
         )
 
 
-# def get_visualizer(config):
-#     return WandbVisualizer(config)
+def get_visualizer():
+    return WandbVisualizer(config_wdb)
 
 # from config import config_wdb
 # get_visualizer(config_wdb)
