@@ -24,10 +24,9 @@ class BaseDataset(Dataset):
 
     def load_audio(self, path):
         audio, sr = sf.read(path)
-        if len(audio.shape) > 2:
-            self.logger.info(f"unable to load audio {path}, > 2 channels")
-        if len(audio.shape) == 2:
-            audio = np.mean(audio, axis=0)
+        if len(audio.shape) > 1:  # 2 mono
+            minDim = np.where(np.mean(audio.shape == np.amin(audio.shape)))[0][0]
+            audio = np.mean(audio, axis=minDim)
 
         audio_tensor = torch.from_numpy(audio)
 

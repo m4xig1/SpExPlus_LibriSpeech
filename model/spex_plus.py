@@ -176,9 +176,9 @@ class SpEx_Plus(nn.Module):
         S2 = w2 * m2
         S3 = w3 * m3
 
-        return (
-            self.decoder_1d_short(S1),
-            self.decoder_1d_middle(S2)[:, :xlen1],
-            self.decoder_1d_long(S3)[:, :xlen1],
-            self.pred_linear(aux),
-        )
+        return {
+            "short": self.decoder_1d_short(S1),
+            "mid": self.decoder_1d_middle(S2)[:, :xlen1],
+            "long": self.decoder_1d_long(S3)[:, :xlen1],
+            "logits": self.pred_linear(aux),
+        }

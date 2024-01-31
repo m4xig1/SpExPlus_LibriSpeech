@@ -21,20 +21,21 @@ class SpexPlusLoss(nn.Module):
     def __vec_l2norm(x):
         return np.linalg.norm(x, 2)
 
+    @staticmethod
+    def __normalize(x: Tensor):
+        return NotImplementedError()
+
     def forward(
         self,
-        x_short: Tensor,
-        x_mid: Tensor,
-        x_long: Tensor,
-        logits: Tensor,
+        pred: "dict[str, Tensor]",  # predicted vals
         target: Tensor,
         speaker_id: Tensor,
         is_train=True,
     ):
         target -= target.mean(dim=-1, keepdim=True)
-        x_short -= x_short.mean(dim=-1, keepdim=True)
-        x_mid -= x_short.mean(dim=-1, keepdim=True)
-        x_long -= x_short.mean(dim=-1, keepdim=True)
+        x_short = pred["short"] - pred["short"].mean(dim=-1, keepdim=True)
+        x_mid = pred["mid"] - pred["mid"].mean(dim=-1, keepdim=True)
+        x_long = pred["long"] - pred["long"].mean(dim=-1, keepdim=True)
         metric = SiSdr()
         phi = 1 - self.mid_scale - self.long_scale
         sisdr_short = metric.forward(x_short, target)
@@ -42,12 +43,11 @@ class SpexPlusLoss(nn.Module):
         sisdr_long = metric.forward(x_long, target)
         loss = (
             -phi * sisdr_short.sum()
-            - self.mid_scale * sisdr_short
-            - self.long_scale * sisdr_long
+            - self.mid_scale * sisdr_mid.sum()
+            - self.long_scale * sisdr_long.sum()
         ) / x_short.shape[0]
         # norm?
         ce_loss = 0
         if is_train:
-            ce_loss = F.cross_entropy(logits, speaker_id)
+            ce_loss = F.cross_entropy(pred["logits"], speaker_id)
         return loss + self.ce * ce_loss
-    
