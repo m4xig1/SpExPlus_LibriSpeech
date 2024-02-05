@@ -1,5 +1,5 @@
 if __name__ == "__main__":
-    from libri_dataset import LibriDataset
+    from .libri_dataset import LibriDataset
     import config
     import soundfile as sf
     dataset = LibriDataset(config.config_dataloader, config.config_dataloader["path_to_train"])

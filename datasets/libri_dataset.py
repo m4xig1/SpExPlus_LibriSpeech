@@ -21,6 +21,7 @@ class LibriDataset(BaseDataset):
         # self.index = sorted(os.listdir(self.path))  # tmp solution, better 2 use index file
 
     def __getitem__(self, id):
+        # get speaker id from audio !!
         triplet = {}
         for i in range(3):
             if "mixed" in self.index[id * 3 + i]:

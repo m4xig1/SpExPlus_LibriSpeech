@@ -32,6 +32,7 @@ class SpexPlusLoss(nn.Module):
         speaker_id: Tensor,
         is_train=True,
     ):
+        # we still need to get speaker id from name of the audio... 
         target -= target.mean(dim=-1, keepdim=True)
         x_short = pred["short"] - pred["short"].mean(dim=-1, keepdim=True)
         x_mid = pred["mid"] - pred["mid"].mean(dim=-1, keepdim=True)
