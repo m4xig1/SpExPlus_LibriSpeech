@@ -4,6 +4,6 @@ config_dataloader = {
     "path_to_val": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/",
     "train": {"batch_size": 16, "num_workers": 4},
     "val": {"batch_size": 16, "num_workers": 4},
-    "test": {"batch_size": 16, "num_workers": 4},
+    "test": {"batch_size": 1, "num_workers": 1},
     "sample_rate": 16000,
 }

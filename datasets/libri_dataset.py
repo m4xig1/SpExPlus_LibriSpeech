@@ -17,7 +17,6 @@ class LibriDataset(BaseDataset):
         # индекс создается каждый раз из всех файлов в директории !!
         super().__init__(config, sorted(os.listdir(self.path)))
         self.pos = 0
-        self.batch_size = config["batch_size"]  # unused
         self.is_train = is_train  # pretty unuseful feature
 
         # self.index = sorted(os.listdir(self.path))  # tmp solution, better 2 use index file
@@ -49,7 +48,7 @@ class LibriDataset(BaseDataset):
             return triplet
 
     def __len__(self):
-        return len(self.index) / 3
+        return len(self.index) // 3
 
     @staticmethod
     def __get_id(name):
