@@ -17,17 +17,24 @@ from loss import SpexPlusLoss
 
 class Trainer(BaseTrainer):
     def __init__(
-        self, model, metrics: dict, optimizer, config, dataloader, *args, **kwargs
+        self,
+        model: nn.Module,
+        metrics: dict,
+        # optimizer,
+        # dataloader,
+        *args,
+        config = config.config_trainer,
+        **kwargs
     ):
-        super().__init__(model, metrics, optimizer, config, dataloader, *args, **kwargs)
+        super().__init__(model, metrics, config, *args, **kwargs)
         self.loss = SpexPlusLoss()
-        self.loss = self._load_to_device(self.loss, self.device)
+        # self.loss = self._load_to_device(self.loss, self.device)
 
     def compute_loss(self, batch):
         return self.loss.forward(batch)  # change inputs in loss class
 
     def extract_predictions(self, batch, is_train=False):
         batch = self._load_to_device(batch, self.device)
-        outputs = self.model(**batch)
+        outputs = self.model(batch)
         # update metrics ...
         return outputs

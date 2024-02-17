@@ -14,20 +14,22 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 import config
 from logger.logger import start_log
 from logger.visualize import get_visualizer
+from metrics.base import BaseMetric  # ??
 from trainer.DONTDELETE import GIT_GUD
 
 
 class BaseTrainer:
     def __init__(
         self,
-        model,
-        metrics: dict,
-        config,
+        model: nn.Module,
+        metrics: "dict[str, BaseMetric]",
         *args,
+        config=config.config_trainer,
         **kwargs,
     ):
         start_log()  # load config to logger
         self.config = config
+        # self.config['logger']
         self.logger = logging.getLogger("train logger")
         self.logger.setLevel(config["logger"]["level"])
         self.reporter = get_visualizer()  # Wandb monitor
@@ -36,12 +38,13 @@ class BaseTrainer:
         if not torch.cuda.is_available():
             raise RuntimeError("no CUDA is available")
         # load gpuid
-        self.device = "gpu"
-        self.logger.info("Running trainer on gpu")
+        self.device = self.config["device"]
+        self.logger.info(f"Running trainer on {self.device}")
 
         self.model = model.to(self.device)
 
-        self.metrics = self._load_to_device(metrics, self.device)
+        # self.metrics = self._load_to_device(metrics, self.device)
+        self.metrics = metrics
 
         # self.optimizer = optimizer  # возможно, тут его загрузить надо
         # self.lrScheduler = None
@@ -77,6 +80,8 @@ class BaseTrainer:
             # self.lrScheduler = ReduceLROnPlateau(**config["lrScheduler"])
         self.checkpoint_queue = deque(maxlen=self.config["nCheckpoints"])
 
+        # steps before stopping the training
+        self.no_impr = self.config["no_improvment"]
         self.args = args
         self.kwargs = kwargs
         self.cur_epoch = 0
@@ -90,10 +95,10 @@ class BaseTrainer:
         """
         loads obj to device if obj contains Tensor
         """
-        if isinstance(obj, list):
+        if isinstance(obj, list) or isinstance(obj, tuple):
             return [self.__load_batch(i, device) for i in obj]
         if isinstance(obj, dict):
-            return {key: self.__load_batch(val, device) for val, key in obj.items()}
+            return {key: self.__load_batch(val, device) for key, val in obj.items()}
         return self.__load_batch(obj, device)
 
     def _process_checkpoint(self, path):
@@ -119,17 +124,17 @@ class BaseTrainer:
         torch.save(check, path)
         self._process_checkpoint(path)
 
-    def _load_checkpoint(self, id):
-        """
-        Must be rewrited to load model from checkpoint and continue training.
-        Now model is loading checkpoint in __init__
-        """
-        checkpoint = torch.load(self.checkpoint_queue[id], map_location="cpu")
-        try:
-            self.model.load_state_dict(checkpoint["model"])
-        except Exception as e:
-            self.logger.info(f"Exception while loading checkpoint: {e}")
-        self.model = self.model.to(self.device)
+    # def _load_checkpoint(self, id):
+    #     """
+    #     Must be rewrited to load model from checkpoint and continue training.
+    #     Now model is loading checkpoint in __init__
+    #     """
+    #     checkpoint = torch.load(self.checkpoint_queue[id], map_location="cpu")
+    #     try:
+    #         self.model.load_state_dict(checkpoint["model"])
+    #     except Exception as e:
+    #         self.logger.info(f"Exception while loading checkpoint: {e}")
+    #     self.model = self.model.to(self.device)
 
     def compute_loss(self, batch) -> dict:
         """
@@ -156,7 +161,6 @@ class BaseTrainer:
             torch.stack([torch.norm(p.grad.detach(), p_type) for p in params]).cpu(),
             p_type,
         )
-        # print(norm)
         return norm.item()
 
     def train(self, dataloader):
@@ -201,7 +205,7 @@ class BaseTrainer:
                 batch = self.compute_loss(batch)
                 logs["loss"] += batch["loss"]
                 # logging here
-                
+
             logs["loss"] /= batch_size
         # force logs
 
@@ -212,6 +216,8 @@ class BaseTrainer:
         self.reporter.step = 0
         logs = self.eval(testloader)
         best_loss = logs["loss"]
+        self.logger.info(f"Start from epoch {self.cur_epoch}, Loss: {best_loss}")
+        no_impr = 0
         while self.cur_epoch < nEpochs:
             self.logger.info(f"Epoch {self.cur_epoch}...")
             self.cur_epoch += 1
@@ -221,9 +227,19 @@ class BaseTrainer:
             # good time to log something
             if self.lrScheduler is not None:
                 self.lrScheduler.step(logs["loss"])
-            # if (logs["loss"] < best_loss):
-            self.save_checkpoint(f"epoch_{self.cur_epoch}")
 
+            if logs["loss"] < best_loss:
+                no_impr += 1
+                self.save_checkpoint(f"epoch_{self.cur_epoch}")
+                if no_impr >= self.no_impr:
+                    self.logger.info(
+                        f"Stopping training, no improvment for {no_impr} epochs"
+                    )
+                    break
+            else:
+                no_impr = 0
+                best_loss = logs["loss"]
+                self.save_checkpoint(f"improvment_epoch_{self.cur_epoch}")
             sys.stdout.flush()
 
         self.logger.info(f"Training for {self.cur_epoch}/{nEpochs} epoches done!")

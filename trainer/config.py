@@ -1,7 +1,9 @@
 import logging
 
 config_trainer = {
-    "logger": {"level": logging.INFO},
+    "logger": {
+        "level": logging.INFO
+    },
     "optimizer" : {
         "lr" : 0.01,
         "weight_decay" : 1e-5
@@ -13,4 +15,7 @@ config_trainer = {
         "min_lr" : 0, 
         "verbose" : True
     },
-      "nCheckpoints": 5}
+      "nCheckpoints": 5,
+      "device" : "gpu", # ?
+      "no_improvment" : 6 # steps before stopping the training
+    }

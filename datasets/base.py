@@ -18,7 +18,7 @@ class BaseDataset(Dataset):
         self.logger = logging.getLogger(config["logging_name"])
         self.index = index
 
-        self.sr4audio = None
+        self.sr4audio = 16000
         if "sample_rate" in self.config:
             self.sr4audio = self.config["sample_rate"]
 
