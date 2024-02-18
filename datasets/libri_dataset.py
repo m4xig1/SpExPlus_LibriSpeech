@@ -33,6 +33,7 @@ class LibriDataset(BaseDataset):
             elif "target" in self.index[id * 3 + i]:
                 triplet["target"] = self.load_audio(self.path + self.index[id * 3 + i])
 
+        
         if self.is_train: # speaker id for classification
             triplet["speaker_id"] = self.__get_id(self.index[id * 3])
 
@@ -42,9 +43,10 @@ class LibriDataset(BaseDataset):
             or "target" not in triplet
             or (self.is_train and "speaker_id" not in triplet)
         ):
-            self.logger.info(f"bad triplet starting with: {self.index[self.pos]}")
+            self.logger.warning(f"bad triplet starting with: {self.index[self.pos]}")
             return None
         else:
+            triplet["ref_len"] = len(triplet["reference"])
             return triplet
 
     def __len__(self):

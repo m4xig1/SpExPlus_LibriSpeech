@@ -11,7 +11,7 @@ if __name__ == "__main__":
     # print(audio, sr)
     dataloader = get_test_dataloader(config.config_dataloader, dataset)
     for i, batch in enumerate(dataloader):
-        print(batch['speaker_id'])
-        if (i > 1000):
+        print(batch['speaker_id'], batch["ref_len"])
+        if (i > 200):
             break
         

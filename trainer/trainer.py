@@ -20,18 +20,20 @@ class Trainer(BaseTrainer):
         self,
         model: nn.Module,
         metrics: dict,
-        # optimizer,
-        # dataloader,
         *args,
-        config = config.config_trainer,
+        config=config.config_trainer,
         **kwargs
     ):
         super().__init__(model, metrics, config, *args, **kwargs)
         self.loss = SpexPlusLoss()
         # self.loss = self._load_to_device(self.loss, self.device)
 
-    def compute_loss(self, batch):
-        return self.loss.forward(batch)  # change inputs in loss class
+    def compute_loss(self, batch: dict, is_train=True):
+        est = self.model(batch["mix"], batch["reference"], batch["ref_len"])
+        return self.loss.forward(est, batch["target"], batch["speaker_id"], is_train)
+    
+    # est_short, est_mid, est_long, pred_spk = torch.nn.parallel.data_parallel(self.model, (batch['mix'], batch['ref'], batch['len']), self.cpuid) # must be devices?
+    # do smth to 
 
     def extract_predictions(self, batch, is_train=False):
         batch = self._load_to_device(batch, self.device)
