@@ -116,7 +116,7 @@ class SpEx_Plus(nn.Module):
         ]
         return nn.Sequential(*blocks)
 
-    def forward(self, x, aux, aux_len):
+    def forward(self, x, aux, aux_len : int):
         if x.dim() >= 3:
             raise RuntimeError(
                 "{} accept 1/2D tensor as input, but got {:d}".format(
