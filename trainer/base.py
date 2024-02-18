@@ -11,7 +11,8 @@ import logger
 import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-import config
+# import config
+from .config import config_trainer
 from logger.logger import start_log
 from logger.visualize import get_visualizer
 from metrics.base import BaseMetric  # ??
@@ -24,7 +25,8 @@ class BaseTrainer:
         model: nn.Module,
         metrics: "dict[str, BaseMetric]",
         *args,
-        config=config.config_trainer,
+        config=config_trainer,
+        load_checkpoint=None, # load from
         **kwargs,
     ):
         start_log()  # load config to logger
@@ -59,8 +61,8 @@ class BaseTrainer:
         self.lrScheduler = None
 
         self.checkpoint_path = config["checkpoint_path"]  # saving, loading here
-        if self.checkpoint_path is not None:
-            checkpoint = torch.load(self.checkpoint_path, map_location="cpu")
+        if load_checkpoint is not None:
+            checkpoint = torch.load(load_checkpoint, map_location="cpu")
             try:
                 self.model.load_state_dict(checkpoint["model"])
                 self.optimizer.load_state_dict(checkpoint["optimizer"])  # ?
@@ -119,7 +121,7 @@ class BaseTrainer:
             self.lrScheduler.state_dict() if self.lrScheduler is not None else None
         )
 
-        path = self.checkpoint_path.join(f"{name}.pt.tar")
+        path = self.checkpoint_path + f"{name}.pt.tar"
         self.logger.info(f"saving checkpoint {path}")
         torch.save(check, path)
         self._process_checkpoint(path)

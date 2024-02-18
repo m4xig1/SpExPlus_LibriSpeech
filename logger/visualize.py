@@ -1,9 +1,8 @@
 from datetime import datetime
-from operator import imod
 from matplotlib.pyplot import step
 import wandb
 import numpy as np
-from config import config_wdb
+from .config import config_wdb
 
 class WandbVisualizer:
     def __init__(self, config):

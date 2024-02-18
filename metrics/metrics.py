@@ -1,4 +1,4 @@
-from base import BaseMetric
+from .base import BaseMetric
 from torchmetrics.audio import ScaleInvariantSignalDistortionRatio
 from torchmetrics.audio.pesq import PerceptualEvaluationSpeechQuality
 
@@ -14,7 +14,7 @@ class SiSdr(BaseMetric):
 
 
 class Pesq(BaseMetric):
-    def __init__(self, sample_rate, mode="wb", **kwargs):
+    def __init__(self, sample_rate=16000, mode="wb", **kwargs):
         super(Pesq, self).__init__()
         self.pesq = PerceptualEvaluationSpeechQuality(sample_rate, mode)
 

@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-from base import BaseDataset
+from .base import BaseDataset
 import os
 import glob
 import soundfile as sf
@@ -60,7 +60,8 @@ class LibriDataset(BaseDataset):
         return int(name.split("_")[0])
 
 
-def get_train_dataloader(config, dataset):
+def get_train_dataloader(config):
+    dataset = LibriDataset(config, config["path_to_train"])
     return DataLoader(
         dataset=dataset,
         batch_size=config["train"]["batch_size"],
@@ -70,7 +71,8 @@ def get_train_dataloader(config, dataset):
     )
 
 
-def get_test_dataloader(config, dataset):
+def get_test_dataloader(config):
+    dataset = LibriDataset(config, config["path_to_val"])
     return DataLoader(
         dataset=dataset,
         batch_size=config["test"]["batch_size"],
@@ -79,7 +81,8 @@ def get_test_dataloader(config, dataset):
     )
 
 
-def get_eval_dataloader(config, dataset):
+def get_eval_dataloader(config):
+    dataset = LibriDataset(config, config["path_to_val"])
     return DataLoader(
         dataset=dataset,
         batch_size=config["val"]["batch_size"],

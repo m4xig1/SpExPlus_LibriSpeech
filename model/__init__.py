@@ -1,1 +1,1 @@
-from spex_plus import *
+from .spex_plus import *

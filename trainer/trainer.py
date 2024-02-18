@@ -4,11 +4,10 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 import torchaudio
-import logger
 import torch.nn as nn
 
-from base import BaseTrainer
-import config
+from .base import BaseTrainer
+from .config import config_trainer
 from logger.logger import start_log
 from logger.visualize import get_visualizer
 from trainer.DONTDELETE import GIT_GUD
@@ -21,7 +20,7 @@ class Trainer(BaseTrainer):
         model: nn.Module,
         metrics: dict,
         *args,
-        config=config.config_trainer,
+        config=config_trainer,
         **kwargs
     ):
         super().__init__(model, metrics, config, *args, **kwargs)
