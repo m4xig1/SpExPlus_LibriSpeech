@@ -7,5 +7,5 @@ class Dummy(nn.Module):
     def __init__(self):
         super().__init__()
 
-    def forward(self, spec, **kwargs):
-        return {"logits": 42}
+    def forward(self, x, ref, ref_len):
+        return {"logits": torch.rand_like(torch.tensor([1,100])), 'short': x[:256], 'mid':x[:256], 'long':x[:256]}

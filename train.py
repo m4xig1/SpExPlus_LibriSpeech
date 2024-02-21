@@ -7,6 +7,7 @@ from datasets.libri_dataset import (
 )
 from datasets.config import config_dataloader
 from model.spex_plus import SpEx_Plus
+from model.dummy_model import Dummy
 from logger.visualize import get_visualizer
 from run_configs.train_config import train_config
 from metrics.metrics import SiSdr, Pesq
@@ -26,6 +27,7 @@ def main():
     metrics = {"SI-SDR": SiSdr(), "PesQ": Pesq()}
 
     model = SpEx_Plus()
+    # model = Dummy()
     # parallel?
     # n_gpus = torch.cuda.device_count()
     # logger.info(f"running on {n_gpus} gpus")
@@ -38,3 +40,24 @@ def main():
 if __name__ == "__main__":
     # parse args or use config?
     main()
+
+    # test the model
+    # model = SpEx_Plus()
+    # mix = torch.rand(1, 1000)
+    # ref = torch.rand(1, 500)
+    # print(mix.shape, ref.shape)
+    # train_loader = get_train_dataloader(config_dataloader)  
+    # for batch in train_loader:
+        # print(batch['mix'].shape, batch['reference'].shape, batch['mix'].dtype, batch['reference'].dtype)
+        # result = model(batch["mix"], batch["reference"], batch["ref_len"])
+        # print(result)
+        # break
+
+
+    # model = SpEx_Plus()
+    # mix = torch.rand(1, 1000)
+    # ref = torch.rand(1, 500)
+    # result = model(mix, ref, torch.tensor([500]))
+    # print(result)
+    # print(result["logits"].shape)
+        

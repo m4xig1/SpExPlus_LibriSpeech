@@ -1,5 +1,6 @@
 if __name__ == "__main__":
     import os
+    # from libri_dataset import LibriDataset, get_test_dataloader, get_train_dataloader
     from libri_dataset import LibriDataset, get_test_dataloader, get_train_dataloader
     import config
     import soundfile as sf
@@ -11,7 +12,8 @@ if __name__ == "__main__":
     # print(audio, sr)
     dataloader = get_train_dataloader(config.config_dataloader)
     for i, batch in enumerate(dataloader):
-        print(batch['speaker_id'], batch["ref_len"])
+        print(batch)
+        break 
         # if (i > 200):
         #     break
         

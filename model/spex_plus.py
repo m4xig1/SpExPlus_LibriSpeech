@@ -19,7 +19,7 @@ class SpEx_Plus(nn.Module):
         O=256,
         P=512,
         Q=3,
-        num_spks=101,
+        num_spks=2000,
         spk_embed_dim=256,
         causal=False,
     ):
@@ -116,7 +116,7 @@ class SpEx_Plus(nn.Module):
         ]
         return nn.Sequential(*blocks)
 
-    def forward(self, x, aux, aux_len : int):
+    def forward(self, x, aux, aux_len):
         if x.dim() >= 3:
             raise RuntimeError(
                 "{} accept 1/2D tensor as input, but got {:d}".format(
@@ -126,7 +126,7 @@ class SpEx_Plus(nn.Module):
         # when inference, only one utt
         if x.dim() == 1:
             x = th.unsqueeze(x, 0)
-
+            
         # n x 1 x S => n x N x T
         w1 = F.relu(self.encoder_1d_short(x))
         T = w1.shape[-1]
@@ -182,3 +182,4 @@ class SpEx_Plus(nn.Module):
             "long": self.decoder_1d_long(S3)[:, :xlen1],
             "logits": self.pred_linear(aux),
         }
+

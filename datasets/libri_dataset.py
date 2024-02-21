@@ -25,16 +25,19 @@ class LibriDataset(BaseDataset):
         triplet = {}
         for i in range(3):
             if "mixed" in self.index[id * 3 + i]:
-                triplet["mix"] = self.load_audio(self.path + self.index[id * 3 + i])
+                triplet["mix"] = self.load_audio(
+                    self.path + self.index[id * 3 + i]
+                ).type(torch.float32) # casted to float32!
             elif "ref" in self.index[id * 3 + i]:
                 triplet["reference"] = self.load_audio(
                     self.path + self.index[id * 3 + i]
-                )
+                ).type(torch.float32)
             elif "target" in self.index[id * 3 + i]:
-                triplet["target"] = self.load_audio(self.path + self.index[id * 3 + i])
+                triplet["target"] = self.load_audio(
+                    self.path + self.index[id * 3 + i]
+                ).type(torch.float32)
 
-        
-        if self.is_train: # speaker id for classification
+        if self.is_train:  # speaker id for classification
             triplet["speaker_id"] = self.__get_id(self.index[id * 3])
 
         if (

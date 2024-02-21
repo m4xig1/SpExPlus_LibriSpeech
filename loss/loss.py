@@ -16,6 +16,7 @@ class SpexPlusLoss(nn.Module):
         self.cross_ent_scale = cross_ent_scale
         self.mid_scale = mid_scale
         self.long_scale = long_scale
+        self.metric = SiSdr()
 
     @staticmethod
     def __vec_l2norm(x):
@@ -23,7 +24,7 @@ class SpexPlusLoss(nn.Module):
 
     @staticmethod
     def __normalize(x: Tensor):
-        return NotImplementedError()
+        return x - x.mean(dim=-1, keepdim=True)
 
     def forward(
         self,
@@ -32,16 +33,16 @@ class SpexPlusLoss(nn.Module):
         speaker_id: Tensor,
         is_train=True,
     ):
-        # we still need to get speaker id from name of the audio... 
-        target -= target.mean(dim=-1, keepdim=True)
-        x_short = pred["short"] - pred["short"].mean(dim=-1, keepdim=True)
-        x_mid = pred["mid"] - pred["mid"].mean(dim=-1, keepdim=True)
-        x_long = pred["long"] - pred["long"].mean(dim=-1, keepdim=True)
-        metric = SiSdr()
+        # we still need to get speaker id from name of the audio...
+        target = self.__normalize(target.squeeze(1))  # 1-d
+        x_short = self.__normalize(pred["short"].squeeze(1))
+        x_mid = self.__normalize(pred["mid"].squeeze(1))
+        x_long = self.__normalize(pred["long"].squeeze(1))
+        # metric = SiSdr()
         phi = 1 - self.mid_scale - self.long_scale
-        sisdr_short = metric.forward(x_short, target)
-        sisdr_mid = metric.forward(x_mid, target)
-        sisdr_long = metric.forward(x_long, target)
+        sisdr_short = self.metric.forward(x_short, target)
+        sisdr_mid = self.metric.forward(x_mid, target)
+        sisdr_long = self.metric.forward(x_long, target)
         loss = (
             -phi * sisdr_short.sum()
             - self.mid_scale * sisdr_mid.sum()
@@ -51,4 +52,4 @@ class SpexPlusLoss(nn.Module):
         ce_loss = 0
         if is_train:
             ce_loss = F.cross_entropy(pred["logits"], speaker_id)
-        return loss + self.ce * ce_loss
+        return {"loss": loss + self.cross_ent_scale * ce_loss} # наверное, хочется возвращать какой-нибудь accuracy для предсказаний
