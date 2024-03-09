@@ -29,14 +29,15 @@ class Trainer(BaseTrainer):
 
     def compute_loss(self, batch: dict, is_train=True):
         # est = self.model(batch["mix"], batch["reference"], batch["ref_len"])
+        # print(batch["mix"].shape,  batch["reference"].shape, batch["ref_len"].shape)
+
         est = self.model(batch["mix"], batch["reference"], batch["ref_len"]) # batch size = 1?
         return self.loss.forward(est, batch["target"], batch["speaker_id"], is_train)
     
     # est_short, est_mid, est_long, pred_spk = torch.nn.parallel.data_parallel(self.model, (batch['mix'], batch['ref'], batch['len']), self.cpuid) # > 1 devices?
     # do smth to 
 
-    def extract_predictions(self, batch, is_train=False):
-        batch = self._load_to_device(batch, self.device)
-        outputs = self.model(batch)
+    def extract_predictions(self,  batch: dict, is_train=False):
+        outputs = self.model(batch["mix"], batch["reference"], batch["ref_len"])
         # update metrics ...
         return outputs

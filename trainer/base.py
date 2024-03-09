@@ -35,7 +35,8 @@ class BaseTrainer:
         self.logger = logging.getLogger("train logger")
         self.logger.setLevel(config["logger"]["level"])
         self.reporter = get_visualizer()  # Wandb monitor
-        self.log_step = 50  # how many batches between logging
+        
+        self.log_step = 5  # how many batches between logging
 
         if not torch.cuda.is_available():
             raise RuntimeError("no CUDA is available")
@@ -44,6 +45,7 @@ class BaseTrainer:
         self.logger.info(f"Running trainer on {self.device}")
 
         self.model = model.to(self.device)
+        self.reporter.watch(model)
 
         # self.metrics = self._load_to_device(metrics, self.device)
         self.metrics = metrics
@@ -170,7 +172,7 @@ class BaseTrainer:
         self.model.train()
         batch_size = len(dataloader)
         logs = {}
-        for step, batch in enumerate(tqdm(dataloader)):
+        for step, batch in enumerate(tqdm(dataloader, desc="train")):
             batch = self._load_to_device(batch, self.device)
             self.optimizer.zero_grad()
             batch = self.compute_loss(batch)
@@ -202,7 +204,7 @@ class BaseTrainer:
         batch_size = len(dataloader)
         logs = {"loss": 0.0}
         with torch.no_grad():
-            for step, batch in tqdm(enumerate(dataloader)):
+            for step, batch in enumerate(tqdm(dataloader, desc="eval")):
                 batch = self._load_to_device(batch, self.device)
                 batch = self.compute_loss(batch)
                 logs["loss"] += batch["loss"]

@@ -1,3 +1,4 @@
+from pyparsing import col
 import torch
 import numpy as np
 from .base import BaseDataset
@@ -5,90 +6,147 @@ import os
 import glob
 import soundfile as sf
 from torch.utils.data import DataLoader
-
-# PATH = "/home/m4xig1/speaker_extraction_SpEx/"
-
-# print(sorted(os.listdir(PATH + "libri_dataset/mix/train/"))[3:6])
+import json
+from pathlib import Path
+import logging
+from typing import List
 
 
 class LibriDataset(BaseDataset):
-    def __init__(self, config, path, is_train=True):
+    def __init__(self, config, path, is_train=True, create_index=True):
         self.path = path
-        # индекс создается каждый раз из всех файлов в директории !!
-        super().__init__(config, sorted(os.listdir(self.path)))
+        self.logger = logging.getLogger(config["logging_name"])
+        if create_index:  # create index
+            index = self._create_index()
+        else:
+            with Path(self.config["index_path"]).open() as f:  # load index
+                index = json.load(f)
+
+        super().__init__(config, index)
         self.pos = 0
         self.is_train = is_train  # pretty unuseful feature
 
         # self.index = sorted(os.listdir(self.path))  # tmp solution, better 2 use index file
 
-    def __getitem__(self, id):
-        triplet = {}
-        for i in range(3):
-            if "mixed" in self.index[id * 3 + i]:
-                triplet["mix"] = self.load_audio(
-                    self.path + self.index[id * 3 + i]
-                ).type(torch.float32) # casted to float32!
-            elif "ref" in self.index[id * 3 + i]:
-                triplet["reference"] = self.load_audio(
-                    self.path + self.index[id * 3 + i]
-                ).type(torch.float32)
-            elif "target" in self.index[id * 3 + i]:
-                triplet["target"] = self.load_audio(
-                    self.path + self.index[id * 3 + i]
-                ).type(torch.float32)
+    def _create_index(self, save=False):
+        self.logger.info(f"creating index from {self.path}")
 
-        if self.is_train:  # speaker id for classification
-            triplet["speaker_id"] = self.__get_id(self.index[id * 3])
+        mix = np.array(sorted(glob.glob(self.path + "*-mixed.wav")))
+        ref = np.array(sorted(glob.glob(self.path + "*-ref.wav")))
+        target = np.array(sorted(glob.glob(self.path + "*-target.wav")))
 
-        if (
-            "mix" not in triplet
-            or "reference" not in triplet
-            or "target" not in triplet
-            or (self.is_train and "speaker_id" not in triplet)
-        ):
-            self.logger.warning(f"bad triplet starting with: {self.index[self.pos]}")
+        ids = np.array([self.__get_id(path) for path in mix])  # already sorted
+
+        # for a, b, c in zip(mix, ref, target): # test
+        #     if (a.split('-')[0] != b.split('-')[0] or a.split('-')[0] != c.split('-')[0]):
+        #         print(a,b,c)
+        #         exit(1)
+
+        if mix.shape != ref.shape or ref.shape != target.shape:
+            self.logger.warning(f"mix.shape != ref.shape || ref.shape != target.shape")
+            print(mix.shape, ref.shape, target.shape)
             return None
-        else:
-            triplet["ref_len"] = len(triplet["reference"])
-            return triplet
 
-    def __len__(self):
-        return len(self.index) // 3
+        ce_ids = dict()  # ids for classification
+        free_id = 0
+        index = []
+        for i in range(mix.size):
+            if ids[i] not in ce_ids:
+                ce_ids[ids[i]] = free_id
+                free_id += 1
+            triplet = {
+                "mix": mix[i],
+                "ref": ref[i],
+                "target": target[i],
+                "speaker_id": ce_ids[ids[i]],
+            }
+            index.append(triplet)
+
+        if save:
+            name = "train_index.json" if "train" in self.path else "test_index.json"
+            with Path(self.config["index_path"] + name).open("w") as f:
+                json.dump(index, f, indent=1)
+
+        return index
+
+    def __getitem__(self, id):
+        triplet = {
+            "mix": self.load_audio(self.index[id]["mix"]).type(torch.float32),
+            "reference": self.load_audio(self.index[id]["ref"]).type(torch.float32),
+            "target": self.load_audio(self.index[id]["target"]).type(torch.float32),
+            "speaker_id": self.index[id]["speaker_id"],
+        }
+        triplet["ref_len"] = len(triplet["reference"])
+        return triplet
 
     @staticmethod
     def __get_id(name):
         """
-        name of the file must be {target_id}_{noise_id}_{triplet_id}-{mixed/target/ref}.wav
+        name of the file must look like path/{target_id}_{noise_id}_{triplet_id}-{mixed/target/ref}.wav
         """
-        return int(name.split("_")[0])
+        return int(name.split("/")[-1].split("_")[0])
+
+
+def collate_fn(batch: List[dict]):
+    """
+    Pad data in batch here.
+    """
+    pad_batch = {}
+    # shape(1/2, N) -> shape(2/0, N) -> pad -> shape(1/2, N)
+    pad_batch["reference"] = torch.nn.utils.rnn.pad_sequence(
+        [elem["reference"].squeeze(0) for elem in batch], batch_first=True
+    ).unsqueeze(1)
+
+    pad_batch["target"] = torch.nn.utils.rnn.pad_sequence(
+        [elem["target"].squeeze(0) for elem in batch], batch_first=True
+    ).unsqueeze(1)
+
+    pad_batch["mix"] = torch.nn.utils.rnn.pad_sequence(
+        [elem["mix"].squeeze(0) for elem in batch], batch_first=True
+    ).unsqueeze(1)
+
+    pad_batch["speaker_id"] = torch.tensor([elem["speaker_id"] for elem in batch])
+    # padded len?
+    pad_batch["ref_len"] = torch.tensor([elem["ref_len"] for elem in batch])
+
+    return pad_batch
 
 
 def get_train_dataloader(config):
-    dataset = LibriDataset(config, config["path_to_train"])
+    dataset = LibriDataset(
+        config, config["path_to_train"], create_index=config["train"]["create_index"]
+    )
     return DataLoader(
         dataset=dataset,
         batch_size=config["train"]["batch_size"],
         shuffle=True,
         num_workers=config["train"]["num_workers"],
+        collate_fn=collate_fn,
         # chunk size?
     )
 
 
 def get_test_dataloader(config):
-    dataset = LibriDataset(config, config["path_to_val"])
+    dataset = LibriDataset(
+        config, config["path_to_val"], create_index=config["test"]["create_index"]
+    )
     return DataLoader(
         dataset=dataset,
         batch_size=config["test"]["batch_size"],
         shuffle=False,
         num_workers=config["test"]["num_workers"],
+        collate_fn=collate_fn,
     )
 
 
 def get_eval_dataloader(config):
-    dataset = LibriDataset(config, config["path_to_val"])
+    dataset = LibriDataset(
+        config, config["path_to_val"], create_index=config["val"]["create_index"]
+    )
     return DataLoader(
         dataset=dataset,
         batch_size=config["val"]["batch_size"],
         shuffle=False,
         num_workers=config["val"]["num_workers"],
+        collate_fn=collate_fn,
     )

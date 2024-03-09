@@ -17,6 +17,6 @@ config_trainer = {
     },
       "nCheckpoints": 5,
       "checkpoint_path": "/home/m4xig1/speaker_extraction_SpEx/checkpoints/",
-      "device" : "cpu", # ?
+      "device" : "cuda", # ?
       "no_improvment" : 6 # steps before stopping the training
     }

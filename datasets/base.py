@@ -15,7 +15,7 @@ class BaseDataset(Dataset):
         """
         self.config = config
         super(BaseDataset, self).__init__()
-        self.logger = logging.getLogger(config["logging_name"])
+        # self.logger = logging.getLogger(config["logging_name"])
         self.index = index
 
         self.sr4audio = 16000

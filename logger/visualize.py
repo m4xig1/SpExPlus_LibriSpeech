@@ -8,7 +8,7 @@ class WandbVisualizer:
     def __init__(self, config):
 
         wandb.login()
-        wandb.init(
+        self.run = wandb.init(
             project=config["project_name"],
             name=config["run_name"],
             config=config["config"],
@@ -18,6 +18,9 @@ class WandbVisualizer:
         self.time = datetime.now()
         # print(f"WanDB logger, log: name_step, project: {config['project_name']}")
 
+    def watch(self, model):
+        self.run.watch(model)
+    
     def new_step(self, step_number):
         epoch = datetime.now() - self.time
         if (self.step != 0):

@@ -16,6 +16,7 @@ import torch
 import numpy as np
 import os
 import logging
+import wandb
 
 
 def main():
@@ -47,11 +48,11 @@ if __name__ == "__main__":
     # ref = torch.rand(1, 500)
     # print(mix.shape, ref.shape)
     # train_loader = get_train_dataloader(config_dataloader)  
-    # for batch in train_loader:
+    # for num, batch in enumerate(train_loader):
         # print(batch['mix'].shape, batch['reference'].shape, batch['mix'].dtype, batch['reference'].dtype)
         # result = model(batch["mix"], batch["reference"], batch["ref_len"])
         # print(result)
-        # break
+        # break 
 
 
     # model = SpEx_Plus()
