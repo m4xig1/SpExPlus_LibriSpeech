@@ -117,10 +117,10 @@ class SpEx_Plus(nn.Module):
         return nn.Sequential(*blocks)
 
     def forward(self, x, aux, aux_len):
-        # if x.dim() >= 3:
-        #     raise RuntimeError(
-        #         "SpEx_Plus forward accept 1/2D tensor as input, but got {:d}".format(x.dim())
-        #     )
+        if x.dim() >= 3:
+            raise RuntimeError(
+                "SpEx_Plus forward accept 1/2D tensor as input, but got {:d}".format(x.dim())
+            )
         # when inference, only one utt
         if x.dim() == 1:
             x = th.unsqueeze(x, 0)

@@ -43,10 +43,6 @@ if __name__ == "__main__":
     main()
 
     # test the model
-    # model = SpEx_Plus()
-    # mix = torch.rand(1, 1000)
-    # ref = torch.rand(1, 500)
-    # print(mix.shape, ref.shape)
     # train_loader = get_train_dataloader(config_dataloader)  
     # for num, batch in enumerate(train_loader):
         # print(batch['mix'].shape, batch['reference'].shape, batch['mix'].dtype, batch['reference'].dtype)
@@ -56,8 +52,8 @@ if __name__ == "__main__":
 
 
     # model = SpEx_Plus()
-    # mix = torch.rand(1, 1000)
-    # ref = torch.rand(1, 500)
+    # mix = torch.ones(1, 1000)
+    # ref = torch.ones(1, 500)
     # result = model(mix, ref, torch.tensor([500]))
     # print(result)
     # print(result["logits"].shape)

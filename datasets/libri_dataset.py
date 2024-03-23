@@ -92,18 +92,18 @@ def collate_fn(batch: List[dict]):
     Pad data in batch here.
     """
     pad_batch = {}
-    # shape(1/2, N) -> shape(2/0, N) -> pad -> shape(1/2, N)
+    # audio is mono: (1, N) -> (N,) -> (batch_size, N) 
     pad_batch["reference"] = torch.nn.utils.rnn.pad_sequence(
         [elem["reference"].squeeze(0) for elem in batch], batch_first=True
-    ).unsqueeze(1)
+    )
 
     pad_batch["target"] = torch.nn.utils.rnn.pad_sequence(
         [elem["target"].squeeze(0) for elem in batch], batch_first=True
-    ).unsqueeze(1)
+    )
 
     pad_batch["mix"] = torch.nn.utils.rnn.pad_sequence(
         [elem["mix"].squeeze(0) for elem in batch], batch_first=True
-    ).unsqueeze(1)
+    )
 
     pad_batch["speaker_id"] = torch.tensor([elem["speaker_id"] for elem in batch])
     # padded len?

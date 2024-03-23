@@ -140,7 +140,7 @@ class BaseTrainer:
     #         self.logger.info(f"Exception while loading checkpoint: {e}")
     #     self.model = self.model.to(self.device)
 
-    def compute_loss(self, batch) -> dict:
+    def compute_loss(self, batch, is_train=False):
         """
         chunk -- batch from Dataloader with predictions
         returns: dict[None|torch.Tensor] with loss
@@ -149,8 +149,8 @@ class BaseTrainer:
 
     def compute_metrics(self, pred, target):
         return {
-            key: metric.forward(pred, target)
-            for key, metric in self.metrics.items()  # ало че ты светишься
+            key: metric(pred, target)
+            for key, metric in self.metrics.items()
         }
 
     @torch.no_grad()
@@ -202,17 +202,27 @@ class BaseTrainer:
         self.logger.info("Eval mode")
         self.model.eval()
         batch_size = len(dataloader)
-        logs = {"loss": 0.0}
+        logs = {"loss": 0.0, "ce" : 0.0, "SI-SDR": 0.0, "PesQ": 0.0}
         with torch.no_grad():
             for step, batch in enumerate(tqdm(dataloader, desc="eval")):
                 batch = self._load_to_device(batch, self.device)
-                batch = self.compute_loss(batch)
-                logs["loss"] += batch["loss"]
-                # logging here
+                metr, result, mixed = self.compute_loss(batch, is_train=False)
 
-            logs["loss"] /= batch_size
+                for key in metr:
+                    logs[key] += metr[key]
+
+                if step % self.log_step == 0:
+                    self.reporter.new_step(step)
+                    self.logger.info(
+                        f"Eval step: {step}, Loss: {metr['loss']}, CE: {metr['ce']}, SI-SDR: {metr['SI-SDR']}, PesQ: {metr['PesQ']}" # metrics on batch
+                    )
+                    for key in logs:
+                        self.reporter.log_scalar(key, metr[key])
+                        
+                    # self.reporter.log_audio("mix", mixed)
+                    # self.reporter.log_audio("predicted", result)
         # force logs
-
+        logs["loss"] /= batch_size
         return logs
 
     def run(self, trainloader, testloader, nEpochs=50):
@@ -228,7 +238,7 @@ class BaseTrainer:
 
             self.train(trainloader)
             logs = self.eval(testloader)
-            # good time to log something
+
             if self.lrScheduler is not None:
                 self.lrScheduler.step(logs["loss"])
 

@@ -6,6 +6,27 @@ import numpy as np
 from metrics.metrics import SiSdr
 
 
+def sisdr(x, s, remove_dc=True):
+    """
+    Compute SI-SDR
+    x: extracted signal
+    s: reference signal(ground truth)
+    """
+
+    def vec_l2norm(x):
+        return np.linalg.norm(x, 2)
+
+    if remove_dc:
+        x_zm = x - np.mean(x)
+        s_zm = s - np.mean(s)
+        t = np.inner(x_zm, s_zm) * s_zm / vec_l2norm(s_zm) ** 2
+        n = x_zm - t
+    else:
+        t = np.inner(x, s) * s / vec_l2norm(s) ** 2
+        n = x - t
+    return 20 * np.log10(vec_l2norm(t) / vec_l2norm(n))
+
+
 class SpexPlusLoss(nn.Module):
     # gamma, beta, alpha according to the paper
     def __init__(self, mid_scale=0.1, long_scale=0.1, cross_ent_scale=0.5):
@@ -40,16 +61,17 @@ class SpexPlusLoss(nn.Module):
         x_long = self.__normalize(pred["long"].squeeze(1))
         # metric = SiSdr()
         phi = 1 - self.mid_scale - self.long_scale
-        sisdr_short = self.metric.forward(x_short, target)
-        sisdr_mid = self.metric.forward(x_mid, target)
-        sisdr_long = self.metric.forward(x_long, target)
+        sisdr_short = self.metric(x_short, target)  # const?
+        sisdr_mid = self.metric(x_mid, target)
+        sisdr_long = self.metric(x_long, target)
         loss = (
-            -phi * sisdr_short.sum()
-            - self.mid_scale * sisdr_mid.sum()
-            - self.long_scale * sisdr_long.sum()
+            -phi * sisdr_short
+            - self.mid_scale * sisdr_mid
+            - self.long_scale * sisdr_long
         ) / x_short.shape[0]
         # norm?
-        ce_loss = 0
+
+        ce_loss = F.cross_entropy(pred["logits"], speaker_id)
         if is_train:
-            ce_loss = F.cross_entropy(pred["logits"], speaker_id)
-        return {"loss": loss + self.cross_ent_scale * ce_loss} # наверное, хочется возвращать какой-нибудь accuracy для предсказаний
+            loss += self.cross_ent_scale * ce_loss
+        return {"loss": loss, "ce": ce_loss}

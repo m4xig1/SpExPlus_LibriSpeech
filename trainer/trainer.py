@@ -16,28 +16,37 @@ from loss import SpexPlusLoss
 
 class Trainer(BaseTrainer):
     def __init__(
-        self,
-        model: nn.Module,
-        metrics: dict,
-        *args,
-        config=config_trainer,
-        **kwargs
+        self, model: nn.Module, metrics: dict, *args, config=config_trainer, **kwargs
     ):
         super().__init__(model, metrics, config, *args, **kwargs)
         self.loss = SpexPlusLoss()
         # self.loss = self._load_to_device(self.loss, self.device)
 
     def compute_loss(self, batch: dict, is_train=True):
-        # est = self.model(batch["mix"], batch["reference"], batch["ref_len"])
         # print(batch["mix"].shape,  batch["reference"].shape, batch["ref_len"].shape)
 
-        est = self.model(batch["mix"], batch["reference"], batch["ref_len"]) # batch size = 1?
-        return self.loss.forward(est, batch["target"], batch["speaker_id"], is_train)
-    
-    # est_short, est_mid, est_long, pred_spk = torch.nn.parallel.data_parallel(self.model, (batch['mix'], batch['ref'], batch['len']), self.cpuid) # > 1 devices?
-    # do smth to 
+        if batch["mix"].dim() < 2:  # make batch size 1
+            batch["mix"] = batch["mix"].unsqueeze(0)
+            batch["target"] = batch["target"].unsqueeze(0)
+            batch["reference"] = batch["reference"].unsqueeze(0)
 
-    def extract_predictions(self,  batch: dict, is_train=False):
+        loss = {}
+        metrics = {}
+        pred = self.model(batch["mix"], batch["reference"], batch["ref_len"])
+        elem_loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
+
+        if not is_train:
+            # calc according to short
+            metr = self.compute_metrics(pred["short"], batch["target"]) 
+            loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
+            return {**metr, **loss}, pred, batch["mix"]
+
+        return self.loss(pred, batch["target"], batch["speaker_id"], is_train)
+
+    # est_short, est_mid, est_long, pred_spk = torch.nn.parallel.data_parallel(self.model, (batch['mix'], batch['ref'], batch['len']), self.cpuid) # > 1 devices?
+    # do smth to
+
+    def extract_predictions(self, batch: dict, is_train=False):
         outputs = self.model(batch["mix"], batch["reference"], batch["ref_len"])
         # update metrics ...
         return outputs
