@@ -14,12 +14,15 @@ from typing import List
 
 class LibriDataset(BaseDataset):
     def __init__(self, config, path, is_train=True, create_index=True):
+
+        self.config = config
         self.path = path
         self.logger = logging.getLogger(config["logging_name"])
         if create_index:  # create index
-            index = self._create_index()
+            index = self._create_index(save=True)
         else:
-            with Path(self.config["index_path"]).open() as f:  # load index
+            name = "train_index.json" if "train" in self.path else "test_index.json"
+            with Path(self.config["index_path"] + name).open() as f:  # load index
                 index = json.load(f)
 
         super().__init__(config, index)
@@ -114,7 +117,7 @@ def collate_fn(batch: List[dict]):
 
 def get_train_dataloader(config):
     dataset = LibriDataset(
-        config, config["path_to_train"], create_index=config["train"]["create_index"]
+        config["train"], config["path_to_train"], create_index=config["train"]["create_index"]
     )
     return DataLoader(
         dataset=dataset,
@@ -122,13 +125,12 @@ def get_train_dataloader(config):
         shuffle=True,
         num_workers=config["train"]["num_workers"],
         collate_fn=collate_fn,
-        # chunk size?
     )
 
 
 def get_test_dataloader(config):
     dataset = LibriDataset(
-        config, config["path_to_val"], create_index=config["test"]["create_index"]
+        config["test"], config["path_to_val"], create_index=config["test"]["create_index"]
     )
     return DataLoader(
         dataset=dataset,
@@ -139,14 +141,14 @@ def get_test_dataloader(config):
     )
 
 
-def get_eval_dataloader(config):
-    dataset = LibriDataset(
-        config, config["path_to_val"], create_index=config["val"]["create_index"]
-    )
-    return DataLoader(
-        dataset=dataset,
-        batch_size=config["val"]["batch_size"],
-        shuffle=False,
-        num_workers=config["val"]["num_workers"],
-        collate_fn=collate_fn,
-    )
+# def get_eval_dataloader(config):
+#     dataset = LibriDataset(
+#         config["val"], config["path_to_val"], create_index=config["val"]["create_index"]
+#     )
+#     return DataLoader(
+#         dataset=dataset,
+#         batch_size=config["val"]["batch_size"],
+#         shuffle=False,
+#         num_workers=config["val"]["num_workers"],
+#         collate_fn=collate_fn,
+#     )

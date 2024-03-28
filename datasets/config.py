@@ -9,13 +9,6 @@ config_dataloader = {
         "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
         "logging_name": "train dataloader",
     },  # batch size = 16?
-    # "val": {
-    #     "batch_size": 4,
-    #     "num_workers": 4,
-    #     "create_index": True,
-    #     "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
-    #     "logging_name": "val dataloader",
-    # },
     "test": {
         "batch_size": 4,
         "num_workers": 4,

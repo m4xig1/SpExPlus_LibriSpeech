@@ -10,7 +10,7 @@ class SiSdr(BaseMetric):
 
     def forward(self, pred, target):
         self.metric = self.si_sdr.to(pred.device)  # load to device
-        return self.metric(pred, target)
+        return self.metric(pred, target).item()
 
 
 class Pesq(BaseMetric):
@@ -20,4 +20,4 @@ class Pesq(BaseMetric):
 
     def forward(self, pred, target):
         self.metric = self.pesq.to(pred.device)  # load to device
-        return self.metric(pred, target)  # ?
+        return self.metric(pred, target).item()

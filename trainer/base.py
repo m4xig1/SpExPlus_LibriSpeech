@@ -140,7 +140,7 @@ class BaseTrainer:
     #         self.logger.info(f"Exception while loading checkpoint: {e}")
     #     self.model = self.model.to(self.device)
 
-    def compute_loss(self, batch, is_train=False):
+    def compute_loss(self, batch, is_train=True):
         """
         chunk -- batch from Dataloader with predictions
         returns: dict[None|torch.Tensor] with loss
@@ -176,7 +176,9 @@ class BaseTrainer:
             batch = self._load_to_device(batch, self.device)
             self.optimizer.zero_grad()
             batch = self.compute_loss(batch)
+
             loss = batch["loss"]
+            
             self.logger.info("Loss: {loss}")
             loss.backward()
             self.optimizer.step()
@@ -228,9 +230,12 @@ class BaseTrainer:
     def run(self, trainloader, testloader, nEpochs=50):
         self.save_checkpoint("init checkpoint")
         self.reporter.step = 0
-        logs = self.eval(testloader)
-        best_loss = logs["loss"]
-        self.logger.info(f"Start from epoch {self.cur_epoch}, Loss: {best_loss}")
+        best_loss = 0
+
+        # logs = self.eval(testloader)
+        # best_loss = logs["loss"]
+        # self.logger.info(f"Start from epoch {self.cur_epoch}, Loss: {best_loss}")
+
         no_impr = 0
         while self.cur_epoch < nEpochs:
             self.logger.info(f"Epoch {self.cur_epoch}...")

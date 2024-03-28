@@ -1,0 +1,824 @@
+[
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_174_000087-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_174_000087-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_174_000087-target.wav",
+     "speaker_id": 0
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_5536_000104-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_5536_000104-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_5536_000104-target.wav",
+     "speaker_id": 0
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_6295_000067-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_6295_000067-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_6295_000067-target.wav",
+     "speaker_id": 0
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_7976_000007-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_7976_000007-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_7976_000007-target.wav",
+     "speaker_id": 0
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_7976_000024-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_7976_000024-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1272_7976_000024-target.wav",
+     "speaker_id": 0
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_2078_000022-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_2078_000022-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_2078_000022-target.wav",
+     "speaker_id": 1
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_5536_000069-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_5536_000069-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_5536_000069-target.wav",
+     "speaker_id": 1
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_777_000003-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_777_000003-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_777_000003-target.wav",
+     "speaker_id": 1
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_777_000112-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_777_000112-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_777_000112-target.wav",
+     "speaker_id": 1
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_8297_000127-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_8297_000127-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1462_8297_000127-target.wav",
+     "speaker_id": 1
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_2035_000082-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_2035_000082-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_2035_000082-target.wav",
+     "speaker_id": 2
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_3536_000072-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_3536_000072-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_3536_000072-target.wav",
+     "speaker_id": 2
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_5338_000029-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_5338_000029-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_5338_000029-target.wav",
+     "speaker_id": 2
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_5338_000080-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_5338_000080-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_5338_000080-target.wav",
+     "speaker_id": 2
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_84_000130-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_84_000130-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1673_84_000130-target.wav",
+     "speaker_id": 2
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_5338_000066-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_5338_000066-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_5338_000066-target.wav",
+     "speaker_id": 3
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_6241_000081-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_6241_000081-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_6241_000081-target.wav",
+     "speaker_id": 3
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_8297_000006-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_8297_000006-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/174_8297_000006-target.wav",
+     "speaker_id": 3
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1919_5536_000004-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1919_5536_000004-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1919_5536_000004-target.wav",
+     "speaker_id": 4
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1919_84_000108-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1919_84_000108-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1919_84_000108-target.wav",
+     "speaker_id": 4
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_1919_000105-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_1919_000105-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_1919_000105-target.wav",
+     "speaker_id": 5
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3536_000015-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3536_000015-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3536_000015-target.wav",
+     "speaker_id": 5
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3853_000099-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3853_000099-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3853_000099-target.wav",
+     "speaker_id": 5
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3853_000115-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3853_000115-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_3853_000115-target.wav",
+     "speaker_id": 5
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_7976_000133-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_7976_000133-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1988_7976_000133-target.wav",
+     "speaker_id": 5
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1993_251_000136-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1993_251_000136-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1993_251_000136-target.wav",
+     "speaker_id": 6
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1993_6241_000065-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1993_6241_000065-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/1993_6241_000065-target.wav",
+     "speaker_id": 6
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2035_3752_000054-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2035_3752_000054-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2035_3752_000054-target.wav",
+     "speaker_id": 7
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2035_5536_000068-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2035_5536_000068-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2035_5536_000068-target.wav",
+     "speaker_id": 7
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_1919_000135-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_1919_000135-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_1919_000135-target.wav",
+     "speaker_id": 8
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_2277_000074-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_2277_000074-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_2277_000074-target.wav",
+     "speaker_id": 8
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_3170_000118-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_3170_000118-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_3170_000118-target.wav",
+     "speaker_id": 8
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_6319_000116-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_6319_000116-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2078_6319_000116-target.wav",
+     "speaker_id": 8
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_1673_000051-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_1673_000051-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_1673_000051-target.wav",
+     "speaker_id": 9
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_3170_000008-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_3170_000008-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_3170_000008-target.wav",
+     "speaker_id": 9
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_5895_000125-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_5895_000125-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_5895_000125-target.wav",
+     "speaker_id": 9
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_6345_000055-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_6345_000055-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_6345_000055-target.wav",
+     "speaker_id": 9
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_777_000114-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_777_000114-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2086_777_000114-target.wav",
+     "speaker_id": 9
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_1919_000061-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_1919_000061-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_1919_000061-target.wav",
+     "speaker_id": 10
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_6241_000026-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_6241_000026-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_6241_000026-target.wav",
+     "speaker_id": 10
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_8842_000038-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_8842_000038-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_8842_000038-target.wav",
+     "speaker_id": 10
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_8842_000126-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_8842_000126-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2277_8842_000126-target.wav",
+     "speaker_id": 10
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_3000_000100-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_3000_000100-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_3000_000100-target.wav",
+     "speaker_id": 11
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_3752_000048-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_3752_000048-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_3752_000048-target.wav",
+     "speaker_id": 11
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_6319_000014-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_6319_000014-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_6319_000014-target.wav",
+     "speaker_id": 11
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_8842_000089-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_8842_000089-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2412_8842_000089-target.wav",
+     "speaker_id": 11
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_1988_000035-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_1988_000035-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_1988_000035-target.wav",
+     "speaker_id": 12
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2277_000040-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2277_000040-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2277_000040-target.wav",
+     "speaker_id": 12
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2277_000110-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2277_000110-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2277_000110-target.wav",
+     "speaker_id": 12
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2902_000106-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2902_000106-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_2902_000106-target.wav",
+     "speaker_id": 12
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_3576_000001-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_3576_000001-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_3576_000001-target.wav",
+     "speaker_id": 12
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_6345_000016-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_6345_000016-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2428_6345_000016-target.wav",
+     "speaker_id": 12
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_1272_000037-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_1272_000037-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_1272_000037-target.wav",
+     "speaker_id": 13
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_1673_000097-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_1673_000097-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_1673_000097-target.wav",
+     "speaker_id": 13
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_2078_000109-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_2078_000109-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_2078_000109-target.wav",
+     "speaker_id": 13
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_2902_000049-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_2902_000049-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_2902_000049-target.wav",
+     "speaker_id": 13
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_5536_000073-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_5536_000073-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_5536_000073-target.wav",
+     "speaker_id": 13
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_652_000083-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_652_000083-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/251_652_000083-target.wav",
+     "speaker_id": 13
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1673_000017-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1673_000017-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1673_000017-target.wav",
+     "speaker_id": 14
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_174_000113-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_174_000113-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_174_000113-target.wav",
+     "speaker_id": 14
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1919_000019-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1919_000019-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1919_000019-target.wav",
+     "speaker_id": 14
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1919_000124-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1919_000124-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1919_000124-target.wav",
+     "speaker_id": 14
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1993_000043-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1993_000043-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_1993_000043-target.wav",
+     "speaker_id": 14
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_422_000046-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_422_000046-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_422_000046-target.wav",
+     "speaker_id": 14
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_6241_000028-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_6241_000028-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2803_6241_000028-target.wav",
+     "speaker_id": 14
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_2428_000056-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_2428_000056-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_2428_000056-target.wav",
+     "speaker_id": 15
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_422_000122-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_422_000122-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_422_000122-target.wav",
+     "speaker_id": 15
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_5694_000060-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_5694_000060-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_5694_000060-target.wav",
+     "speaker_id": 15
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_6241_000132-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_6241_000132-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_6241_000132-target.wav",
+     "speaker_id": 15
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_6345_000036-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_6345_000036-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_6345_000036-target.wav",
+     "speaker_id": 15
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_7850_000096-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_7850_000096-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/2902_7850_000096-target.wav",
+     "speaker_id": 15
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_1272_000000-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_1272_000000-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_1272_000000-target.wav",
+     "speaker_id": 16
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_2078_000018-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_2078_000018-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_2078_000018-target.wav",
+     "speaker_id": 16
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_3170_000010-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_3170_000010-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_3170_000010-target.wav",
+     "speaker_id": 16
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_3752_000059-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_3752_000059-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_3752_000059-target.wav",
+     "speaker_id": 16
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_6241_000094-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_6241_000094-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3000_6241_000094-target.wav",
+     "speaker_id": 16
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_2035_000084-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_2035_000084-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_2035_000084-target.wav",
+     "speaker_id": 17
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_2902_000005-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_2902_000005-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_2902_000005-target.wav",
+     "speaker_id": 17
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_7850_000033-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_7850_000033-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_7850_000033-target.wav",
+     "speaker_id": 17
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_8297_000063-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_8297_000063-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_8297_000063-target.wav",
+     "speaker_id": 17
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_84_000119-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_84_000119-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3081_84_000119-target.wav",
+     "speaker_id": 17
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3170_1919_000121-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3170_1919_000121-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3170_1919_000121-target.wav",
+     "speaker_id": 18
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3170_2412_000031-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3170_2412_000031-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3170_2412_000031-target.wav",
+     "speaker_id": 18
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_174_000085-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_174_000085-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_174_000085-target.wav",
+     "speaker_id": 19
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_1919_000128-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_1919_000128-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_1919_000128-target.wav",
+     "speaker_id": 19
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_3081_000058-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_3081_000058-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3536_3081_000058-target.wav",
+     "speaker_id": 19
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3576_7850_000101-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3576_7850_000101-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3576_7850_000101-target.wav",
+     "speaker_id": 20
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_2902_000071-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_2902_000071-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_2902_000071-target.wav",
+     "speaker_id": 21
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_3853_000134-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_3853_000134-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_3853_000134-target.wav",
+     "speaker_id": 21
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_84_000103-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_84_000103-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3752_84_000103-target.wav",
+     "speaker_id": 21
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3853_3536_000027-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3853_3536_000027-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3853_3536_000027-target.wav",
+     "speaker_id": 22
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3853_422_000076-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3853_422_000076-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/3853_422_000076-target.wav",
+     "speaker_id": 22
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/422_652_000078-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/422_652_000078-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/422_652_000078-target.wav",
+     "speaker_id": 23
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/422_8297_000090-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/422_8297_000090-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/422_8297_000090-target.wav",
+     "speaker_id": 23
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5338_1993_000070-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5338_1993_000070-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5338_1993_000070-target.wav",
+     "speaker_id": 24
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5338_2035_000086-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5338_2035_000086-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5338_2035_000086-target.wav",
+     "speaker_id": 24
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_1272_000092-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_1272_000092-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_1272_000092-target.wav",
+     "speaker_id": 25
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_1993_000088-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_1993_000088-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_1993_000088-target.wav",
+     "speaker_id": 25
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_6319_000050-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_6319_000050-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5536_6319_000050-target.wav",
+     "speaker_id": 25
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_2803_000064-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_2803_000064-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_2803_000064-target.wav",
+     "speaker_id": 26
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_6295_000077-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_6295_000077-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_6295_000077-target.wav",
+     "speaker_id": 26
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_652_000039-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_652_000039-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5694_652_000039-target.wav",
+     "speaker_id": 26
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_1993_000079-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_1993_000079-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_1993_000079-target.wav",
+     "speaker_id": 27
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_3853_000075-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_3853_000075-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_3853_000075-target.wav",
+     "speaker_id": 27
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_7976_000131-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_7976_000131-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/5895_7976_000131-target.wav",
+     "speaker_id": 27
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_1919_000117-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_1919_000117-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_1919_000117-target.wav",
+     "speaker_id": 28
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_3170_000129-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_3170_000129-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_3170_000129-target.wav",
+     "speaker_id": 28
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_3576_000044-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_3576_000044-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_3576_000044-target.wav",
+     "speaker_id": 28
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_422_000011-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_422_000011-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_422_000011-target.wav",
+     "speaker_id": 28
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_422_000047-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_422_000047-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_422_000047-target.wav",
+     "speaker_id": 28
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_5694_000025-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_5694_000025-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_5694_000025-target.wav",
+     "speaker_id": 28
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_6295_000107-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_6295_000107-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6241_6295_000107-target.wav",
+     "speaker_id": 28
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_3752_000095-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_3752_000095-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_3752_000095-target.wav",
+     "speaker_id": 29
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_5694_000041-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_5694_000041-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_5694_000041-target.wav",
+     "speaker_id": 29
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_6241_000062-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_6241_000062-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6295_6241_000062-target.wav",
+     "speaker_id": 29
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_2086_000030-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_2086_000030-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_2086_000030-target.wav",
+     "speaker_id": 30
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_3576_000021-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_3576_000021-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_3576_000021-target.wav",
+     "speaker_id": 30
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_652_000102-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_652_000102-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6313_652_000102-target.wav",
+     "speaker_id": 30
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_174_000020-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_174_000020-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_174_000020-target.wav",
+     "speaker_id": 31
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_5694_000032-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_5694_000032-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_5694_000032-target.wav",
+     "speaker_id": 31
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_7976_000023-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_7976_000023-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6319_7976_000023-target.wav",
+     "speaker_id": 31
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6345_7850_000111-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6345_7850_000111-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/6345_7850_000111-target.wav",
+     "speaker_id": 32
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_1462_000057-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_1462_000057-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_1462_000057-target.wav",
+     "speaker_id": 33
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_1993_000013-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_1993_000013-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_1993_000013-target.wav",
+     "speaker_id": 33
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_3576_000052-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_3576_000052-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_3576_000052-target.wav",
+     "speaker_id": 33
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_8842_000045-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_8842_000045-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/652_8842_000045-target.wav",
+     "speaker_id": 33
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/777_5338_000002-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/777_5338_000002-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/777_5338_000002-target.wav",
+     "speaker_id": 34
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/777_8842_000120-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/777_8842_000120-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/777_8842_000120-target.wav",
+     "speaker_id": 34
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_2428_000053-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_2428_000053-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_2428_000053-target.wav",
+     "speaker_id": 35
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_2902_000042-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_2902_000042-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_2902_000042-target.wav",
+     "speaker_id": 35
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_6345_000098-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_6345_000098-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_6345_000098-target.wav",
+     "speaker_id": 35
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_777_000093-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_777_000093-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7850_777_000093-target.wav",
+     "speaker_id": 35
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7976_1988_000012-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7976_1988_000012-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/7976_1988_000012-target.wav",
+     "speaker_id": 36
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8297_2412_000034-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8297_2412_000034-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8297_2412_000034-target.wav",
+     "speaker_id": 37
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8297_6295_000091-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8297_6295_000091-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8297_6295_000091-target.wav",
+     "speaker_id": 37
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/84_6295_000123-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/84_6295_000123-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/84_6295_000123-target.wav",
+     "speaker_id": 38
+    },
+    {
+     "mix": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8842_2035_000009-mixed.wav",
+     "ref": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8842_2035_000009-ref.wav",
+     "target": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/8842_2035_000009-target.wav",
+     "speaker_id": 39
+    }
+   ]

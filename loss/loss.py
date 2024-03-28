@@ -46,6 +46,7 @@ class SpexPlusLoss(nn.Module):
     @staticmethod
     def __normalize(x: Tensor):
         return x - x.mean(dim=-1, keepdim=True)
+    
 
     def forward(
         self,
