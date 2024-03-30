@@ -15,7 +15,7 @@ config_trainer = {
         "min_lr" : 0, 
         "verbose" : True
     },
-      "nCheckpoints": 5,
+      "nCheckpoints": 10,
       "checkpoint_path": "/home/m4xig1/speaker_extraction_SpEx/checkpoints/",
       "device" : "cuda", # ?
       "no_improvment" : 6 # steps before stopping the training

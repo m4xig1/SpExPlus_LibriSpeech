@@ -33,13 +33,13 @@ class Trainer(BaseTrainer):
         loss = {}
         metrics = {}
         pred = self.model(batch["mix"], batch["reference"], batch["ref_len"])
-        elem_loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
 
         if not is_train:
             # calc according to short
             metr = self.compute_metrics(pred["short"], batch["target"]) 
             loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
             return {**metr, **loss}, pred, batch["mix"]
+        
 
         return self.loss(pred, batch["target"], batch["speaker_id"], is_train)
 

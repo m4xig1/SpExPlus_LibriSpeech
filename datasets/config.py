@@ -12,7 +12,7 @@ config_dataloader = {
     "test": {
         "batch_size": 4,
         "num_workers": 4,
-        "create_index": True,
+        "create_index": False,
         "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
         "logging_name": "test dataloader",
     },

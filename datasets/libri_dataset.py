@@ -40,12 +40,12 @@ class LibriDataset(BaseDataset):
 
         ids = np.array([self.__get_id(path) for path in mix])  # already sorted
 
-        # for a, b, c in zip(mix, ref, target): # test
-        #     if (a.split('-')[0] != b.split('-')[0] or a.split('-')[0] != c.split('-')[0]):
-        #         print(a,b,c)
-        #         exit(1)
+        for a, b, c in zip(mix, ref, target): # test
+            if (a.split('-')[0] != b.split('-')[0] or a.split('-')[0] != c.split('-')[0]):
+                print(a,b,c)
+                exit(1)
 
-        if mix.shape != ref.shape or ref.shape != target.shape:
+        if mix.shape != ref.shape or ref.shape != target.shape: # test
             self.logger.warning(f"mix.shape != ref.shape || ref.shape != target.shape")
             print(mix.shape, ref.shape, target.shape)
             return None

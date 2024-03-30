@@ -17,6 +17,7 @@ from logger.logger import start_log
 from logger.visualize import get_visualizer
 from metrics.base import BaseMetric  # ??
 from trainer.DONTDELETE import GIT_GUD
+import gc  # garbage collector
 
 
 class BaseTrainer:
@@ -26,7 +27,7 @@ class BaseTrainer:
         metrics: "dict[str, BaseMetric]",
         *args,
         config=config_trainer,
-        load_checkpoint=None, # load from
+        load_checkpoint=None,  # load from
         **kwargs,
     ):
         start_log()  # load config to logger
@@ -35,7 +36,7 @@ class BaseTrainer:
         self.logger = logging.getLogger("train logger")
         self.logger.setLevel(config["logger"]["level"])
         self.reporter = get_visualizer()  # Wandb monitor
-        
+
         self.log_step = 5  # how many batches between logging
 
         if not torch.cuda.is_available():
@@ -148,10 +149,7 @@ class BaseTrainer:
         raise NotImplementedError()
 
     def compute_metrics(self, pred, target):
-        return {
-            key: metric(pred, target)
-            for key, metric in self.metrics.items()
-        }
+        return {key: metric(pred, target) for key, metric in self.metrics.items()}
 
     @torch.no_grad()
     def calc_grad_norm(self, p_type=2):
@@ -173,15 +171,26 @@ class BaseTrainer:
         batch_size = len(dataloader)
         logs = {}
         for step, batch in enumerate(tqdm(dataloader, desc="train")):
-            batch = self._load_to_device(batch, self.device)
-            self.optimizer.zero_grad()
-            batch = self.compute_loss(batch)
+            try:
+                batch = self._load_to_device(batch, self.device)
+                self.optimizer.zero_grad()
+                batch = self.compute_loss(batch)
 
-            loss = batch["loss"]
-            
-            self.logger.info("Loss: {loss}")
-            loss.backward()
-            self.optimizer.step()
+                loss = batch["loss"]
+
+                self.logger.info("Loss: {loss}")
+                loss.backward()
+                self.optimizer.step()
+
+            except RuntimeError as e:  # oom?
+                self.logger.info(f"{e}, step: {step}")
+                for param in self.model.parameters:
+                    if param.grad is not None:
+                        del param.grad
+                torch.cuda.empty_cache()
+                gc.collect()
+                continue
+
             # if self.lrScheduler is not None:
             #     self.lrScheduler. # do smth?
             logs = {
@@ -204,7 +213,7 @@ class BaseTrainer:
         self.logger.info("Eval mode")
         self.model.eval()
         batch_size = len(dataloader)
-        logs = {"loss": 0.0, "ce" : 0.0, "SI-SDR": 0.0, "PesQ": 0.0}
+        logs = {"loss": 0.0, "ce": 0.0, "SI-SDR": 0.0, "PesQ": 0.0}
         with torch.no_grad():
             for step, batch in enumerate(tqdm(dataloader, desc="eval")):
                 batch = self._load_to_device(batch, self.device)
@@ -216,11 +225,11 @@ class BaseTrainer:
                 if step % self.log_step == 0:
                     self.reporter.new_step(step)
                     self.logger.info(
-                        f"Eval step: {step}, Loss: {metr['loss']}, CE: {metr['ce']}, SI-SDR: {metr['SI-SDR']}, PesQ: {metr['PesQ']}" # metrics on batch
+                        f"Eval step: {step}, Loss: {metr['loss']}, CE: {metr['ce']}, SI-SDR: {metr['SI-SDR']}, PesQ: {metr['PesQ']}"  # metrics on batch
                     )
                     for key in logs:
                         self.reporter.log_scalar(key, metr[key])
-                        
+
                     # self.reporter.log_audio("mix", mixed)
                     # self.reporter.log_audio("predicted", result)
         # force logs
@@ -232,9 +241,9 @@ class BaseTrainer:
         self.reporter.step = 0
         best_loss = 0
 
-        # logs = self.eval(testloader)
-        # best_loss = logs["loss"]
-        # self.logger.info(f"Start from epoch {self.cur_epoch}, Loss: {best_loss}")
+        logs = self.eval(testloader)
+        best_loss = logs["loss"]
+        self.logger.info(f"Start from epoch {self.cur_epoch}, Loss: {best_loss}")
 
         no_impr = 0
         while self.cur_epoch < nEpochs:
