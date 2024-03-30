@@ -1,0 +1,129 @@
+INFO:train logger:Running trainer on cuda
+/home/m4xig1/.local/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+INFO:train logger:
+⣿⣿⣿⣿⣿⣿⣿⣤⡘⡍⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠋⡡⠊⠉⢀⠞⡻⠊⡐⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⡟⢿⠻⡀⠀⠀⠉⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠉⠀⠀⣠⠞⠃⠀⢀⡀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⡄⠀⢀⠳⡀⠀⠀⠀⠀⠀⠈⠙⢿⣿⣿⡿⠟⣻⠟⠉⠀⠀⠀⠀⠀⠀⠠⠟⠁⠀⠀⠀⣠⡞⠀⠀⡀⠠⢜⣡⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⡇⠂⣰⣧⠐⡄⠀⠀⠀⠀⠀⣐⣮⣤⠤⠀⠨⠴⣶⡶⡶⠤⣀⠀⠀⠀⠀⠀⠀⠑⠲⣿⣋⣭⣛⠁⠠⠒⢵⣏⡀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣹⣄⢘⣧⠀⢺⣆⠀⣠⠴⠛⠉⡱⠁⠀⠀⠀⠀⠀⠀⠀⠑⠢⡹⣦⡀⠀⠀⠀⠀⠀⠈⠻⡗⠀⠀⣀⣀⣒⡓⠧⡀⠀⢠⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⡈⣙⡿⠂⢈⡿⠋⠀⠀⠀⠈⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠙⢝⣆⠑⡄⠀⠀⠀⠀⠘⢶⣀⣈⠉⣻⢿⡧⠀⠀⣸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣀⠞⠀⠀⡀⠀⠠⠂⠀⠀⠀⠀⠀⠱⠀⠀⠠⠀⠀⠀⠀⠀⠻⡱⣼⡄⠀⠀⠀⠀⠈⢗⠤⣅⣴⣟⣇⣠⠀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⡿⠁⠀⠀⡰⠀⠀⡆⢰⠀⠀⠀⠀⠀⠀⢇⠀⠀⠑⡀⠀⠀⠀⠠⡘⢜⢿⡄⠀⢀⠀⠀⠈⢇⢨⣿⣿⠃⢀⣴⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⢠⢃⠀⣰⠀⠘⠀⠀⠀⠀⣇⠀⢸⣧⡀⠀⠘⢦⠀⠠⠀⠉⢌⠺⣷⠀⠈⡆⠀⠀⠘⣿⢟⡿⢶⣿⡟⠘⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀⠀⠀⠀⣤⠇⢠⡟⡆⠀⡄⠀⠀⠀⠘⡄⠀⢏⠓⢄⠀⠣⠳⣄⠑⢄⠀⠣⡹⣇⠀⢰⠀⠀⠀⢳⠈⣰⣿⣿⢅⠘⣱⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⠏⢠⠃⠀⠀⠀⢠⡟⠀⡾⠀⡇⠀⠂⠀⠀⠀⢳⠸⡄⠘⣄⣧⡦⡔⠒⠘⢯⡙⢍⠒⠚⢾⡀⠐⡆⠀⢡⠸⡮⠿⢫⡇⠘⡄⠀⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⠟⠁⢠⠃⠀⠀⠀⠀⢸⠇⣸⠇⢠⢡⢀⢸⡀⠀⠀⠸⣧⢳⡠⢻⠀⠑⢜⣆⠘⠄⠑⢌⡳⡀⠀⠇⠀⣧⠀⢸⠀⣇⡰⠋⠀⠀⣷⠀⡀⠡⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⠟⠁⢀⣴⡏⠀⡄⠀⠀⠀⢸⢀⣿⡀⠤⢼⡞⡄⣷⡘⣆⠀⠹⣍⣷⡀⢣⠀⠀⣙⣻⣦⣤⣤⣭⣛⣲⣤⠀⢹⠀⠀⠀⣍⣠⣤⠁⡰⢿⠀⠰⡀⠱⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠋⢀⣠⣴⣿⣿⠁⠀⠁⠀⣸⠀⣾⠜⡏⠀⠀⠈⢿⡰⡘⣷⠘⣧⡀⠻⣿⣧⣀⣶⡿⢿⣿⣿⣿⣿⣿⡝⠻⣿⡶⠏⠀⠀⠀⢹⣿⣁⠜⡀⡿⣧⠀⡙⡄⠈⡢⡀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⢿⠀⣿⠀⠃⠀⢀⣀⣨⠷⡑⢼⣧⡽⣷⣄⡀⢻⡠⡏⠀⠸⠏⢹⣿⣿⠙⡇⠀⣼⡇⠀⠀⠀⡆⣎⡙⢇⡰⢁⡇⣿⣧⣿⢮⠢⡀⠀⠑⠢⡀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⡇⠀⠀⡇⠀⢸⡇⢻⠀⢐⣾⠟⣿⣿⣿⣗⠀⠈⠻⣆⠝⠣⢄⠈⠀⠀⠀⠰⣟⠹⢻⣿⠁⠀⠃⠁⠀⠀⢸⡇⣃⡁⢸⠁⣼⢧⢸⠙⡟⢷⣕⡌⠒⠤⣀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⡇⢸⠀⣧⠀⠸⣷⠘⣄⣾⠇⠀⠿⠛⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣈⣁⠉⣁⣀⣀⢀⡁⠀⠀⢸⡄⡏⣡⢟⣿⣿⠸⠀⠄⠸⠀⠀⠀⠉⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⢻⣿⣿⡇⢸⡆⢹⡄⠀⢹⣧⣻⡻⣇⠀⠀⢰⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠟⢁⠠⠀⢸⠇⠀⠀⠸⠃⡗⣡⣾⡏⢿⠀⡇⡇⠀⠑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣸⣿⣿⡇⢸⣷⡘⣷⡀⠈⣿⣿⣧⠈⠂⠀⠀⠉⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⣾⠀⠀⠀⣀⠀⣿⣿⢿⡇⢸⡄⠀⢩⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⢸⣿⣿⣿⠘⣿⣷⣹⣷⣄⠘⣎⢻⣇⠀⠔⢫⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⢸⠀⠀⠀⣿⢠⣿⡇⢸⡇⠀⢷⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣇⢿⣿⣿⣿⣿⡿⣏⠙⢿⠘⠒⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⢀⣼⠀⡄⢠⡏⢸⣿⣧⠘⣿⠀⠈⣇⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⡿⢁⣿⠀⠸⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⠟⣿⠀⠁⢸⡁⣼⣿⣿⠀⡟⡇⠀⠼⡀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣵⣿⢟⡄⠀⢛⠢⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⠟⠁⢀⡏⠸⠀⣇⡆⣿⣿⣿⣇⣧⣿⡤⣶⣷⣸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣇⠀⠸⡀⢸⡏⠓⣦⣤⣀⣀⠀⠀⠀⠀⠀⣀⣤⣾⣿⠟⠁⣠⠐⠁⠃⡆⢠⣾⢱⣿⡏⢉⣀⣠⣴⢤⣤⣬⣁⡒⠢⠤⣄⣀⡀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⣼⣿⠀⠀⠃⠘⡇⢀⣿⢸⣿⣿⣿⣿⣷⣶⣿⣿⣿⠟⠁⡠⠊⠀⠀⠀⣷⠁⢸⣟⣸⠿⠿⢧⡅⢱⣧⠀⡅⡇⠇⢳⠈⠁⠢⡀⠁⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢃⣿⢸⡇⠀⠰⠀⣿⢸⣿⣿⣿⣿⣿⠟⢛⣩⣿⡏⠁⠔⠈⢀⣠⠄⠒⢸⡟⠀⣿⡇⡇⠀⠀⢸⠃⠘⣿⠀⡁⢁⢸⠈⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⣼⣿⢸⣿⡀⠀⠀⢸⣿⣿⣿⡿⠋⠵⡽⠿⠛⠛⠋⠉⠉⠉⠁⡁⠀⠀⣿⡇⢠⣿⣹⠁⠀⠀⣿⠀⢰⢿⠀⠙⠘⢸⡀⣷⠀⠀⠀⠀⠀⠀⠀⠀⠌
+INFO:train logger:saving checkpoint /home/m4xig1/speaker_extraction_SpEx/checkpoints/init checkpoint.pt.tar
+INFO:train logger:Eval mode
+eval:   0%|                                                                                                                                                      | 0/250 [00:00<?, ?it/s]/usr/lib/python3/dist-packages/pkg_resources/__init__.py:116: PkgResourcesDeprecationWarning: 1.1build1 is an invalid version and will not be supported in a future release
+  warnings.warn(
+INFO:train logger:Eval step: 0, Loss: 8.81771607398987, CE: 4.289431095123291, SI-SDR: -36.32972717285156, PesQ: 1.0803035497665405
+
+
+
+
+eval:   2%|██▊                                                                                                                                           | 5/250 [00:33<29:46,  7.29s/it]INFO:train logger:Eval step: 5, Loss: 9.166689872741701, CE: 4.106083393096924, SI-SDR: -38.031070709228516, PesQ: 1.1694139242172241
+
+
+
+eval:   4%|█████▋                                                                                                                                       | 10/250 [00:59<23:56,  5.98s/it]
+Traceback (most recent call last):
+  File "/home/m4xig1/speaker_extraction_SpEx/train.py", line 43, in <module>
+    main()
+  File "/home/m4xig1/speaker_extraction_SpEx/train.py", line 38, in main
+    trainer.run(train_loader, test_loader, 1)
+  File "/home/m4xig1/speaker_extraction_SpEx/trainer/base.py", line 235, in run
+    logs = self.eval(testloader)
+  File "/home/m4xig1/speaker_extraction_SpEx/trainer/base.py", line 211, in eval
+    metr, result, mixed = self.compute_loss(batch, is_train=False)
+  File "/home/m4xig1/speaker_extraction_SpEx/trainer/trainer.py", line 36, in compute_loss
+    elem_loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/m4xig1/speaker_extraction_SpEx/loss/loss.py", line 65, in forward
+    sisdr_short = self.metric(x_short, target)  # const?
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/m4xig1/speaker_extraction_SpEx/metrics/metrics.py", line 13, in forward
+    return self.metric(pred, target).item()
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 302, in forward
+    self._forward_cache = self._forward_full_state_update(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 317, in _forward_full_state_update
+    self.update(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 476, in wrapped_func
+    raise err
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 466, in wrapped_func
+    update(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/audio/sdr.py", line 226, in update
+    si_sdr_batch = scale_invariant_signal_distortion_ratio(preds=preds, target=target, zero_mean=self.zero_mean)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/functional/audio/sdr.py", line 226, in scale_invariant_signal_distortion_ratio
+    _check_same_shape(preds, target)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/utilities/checks.py", line 42, in _check_same_shape
+    raise RuntimeError(
+RuntimeError: Predictions and targets are expected to have the same shape, but got torch.Size([4, 168790]) and torch.Size([4, 168799]).
+Traceback (most recent call last):
+  File "/home/m4xig1/speaker_extraction_SpEx/train.py", line 43, in <module>
+    main()
+  File "/home/m4xig1/speaker_extraction_SpEx/train.py", line 38, in main
+    trainer.run(train_loader, test_loader, 1)
+  File "/home/m4xig1/speaker_extraction_SpEx/trainer/base.py", line 235, in run
+    logs = self.eval(testloader)
+  File "/home/m4xig1/speaker_extraction_SpEx/trainer/base.py", line 211, in eval
+    metr, result, mixed = self.compute_loss(batch, is_train=False)
+  File "/home/m4xig1/speaker_extraction_SpEx/trainer/trainer.py", line 36, in compute_loss
+    elem_loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/m4xig1/speaker_extraction_SpEx/loss/loss.py", line 65, in forward
+    sisdr_short = self.metric(x_short, target)  # const?
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/m4xig1/speaker_extraction_SpEx/metrics/metrics.py", line 13, in forward
+    return self.metric(pred, target).item()
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 302, in forward
+    self._forward_cache = self._forward_full_state_update(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 317, in _forward_full_state_update
+    self.update(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 476, in wrapped_func
+    raise err
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/metric.py", line 466, in wrapped_func
+    update(*args, **kwargs)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/audio/sdr.py", line 226, in update
+    si_sdr_batch = scale_invariant_signal_distortion_ratio(preds=preds, target=target, zero_mean=self.zero_mean)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/functional/audio/sdr.py", line 226, in scale_invariant_signal_distortion_ratio
+    _check_same_shape(preds, target)
+  File "/home/m4xig1/.local/lib/python3.10/site-packages/torchmetrics/utilities/checks.py", line 42, in _check_same_shape
+    raise RuntimeError(
+RuntimeError: Predictions and targets are expected to have the same shape, but got torch.Size([4, 168790]) and torch.Size([4, 168799]).

@@ -1,0 +1,183 @@
+2024-03-29 00:38:01,535 INFO    StreamThr :183644 [internal.py:wandb_internal():86] W&B internal server running at pid: 183644, started at: 2024-03-29 00:38:01.534588
+2024-03-29 00:38:01,537 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: status
+2024-03-29 00:38:01,539 INFO    WriterThread:183644 [datastore.py:open_for_write():87] open: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/run-5ysao5lp.wandb
+2024-03-29 00:38:01,541 DEBUG   SenderThread:183644 [sender.py:send():379] send: header
+2024-03-29 00:38:01,541 DEBUG   SenderThread:183644 [sender.py:send():379] send: run
+2024-03-29 00:38:02,061 INFO    SenderThread:183644 [dir_watcher.py:__init__():211] watching files in: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files
+2024-03-29 00:38:02,061 INFO    SenderThread:183644 [sender.py:_start_run_threads():1124] run started: 5ysao5lp with start time 1711661881.534569
+2024-03-29 00:38:02,065 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: check_version
+2024-03-29 00:38:02,065 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: check_version
+2024-03-29 00:38:02,211 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: run_start
+2024-03-29 00:38:02,227 DEBUG   HandlerThread:183644 [system_info.py:__init__():26] System info init
+2024-03-29 00:38:02,228 DEBUG   HandlerThread:183644 [system_info.py:__init__():41] System info init done
+2024-03-29 00:38:02,228 INFO    HandlerThread:183644 [system_monitor.py:start():194] Starting system monitor
+2024-03-29 00:38:02,228 INFO    SystemMonitor:183644 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-29 00:38:02,228 INFO    HandlerThread:183644 [system_monitor.py:probe():214] Collecting system info
+2024-03-29 00:38:02,229 INFO    SystemMonitor:183644 [interfaces.py:start():190] Started cpu monitoring
+2024-03-29 00:38:02,230 INFO    SystemMonitor:183644 [interfaces.py:start():190] Started disk monitoring
+2024-03-29 00:38:02,231 INFO    SystemMonitor:183644 [interfaces.py:start():190] Started gpu monitoring
+2024-03-29 00:38:02,232 INFO    SystemMonitor:183644 [interfaces.py:start():190] Started memory monitoring
+2024-03-29 00:38:02,233 INFO    SystemMonitor:183644 [interfaces.py:start():190] Started network monitoring
+2024-03-29 00:38:02,242 DEBUG   HandlerThread:183644 [system_info.py:probe():150] Probing system
+2024-03-29 00:38:02,270 DEBUG   HandlerThread:183644 [system_info.py:_probe_git():135] Probing git
+2024-03-29 00:38:02,274 DEBUG   HandlerThread:183644 [system_info.py:_probe_git():143] Probing git done
+2024-03-29 00:38:02,274 DEBUG   HandlerThread:183644 [system_info.py:probe():198] Probing system done
+2024-03-29 00:38:02,274 DEBUG   HandlerThread:183644 [system_monitor.py:probe():223] {'os': 'Linux-5.15.146.1-microsoft-standard-WSL2-x86_64-with-glibc2.35', 'python': '3.10.12', 'heartbeatAt': '2024-03-28T21:38:02.242241', 'startedAt': '2024-03-28T21:38:01.530854', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/m4xig1/speaker_extraction_SpEx/test.py', 'codePathLocal': 'test.py', 'codePath': 'test.py', 'git': {'remote': 'https://github.com/m4xig1/SpExPlus_LibriSpeech.git', 'commit': '9194806f7bc1db1b778f293f251142890a718333'}, 'email': 'maignatov_2@edu.hse.ru', 'root': '/home/m4xig1/speaker_extraction_SpEx', 'host': 'LAPTOP-D3BKPTGE', 'username': 'm4xig1', 'executable': '/bin/python3', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 2303.999, 'min': 0.0, 'max': 0.0}, 'cpu_freq_per_core': [{'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}, {'current': 2303.999, 'min': 0.0, 'max': 0.0}], 'disk': {'/': {'total': 1006.853931427002, 'used': 39.47773361206055}}, 'gpu': 'NVIDIA GeForce RTX 3050 Ti Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 Ti Laptop GPU', 'memory_total': 4294967296}], 'memory': {'total': 7.601963043212891}}
+2024-03-29 00:38:02,274 INFO    HandlerThread:183644 [system_monitor.py:probe():224] Finished collecting system info
+2024-03-29 00:38:02,274 INFO    HandlerThread:183644 [system_monitor.py:probe():227] Publishing system info
+2024-03-29 00:38:02,275 INFO    HandlerThread:183644 [system_monitor.py:probe():229] Finished publishing system info
+2024-03-29 00:38:02,276 DEBUG   SenderThread:183644 [sender.py:send():379] send: files
+2024-03-29 00:38:02,276 INFO    SenderThread:183644 [sender.py:_save_file():1390] saving file wandb-metadata.json with policy now
+2024-03-29 00:38:02,339 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: python_packages
+2024-03-29 00:38:02,340 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: python_packages
+2024-03-29 00:38:02,342 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-29 00:38:02,343 DEBUG   SenderThread:183644 [sender.py:send():379] send: telemetry
+2024-03-29 00:38:02,390 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-29 00:38:02,391 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: stop_status
+2024-03-29 00:38:02,720 DEBUG   SenderThread:183644 [sender.py:send():379] send: telemetry
+2024-03-29 00:38:03,001 INFO    wandb-upload_0:183644 [upload_job.py:push():131] Uploaded file /tmp/tmp21870h3iwandb/kw16l5x7-wandb-metadata.json
+2024-03-29 00:38:03,062 INFO    Thread-12 :183644 [dir_watcher.py:_on_file_created():271] file/dir created: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/output.log
+2024-03-29 00:38:03,063 INFO    Thread-12 :183644 [dir_watcher.py:_on_file_created():271] file/dir created: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/wandb-metadata.json
+2024-03-29 00:38:03,063 INFO    Thread-12 :183644 [dir_watcher.py:_on_file_created():271] file/dir created: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/requirements.txt
+2024-03-29 00:38:04,593 DEBUG   SenderThread:183644 [sender.py:send():379] send: exit
+2024-03-29 00:38:04,593 INFO    SenderThread:183644 [sender.py:send_exit():586] handling exit code: 1
+2024-03-29 00:38:04,593 INFO    SenderThread:183644 [sender.py:send_exit():588] handling runtime: 2
+2024-03-29 00:38:04,595 INFO    SenderThread:183644 [sender.py:_save_file():1390] saving file wandb-summary.json with policy end
+2024-03-29 00:38:04,595 INFO    SenderThread:183644 [sender.py:send_exit():594] send defer
+2024-03-29 00:38:04,595 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,595 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 0
+2024-03-29 00:38:04,595 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,595 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 0
+2024-03-29 00:38:04,595 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 1
+2024-03-29 00:38:04,595 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,595 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 1
+2024-03-29 00:38:04,596 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,596 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 1
+2024-03-29 00:38:04,596 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 2
+2024-03-29 00:38:04,596 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,596 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 2
+2024-03-29 00:38:04,596 INFO    HandlerThread:183644 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-29 00:38:04,596 DEBUG   SystemMonitor:183644 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-29 00:38:04,596 INFO    HandlerThread:183644 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-29 00:38:04,596 DEBUG   SystemMonitor:183644 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-29 00:38:04,597 INFO    HandlerThread:183644 [interfaces.py:finish():202] Joined disk monitor
+2024-03-29 00:38:04,597 DEBUG   SystemMonitor:183644 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-29 00:38:04,607 INFO    HandlerThread:183644 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-29 00:38:04,608 INFO    HandlerThread:183644 [interfaces.py:finish():202] Joined memory monitor
+2024-03-29 00:38:04,608 INFO    HandlerThread:183644 [interfaces.py:finish():202] Joined network monitor
+2024-03-29 00:38:04,609 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,609 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 2
+2024-03-29 00:38:04,609 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 3
+2024-03-29 00:38:04,609 DEBUG   SenderThread:183644 [sender.py:send():379] send: stats
+2024-03-29 00:38:04,609 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,609 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 3
+2024-03-29 00:38:04,610 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,610 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 3
+2024-03-29 00:38:04,610 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 4
+2024-03-29 00:38:04,610 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,610 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 4
+2024-03-29 00:38:04,610 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,610 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 4
+2024-03-29 00:38:04,610 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 5
+2024-03-29 00:38:04,610 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,610 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 5
+2024-03-29 00:38:04,611 DEBUG   SenderThread:183644 [sender.py:send():379] send: summary
+2024-03-29 00:38:04,611 INFO    SenderThread:183644 [sender.py:_save_file():1390] saving file wandb-summary.json with policy end
+2024-03-29 00:38:04,611 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,611 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 5
+2024-03-29 00:38:04,611 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 6
+2024-03-29 00:38:04,611 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,611 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 6
+2024-03-29 00:38:04,611 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,611 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 6
+2024-03-29 00:38:04,614 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: status_report
+2024-03-29 00:38:04,806 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 7
+2024-03-29 00:38:04,807 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:04,807 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 7
+2024-03-29 00:38:04,807 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:04,807 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 7
+2024-03-29 00:38:05,062 INFO    Thread-12 :183644 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/output.log
+2024-03-29 00:38:05,063 INFO    Thread-12 :183644 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/config.yaml
+2024-03-29 00:38:05,063 INFO    Thread-12 :183644 [dir_watcher.py:_on_file_created():271] file/dir created: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/wandb-summary.json
+2024-03-29 00:38:05,593 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-29 00:38:06,729 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 8
+2024-03-29 00:38:06,729 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: poll_exit
+2024-03-29 00:38:06,730 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:06,730 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 8
+2024-03-29 00:38:06,731 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:06,731 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 8
+2024-03-29 00:38:06,731 INFO    SenderThread:183644 [job_builder.py:build():318] Attempting to build job artifact
+2024-03-29 00:38:06,731 INFO    SenderThread:183644 [job_builder.py:_get_source_type():455] is repo sourced job
+2024-03-29 00:38:06,752 INFO    SenderThread:183644 [job_builder.py:build():431] adding wandb-job metadata file
+2024-03-29 00:38:06,758 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 9
+2024-03-29 00:38:06,758 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:06,758 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 9
+2024-03-29 00:38:06,758 DEBUG   SenderThread:183644 [sender.py:send():379] send: artifact
+2024-03-29 00:38:07,063 INFO    Thread-12 :183644 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/output.log
+2024-03-29 00:38:07,595 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-29 00:38:07,664 INFO    SenderThread:183644 [sender.py:send_artifact():1468] sent artifact job-https___github.com_m4xig1_SpExPlus_LibriSpeech.git_test.py - {'id': 'QXJ0aWZhY3Q6Nzc0OTkzMTE0', 'state': 'COMMITTED', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjE1MzY4NzkyNA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6Nzc0OTkzMTE0', 'versionIndex': 0}}}
+2024-03-29 00:38:07,664 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:07,664 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 9
+2024-03-29 00:38:07,664 INFO    SenderThread:183644 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-03-29 00:38:08,064 INFO    SenderThread:183644 [dir_watcher.py:finish():388] scan: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files
+2024-03-29 00:38:08,064 INFO    SenderThread:183644 [dir_watcher.py:finish():402] scan save: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/wandb-summary.json wandb-summary.json
+2024-03-29 00:38:08,064 INFO    SenderThread:183644 [dir_watcher.py:finish():402] scan save: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/config.yaml config.yaml
+2024-03-29 00:38:08,065 INFO    SenderThread:183644 [dir_watcher.py:finish():402] scan save: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/requirements.txt requirements.txt
+2024-03-29 00:38:08,067 INFO    SenderThread:183644 [dir_watcher.py:finish():402] scan save: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/output.log output.log
+2024-03-29 00:38:08,067 INFO    SenderThread:183644 [dir_watcher.py:finish():402] scan save: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/wandb-metadata.json wandb-metadata.json
+2024-03-29 00:38:08,067 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 10
+2024-03-29 00:38:08,067 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: poll_exit
+2024-03-29 00:38:08,069 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:08,069 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 10
+2024-03-29 00:38:08,071 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:08,071 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 10
+2024-03-29 00:38:08,071 INFO    SenderThread:183644 [file_pusher.py:finish():172] shutting down file pusher
+2024-03-29 00:38:08,491 INFO    wandb-upload_0:183644 [upload_job.py:push():131] Uploaded file /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/wandb-summary.json
+2024-03-29 00:38:08,583 INFO    wandb-upload_1:183644 [upload_job.py:push():131] Uploaded file /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/config.yaml
+2024-03-29 00:38:08,596 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-29 00:38:08,596 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: poll_exit
+2024-03-29 00:38:08,765 INFO    wandb-upload_2:183644 [upload_job.py:push():131] Uploaded file /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/requirements.txt
+2024-03-29 00:38:08,779 INFO    wandb-upload_3:183644 [upload_job.py:push():131] Uploaded file /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/files/output.log
+2024-03-29 00:38:08,979 INFO    Thread-11 (_thread_body):183644 [sender.py:transition_state():614] send defer: 11
+2024-03-29 00:38:08,980 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:08,980 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 11
+2024-03-29 00:38:08,980 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:08,980 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 11
+2024-03-29 00:38:08,980 INFO    SenderThread:183644 [file_pusher.py:join():178] waiting for file pusher
+2024-03-29 00:38:08,981 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 12
+2024-03-29 00:38:08,981 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:08,981 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 12
+2024-03-29 00:38:08,981 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:08,981 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 12
+2024-03-29 00:38:08,981 INFO    SenderThread:183644 [file_stream.py:finish():614] file stream finish called
+2024-03-29 00:38:09,149 INFO    SenderThread:183644 [file_stream.py:finish():618] file stream finish is done
+2024-03-29 00:38:09,150 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 13
+2024-03-29 00:38:09,150 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:09,150 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 13
+2024-03-29 00:38:09,150 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:09,150 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 13
+2024-03-29 00:38:09,150 INFO    SenderThread:183644 [sender.py:transition_state():614] send defer: 14
+2024-03-29 00:38:09,151 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: defer
+2024-03-29 00:38:09,151 INFO    HandlerThread:183644 [handler.py:handle_request_defer():172] handle defer: 14
+2024-03-29 00:38:09,151 DEBUG   SenderThread:183644 [sender.py:send():379] send: final
+2024-03-29 00:38:09,151 DEBUG   SenderThread:183644 [sender.py:send():379] send: footer
+2024-03-29 00:38:09,151 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: defer
+2024-03-29 00:38:09,151 INFO    SenderThread:183644 [sender.py:send_request_defer():610] handle sender defer: 14
+2024-03-29 00:38:09,152 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-29 00:38:09,152 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-29 00:38:09,153 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: server_info
+2024-03-29 00:38:09,153 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: poll_exit
+2024-03-29 00:38:09,153 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: get_summary
+2024-03-29 00:38:09,154 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: poll_exit
+2024-03-29 00:38:09,154 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: sampled_history
+2024-03-29 00:38:09,154 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-29 00:38:09,154 DEBUG   SenderThread:183644 [sender.py:send_request():406] send_request: server_info
+2024-03-29 00:38:09,335 INFO    MainThread:183644 [wandb_run.py:_footer_history_summary_info():3920] rendering history
+2024-03-29 00:38:09,335 INFO    MainThread:183644 [wandb_run.py:_footer_history_summary_info():3952] rendering summary
+2024-03-29 00:38:09,335 INFO    MainThread:183644 [wandb_run.py:_footer_sync_info():3879] logging synced files
+2024-03-29 00:38:09,335 DEBUG   HandlerThread:183644 [handler.py:handle_request():146] handle_request: shutdown
+2024-03-29 00:38:09,335 INFO    HandlerThread:183644 [handler.py:finish():866] shutting down handler
+2024-03-29 00:38:10,154 INFO    WriterThread:183644 [datastore.py:close():296] close: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240329_003801-5ysao5lp/run-5ysao5lp.wandb
+2024-03-29 00:38:10,335 INFO    SenderThread:183644 [sender.py:finish():1546] shutting down sender
+2024-03-29 00:38:10,335 INFO    SenderThread:183644 [file_pusher.py:finish():172] shutting down file pusher
+2024-03-29 00:38:10,335 INFO    SenderThread:183644 [file_pusher.py:join():178] waiting for file pusher

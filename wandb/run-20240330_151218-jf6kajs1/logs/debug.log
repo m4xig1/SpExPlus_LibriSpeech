@@ -1,0 +1,29 @@
+2024-03-30 15:12:18,602 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Current SDK version is 0.16.5
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Configure stats pid to 49880
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Loading settings from /home/m4xig1/.config/wandb/settings
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Loading settings from /home/m4xig1/speaker_extraction_SpEx/wandb/settings
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'train.py', 'program_abspath': '/home/m4xig1/speaker_extraction_SpEx/train.py', 'program': '/home/m4xig1/speaker_extraction_SpEx/train.py'}
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_init.py:_log_setup():527] Logging user logs to /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_151218-jf6kajs1/logs/debug.log
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_init.py:_log_setup():528] Logging internal logs to /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_151218-jf6kajs1/logs/debug-internal.log
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_init.py:init():567] calling init triggers
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_init.py:init():574] wandb.init called with sweep_config: {}
+config: {}
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_init.py:init():617] starting backend
+2024-03-30 15:12:18,603 INFO    MainThread:49880 [wandb_init.py:init():621] setting up manager
+2024-03-30 15:12:18,604 INFO    MainThread:49880 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-03-30 15:12:18,606 INFO    MainThread:49880 [wandb_init.py:init():629] backend started and connected
+2024-03-30 15:12:18,608 INFO    MainThread:49880 [wandb_init.py:init():721] updated telemetry
+2024-03-30 15:12:18,614 INFO    MainThread:49880 [wandb_init.py:init():754] communicating run to backend with 90.0 second timeout
+2024-03-30 15:12:19,132 INFO    MainThread:49880 [wandb_run.py:_on_init():2344] communicating current version
+2024-03-30 15:12:19,285 INFO    MainThread:49880 [wandb_run.py:_on_init():2353] got version response 
+2024-03-30 15:12:19,285 INFO    MainThread:49880 [wandb_init.py:init():805] starting run threads in backend
+2024-03-30 15:12:19,489 INFO    MainThread:49880 [wandb_run.py:_console_start():2323] atexit reg
+2024-03-30 15:12:19,489 INFO    MainThread:49880 [wandb_run.py:_redirect():2178] redirect: wrap_raw
+2024-03-30 15:12:19,490 INFO    MainThread:49880 [wandb_run.py:_redirect():2243] Wrapping output streams.
+2024-03-30 15:12:19,490 INFO    MainThread:49880 [wandb_run.py:_redirect():2268] Redirects installed.
+2024-03-30 15:12:19,490 INFO    MainThread:49880 [wandb_init.py:init():848] run started, returning control to user process
+2024-03-30 15:12:19,839 INFO    MainThread:49880 [wandb_watch.py:watch():51] Watching
+2024-03-30 15:13:06,044 WARNING MsgRouterThr:49880 [router.py:message_loop():77] message_loop has been closed

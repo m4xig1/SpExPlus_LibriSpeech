@@ -1,0 +1,28 @@
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Current SDK version is 0.16.5
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Configure stats pid to 168275
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Loading settings from /home/m4xig1/.config/wandb/settings
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Loading settings from /home/m4xig1/speaker_extraction_SpEx/wandb/settings
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'train.py', 'program_abspath': '/home/m4xig1/speaker_extraction_SpEx/train.py', 'program': '/home/m4xig1/speaker_extraction_SpEx/train.py'}
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_init.py:_log_setup():527] Logging user logs to /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240328_235453-8p62nreo/logs/debug.log
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_init.py:_log_setup():528] Logging internal logs to /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240328_235453-8p62nreo/logs/debug-internal.log
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_init.py:init():567] calling init triggers
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_init.py:init():574] wandb.init called with sweep_config: {}
+config: {}
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_init.py:init():617] starting backend
+2024-03-28 23:54:53,129 INFO    MainThread:168275 [wandb_init.py:init():621] setting up manager
+2024-03-28 23:54:53,130 INFO    MainThread:168275 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-03-28 23:54:53,131 INFO    MainThread:168275 [wandb_init.py:init():629] backend started and connected
+2024-03-28 23:54:53,132 INFO    MainThread:168275 [wandb_init.py:init():721] updated telemetry
+2024-03-28 23:54:53,136 INFO    MainThread:168275 [wandb_init.py:init():754] communicating run to backend with 90.0 second timeout
+2024-03-28 23:54:53,711 INFO    MainThread:168275 [wandb_run.py:_on_init():2344] communicating current version
+2024-03-28 23:54:53,871 INFO    MainThread:168275 [wandb_run.py:_on_init():2353] got version response 
+2024-03-28 23:54:53,871 INFO    MainThread:168275 [wandb_init.py:init():805] starting run threads in backend
+2024-03-28 23:54:55,211 INFO    MainThread:168275 [wandb_run.py:_console_start():2323] atexit reg
+2024-03-28 23:54:55,211 INFO    MainThread:168275 [wandb_run.py:_redirect():2178] redirect: wrap_raw
+2024-03-28 23:54:55,211 INFO    MainThread:168275 [wandb_run.py:_redirect():2243] Wrapping output streams.
+2024-03-28 23:54:55,211 INFO    MainThread:168275 [wandb_run.py:_redirect():2268] Redirects installed.
+2024-03-28 23:54:55,211 INFO    MainThread:168275 [wandb_init.py:init():848] run started, returning control to user process
+2024-03-28 23:54:55,669 INFO    MainThread:168275 [wandb_watch.py:watch():51] Watching

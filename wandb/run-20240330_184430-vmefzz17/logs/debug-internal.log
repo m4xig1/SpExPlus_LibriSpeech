@@ -1,0 +1,50 @@
+2024-03-30 18:44:30,385 INFO    StreamThr :86474 [internal.py:wandb_internal():86] W&B internal server running at pid: 86474, started at: 2024-03-30 18:44:30.385202
+2024-03-30 18:44:30,387 DEBUG   HandlerThread:86474 [handler.py:handle_request():146] handle_request: status
+2024-03-30 18:44:30,389 INFO    WriterThread:86474 [datastore.py:open_for_write():87] open: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_184430-vmefzz17/run-vmefzz17.wandb
+2024-03-30 18:44:30,389 DEBUG   SenderThread:86474 [sender.py:send():379] send: header
+2024-03-30 18:44:30,390 DEBUG   SenderThread:86474 [sender.py:send():379] send: run
+2024-03-30 18:44:30,909 INFO    SenderThread:86474 [dir_watcher.py:__init__():211] watching files in: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_184430-vmefzz17/files
+2024-03-30 18:44:30,909 INFO    SenderThread:86474 [sender.py:_start_run_threads():1124] run started: vmefzz17 with start time 1711813470.385289
+2024-03-30 18:44:30,912 DEBUG   HandlerThread:86474 [handler.py:handle_request():146] handle_request: check_version
+2024-03-30 18:44:30,912 DEBUG   SenderThread:86474 [sender.py:send_request():406] send_request: check_version
+2024-03-30 18:44:31,065 DEBUG   HandlerThread:86474 [handler.py:handle_request():146] handle_request: run_start
+2024-03-30 18:44:31,096 DEBUG   HandlerThread:86474 [system_info.py:__init__():26] System info init
+2024-03-30 18:44:31,096 DEBUG   HandlerThread:86474 [system_info.py:__init__():41] System info init done
+2024-03-30 18:44:31,096 INFO    HandlerThread:86474 [system_monitor.py:start():194] Starting system monitor
+2024-03-30 18:44:31,096 INFO    SystemMonitor:86474 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-30 18:44:31,096 INFO    HandlerThread:86474 [system_monitor.py:probe():214] Collecting system info
+2024-03-30 18:44:31,097 INFO    SystemMonitor:86474 [interfaces.py:start():190] Started cpu monitoring
+2024-03-30 18:44:31,098 INFO    SystemMonitor:86474 [interfaces.py:start():190] Started disk monitoring
+2024-03-30 18:44:31,099 INFO    SystemMonitor:86474 [interfaces.py:start():190] Started gpu monitoring
+2024-03-30 18:44:31,099 INFO    SystemMonitor:86474 [interfaces.py:start():190] Started memory monitoring
+2024-03-30 18:44:31,101 INFO    SystemMonitor:86474 [interfaces.py:start():190] Started network monitoring
+2024-03-30 18:44:31,109 DEBUG   HandlerThread:86474 [system_info.py:probe():150] Probing system
+2024-03-30 18:44:31,135 DEBUG   HandlerThread:86474 [system_info.py:_probe_git():135] Probing git
+2024-03-30 18:44:31,138 DEBUG   HandlerThread:86474 [system_info.py:_probe_git():143] Probing git done
+2024-03-30 18:44:31,138 DEBUG   HandlerThread:86474 [system_info.py:probe():198] Probing system done
+2024-03-30 18:44:31,138 DEBUG   HandlerThread:86474 [system_monitor.py:probe():223] {'os': 'Linux-5.15.146.1-microsoft-standard-WSL2-x86_64-with-glibc2.35', 'python': '3.10.12', 'heartbeatAt': '2024-03-30T15:44:31.109088', 'startedAt': '2024-03-30T15:44:30.379083', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/m4xig1/speaker_extraction_SpEx/test.py', 'codePathLocal': 'test.py', 'codePath': 'test.py', 'git': {'remote': 'https://github.com/m4xig1/SpExPlus_LibriSpeech.git', 'commit': '4c4deabb229a250d1ac9ee29584cb79995b3fabf'}, 'email': 'maignatov_2@edu.hse.ru', 'root': '/home/m4xig1/speaker_extraction_SpEx', 'host': 'LAPTOP-D3BKPTGE', 'username': 'm4xig1', 'executable': '/bin/python3', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 2303.998, 'min': 0.0, 'max': 0.0}, 'cpu_freq_per_core': [{'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}, {'current': 2303.998, 'min': 0.0, 'max': 0.0}], 'disk': {'/': {'total': 1006.853931427002, 'used': 33.79963684082031}}, 'gpu': 'NVIDIA GeForce RTX 3050 Ti Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 Ti Laptop GPU', 'memory_total': 4294967296}], 'memory': {'total': 7.601963043212891}}
+2024-03-30 18:44:31,139 INFO    HandlerThread:86474 [system_monitor.py:probe():224] Finished collecting system info
+2024-03-30 18:44:31,139 INFO    HandlerThread:86474 [system_monitor.py:probe():227] Publishing system info
+2024-03-30 18:44:31,139 INFO    HandlerThread:86474 [system_monitor.py:probe():229] Finished publishing system info
+2024-03-30 18:44:31,142 DEBUG   SenderThread:86474 [sender.py:send():379] send: files
+2024-03-30 18:44:31,142 INFO    SenderThread:86474 [sender.py:_save_file():1390] saving file wandb-metadata.json with policy now
+2024-03-30 18:44:31,239 DEBUG   HandlerThread:86474 [handler.py:handle_request():146] handle_request: python_packages
+2024-03-30 18:44:31,239 DEBUG   HandlerThread:86474 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-30 18:44:31,240 DEBUG   SenderThread:86474 [sender.py:send_request():406] send_request: python_packages
+2024-03-30 18:44:31,240 DEBUG   HandlerThread:86474 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-30 18:44:31,240 DEBUG   SenderThread:86474 [sender.py:send_request():406] send_request: stop_status
+2024-03-30 18:44:31,600 DEBUG   SenderThread:86474 [sender.py:send():379] send: telemetry
+2024-03-30 18:44:31,602 DEBUG   SenderThread:86474 [sender.py:send():379] send: telemetry
+2024-03-30 18:44:31,816 INFO    wandb-upload_0:86474 [upload_job.py:push():131] Uploaded file /tmp/tmpyk3mz13zwandb/ajflg9oj-wandb-metadata.json
+2024-03-30 18:44:31,910 INFO    Thread-12 :86474 [dir_watcher.py:_on_file_created():271] file/dir created: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_184430-vmefzz17/files/wandb-metadata.json
+2024-03-30 18:44:31,910 INFO    Thread-12 :86474 [dir_watcher.py:_on_file_created():271] file/dir created: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_184430-vmefzz17/files/requirements.txt
+2024-03-30 18:44:31,910 INFO    Thread-12 :86474 [dir_watcher.py:_on_file_created():271] file/dir created: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_184430-vmefzz17/files/output.log
+2024-03-30 18:44:33,911 INFO    Thread-12 :86474 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_184430-vmefzz17/files/output.log
+2024-03-30 18:44:35,174 INFO    Thread-12 :86474 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/m4xig1/speaker_extraction_SpEx/wandb/run-20240330_184430-vmefzz17/files/output.log
+2024-03-30 18:44:36,166 DEBUG   HandlerThread:86474 [handler.py:handle_request():146] handle_request: status_report
+2024-03-30 18:44:37,167 INFO    MainThread:86474 [internal.py:handle_exit():76] Internal process exited
+2024-03-30 18:44:37,173 INFO    cpu       :86474 [interfaces.py:monitor():140] Process cpu has exited.
+2024-03-30 18:44:37,173 DEBUG   SystemMonitor:86474 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-30 18:44:37,174 DEBUG   SystemMonitor:86474 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-30 18:44:37,174 DEBUG   SystemMonitor:86474 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-30 18:44:37,175 DEBUG   SenderThread:86474 [sender.py:send():379] send: stats

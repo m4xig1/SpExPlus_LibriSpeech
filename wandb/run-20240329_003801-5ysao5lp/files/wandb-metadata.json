@@ -1,0 +1,128 @@
+{
+    "os": "Linux-5.15.146.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.10.12",
+    "heartbeatAt": "2024-03-28T21:38:02.242241",
+    "startedAt": "2024-03-28T21:38:01.530854",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/m4xig1/speaker_extraction_SpEx/test.py",
+    "codePathLocal": "test.py",
+    "codePath": "test.py",
+    "git": {
+        "remote": "https://github.com/m4xig1/SpExPlus_LibriSpeech.git",
+        "commit": "9194806f7bc1db1b778f293f251142890a718333"
+    },
+    "email": "maignatov_2@edu.hse.ru",
+    "root": "/home/m4xig1/speaker_extraction_SpEx",
+    "host": "LAPTOP-D3BKPTGE",
+    "username": "m4xig1",
+    "executable": "/bin/python3",
+    "cpu_count": 8,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 2303.999,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2303.999,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 1006.853931427002,
+            "used": 39.47773361206055
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 7.601963043212891
+    }
+}
