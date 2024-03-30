@@ -175,7 +175,7 @@ class BaseTrainer:
                 batch = self._load_to_device(batch, self.device)
                 self.optimizer.zero_grad()
                 batch = self.compute_loss(batch)
-
+                
                 loss = batch["loss"]
 
                 self.logger.info("Loss: {loss}")

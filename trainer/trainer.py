@@ -22,6 +22,15 @@ class Trainer(BaseTrainer):
         self.loss = SpexPlusLoss()
         # self.loss = self._load_to_device(self.loss, self.device)
 
+    @staticmethod
+    def __mask_pred(pred, shape):
+        """
+        Assume shape > pred.shape, we pad pred with zeroes to shape.
+        """
+        new_pred = torch.zeros(shape[0], shape[1])
+        new_pred[:, : pred.shape[1]] = pred
+        return new_pred
+
     def compute_loss(self, batch: dict, is_train=True):
         # print(batch["mix"].shape,  batch["reference"].shape, batch["ref_len"].shape)
 
@@ -34,12 +43,15 @@ class Trainer(BaseTrainer):
         metrics = {}
         pred = self.model(batch["mix"], batch["reference"], batch["ref_len"])
 
+        if pred["short"].shape != batch["mix"].shape:
+            # maby i should pad for all of pred
+            pred["short"] = self.__mask_pred(pred["short"], batch["mix"].shape)
+
         if not is_train:
             # calc according to short
-            metr = self.compute_metrics(pred["short"], batch["target"]) 
+            metr = self.compute_metrics(pred["short"], batch["target"])
             loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
             return {**metr, **loss}, pred, batch["mix"]
-        
 
         return self.loss(pred, batch["target"], batch["speaker_id"], is_train)
 
