@@ -190,10 +190,8 @@ class BaseTrainer:
         logs = {}
         for step, batch in enumerate(tqdm(dataloader, desc="train")):
             try:
-                print_cuda_info()
                 batch = self._load_to_device(batch, self.device)
-                print_cuda_info()
-                
+
                 self.optimizer.zero_grad()
 
                 batch = self.compute_loss(batch)
@@ -206,6 +204,7 @@ class BaseTrainer:
 
             except RuntimeError as e:  # oom?
                 self.logger.info(f"{e}, step: {step}")
+                print_cuda_info()
                 for param in self.model.parameters:
                     if param.grad is not None:
                         del param.grad
