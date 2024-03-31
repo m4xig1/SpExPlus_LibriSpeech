@@ -38,4 +38,7 @@ def main():
 
 if __name__ == "__main__":
     # parse args or use config?
+    print("import wandb key")
+    key = input()
+    wandb.login("never", key)
     main()
