@@ -19,7 +19,7 @@ class SpEx_Plus(nn.Module):
         O=256,
         P=512,
         Q=3,
-        num_spks=100,
+        num_spks=251,
         spk_embed_dim=256,
         causal=False,
     ):
@@ -173,7 +173,7 @@ class SpEx_Plus(nn.Module):
         S1 = w1 * m1
         S2 = w2 * m2
         S3 = w3 * m3
-
+        
         return {
             "short": self.decoder_1d_short(S1),
             "mid": self.decoder_1d_middle(S2)[:, :xlen1],

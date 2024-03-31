@@ -16,8 +16,8 @@ config_trainer = {
         "verbose" : True
     },
       "nCheckpoints": 10,
-    #   "checkpoint_path": "/home/m4xig1/speaker_extraction_SpEx/checkpoints/",
+      # "checkpoint_path": "/home/m4xig1/speaker_extraction_SpEx/checkpoints/",
     "checkpoint_path" : "/kaggle/working/SpExPlus_LibriSpeech/model/",
-      "device" : "cpu", # ?
+      "device" : "cuda", # ?
       "no_improvment" : 6 # steps before stopping the training
     }

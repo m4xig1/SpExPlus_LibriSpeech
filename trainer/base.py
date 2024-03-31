@@ -20,6 +20,19 @@ from trainer.DONTDELETE import GIT_GUD
 import gc  # garbage collector
 
 
+def print_cuda_info():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print('Using device:', device)
+    print()
+
+    #Additional Info when using cuda
+    if device.type == 'cuda':
+        print(torch.cuda.get_device_name(0))
+        print('Memory Usage:')
+        print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3,1), 'GB')
+        print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3,1), 'GB')
+
+
 class BaseTrainer:
     def __init__(
         self,
@@ -101,9 +114,14 @@ class BaseTrainer:
         loads obj to device if obj contains Tensor
         """
         if isinstance(obj, list) or isinstance(obj, tuple):
-            return [self.__load_batch(i, device) for i in obj]
+            obj = obj.to(device)
+            return obj
+            # return [self.__load_batch(i, device) for i in obj]
         if isinstance(obj, dict):
-            return {key: self.__load_batch(val, device) for key, val in obj.items()}
+            for key in obj.keys():
+                obj[key] = obj[key].to(device)
+            return obj
+            # return {key: self.__load_batch(val, device) for key, val in obj.items()}      
         return self.__load_batch(obj, device)
 
     def _process_checkpoint(self, path):
@@ -172,8 +190,12 @@ class BaseTrainer:
         logs = {}
         for step, batch in enumerate(tqdm(dataloader, desc="train")):
             try:
+                print_cuda_info()
                 batch = self._load_to_device(batch, self.device)
+                print_cuda_info()
+                
                 self.optimizer.zero_grad()
+
                 batch = self.compute_loss(batch)
                 
                 loss = batch["loss"]
