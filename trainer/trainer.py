@@ -29,7 +29,7 @@ class Trainer(BaseTrainer):
         """
         new_pred = torch.zeros(shape[0], shape[1])
         new_pred[:, : pred.shape[1]] = pred
-        return new_pred
+        return new_pred.to(pred.device)
 
     def compute_loss(self, batch: dict, is_train=True):
         # print(batch["mix"].shape,  batch["reference"].shape, batch["ref_len"].shape)

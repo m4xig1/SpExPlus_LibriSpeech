@@ -50,7 +50,7 @@ class BaseTrainer:
         self.logger.setLevel(config["logger"]["level"])
         self.reporter = get_visualizer()  # Wandb monitor
 
-        self.log_step = 5  # how many batches between logging
+        self.log_step = 25  # how many batches between logging
 
         if not torch.cuda.is_available():
             raise RuntimeError("no CUDA is available")
@@ -114,14 +114,11 @@ class BaseTrainer:
         loads obj to device if obj contains Tensor
         """
         if isinstance(obj, list) or isinstance(obj, tuple):
-            obj = obj.to(device)
-            return obj
-            # return [self.__load_batch(i, device) for i in obj]
+            return [self.__load_batch(i, device) for i in obj]
         if isinstance(obj, dict):
             for key in obj.keys():
                 obj[key] = obj[key].to(device)
-            return obj
-            # return {key: self.__load_batch(val, device) for key, val in obj.items()}      
+            return {key: self.__load_batch(val, device) for key, val in obj.items()}      
         return self.__load_batch(obj, device)
 
     def _process_checkpoint(self, path):
@@ -198,14 +195,13 @@ class BaseTrainer:
                 
                 loss = batch["loss"]
 
-                self.logger.info("Loss: {loss}")
                 loss.backward()
                 self.optimizer.step()
 
             except RuntimeError as e:  # oom?
-                self.logger.info(f"{e}, step: {step}")
-                print_cuda_info()
-                for param in self.model.parameters:
+                self.logger.info(f"Out of Memory, step: {step}")
+                # print_cuda_info()
+                for param in self.model.parameters():
                     if param.grad is not None:
                         del param.grad
                 torch.cuda.empty_cache()
@@ -214,19 +210,20 @@ class BaseTrainer:
 
             # if self.lrScheduler is not None:
             #     self.lrScheduler. # do smth?
-            logs = {
-                "loss": batch["loss"].detach().cpu().numpy(),  # copy?
-                "step": (step + 1 + self.cur_epoch * batch_size),
-                "grad_norm": self.calc_grad_norm(),
-                "progress": (step + 1 + self.cur_epoch * batch_size) / batch_size,
-            }
-            self.reporter.new_step(logs["step"])
-            self.logger.debug(
-                f"step: {logs['step']}, Loss: {logs['loss']}, Grad norm: {logs['grad_norm']}"
-            )
-            for name, x in logs.items():
-                self.reporter.log_scalar(name, x)
-            # self._log_epoch(logs)
+            if step % self.log_step == 0:
+                logs = {
+                    "loss": batch["loss"].detach().cpu().numpy(),  # copy?
+                    "step": (step + 1 + self.cur_epoch * batch_size),
+                    "grad_norm": self.calc_grad_norm(),
+                    "progress": (step + 1 + self.cur_epoch * batch_size) / batch_size,
+                }
+                self.reporter.new_step(logs["step"])
+                self.logger.info(
+                    f"step: {logs['step']}, Loss: {logs['loss']}, Grad norm: {logs['grad_norm']}"
+                )
+                for name, x in logs.items():
+                    self.reporter.log_scalar(name, x)
+                # self._log_epoch(logs)
 
         self.logger.info("force report")
 

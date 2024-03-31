@@ -41,6 +41,7 @@ class SpexPlusLoss(nn.Module):
         self.mid_scale = mid_scale
         self.long_scale = long_scale
         self.metric = SiSdr() # this gives us avg result on batch
+        self.ce = torch.nn.CrossEntropyLoss()
 
     @staticmethod
     def __vec_l2norm(x):
@@ -70,18 +71,14 @@ class SpexPlusLoss(nn.Module):
         sisdr_short = sisdr(x_short, target)
         sisdr_mid = sisdr(x_mid, target)
         sisdr_long = sisdr(x_long, target)
-        # sisdr_short = self.metric(x_short, target)
-        # sisdr_mid = self.metric(x_mid, target)
-        # sisdr_long = self.metric(x_long, target)
         loss = (
-            -phi * sisdr_short
-            - self.mid_scale * sisdr_mid
-            - self.long_scale * sisdr_long
+            -phi * sisdr_short.sum()
+            - self.mid_scale * sisdr_mid.sum()
+            - self.long_scale * sisdr_long.sum()
         ) / x_short.shape[0]
 
         # norm?
-        ce_loss = torch.nn.functional.cross_entropy(pred["logits"], speaker_id)
-        # print(ce_loss)
-        if is_train:
-            loss += self.cross_ent_scale * ce_loss
+        ce_loss = self.ce(pred["logits"], speaker_id)
+        # if is_train:
+        loss += self.cross_ent_scale * ce_loss
         return {"loss": loss, "ce": ce_loss}
