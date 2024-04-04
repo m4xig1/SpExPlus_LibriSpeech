@@ -95,7 +95,9 @@ class BaseTrainer:
                 min_lr=config["lrScheduler"]["min_lr"],
                 verbose=config["lrScheduler"]["verbose"],
             )
-            # self.lrScheduler = ReduceLROnPlateau(**config["lrScheduler"])
+        self.epoch_len = config["epoch_len"]
+        
+        # self.lrScheduler = ReduceLROnPlateau(**config["lrScheduler"])
         self.checkpoint_queue = deque(maxlen=self.config["nCheckpoints"])
 
         # steps before stopping the training
@@ -233,7 +235,7 @@ class BaseTrainer:
         batch_size = len(dataloader)
         logs = {"loss": 0.0, "ce": 0.0, "SI-SDR": 0.0, "PesQ": 0.0}
         with torch.no_grad():
-            for step, batch in enumerate(tqdm(dataloader, desc="eval")):
+            for step, batch in enumerate(tqdm(dataloader, desc="eval", total=self.epoch_len)):
                 batch = self._load_to_device(batch, self.device)
                 metr, result, mixed = self.compute_loss(batch, is_train=False)
 

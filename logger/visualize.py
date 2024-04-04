@@ -35,8 +35,9 @@ class WandbVisualizer:
         self.wandb.log({f"{name}_{self.step}": scalar}, step=self.step)
 
     def log_audio(self, name, audio, sr=16000):
+        # print(f"audio: {audio.squeeze(0).shape}")
         self.wandb.log(
-            {f"{name}_{self.step}": self.wandb.Audio(audio.squeeze(0).detach().cpu().numpy(), sr, name)}, step=self.step
+            {f"{name}_{self.step}": self.wandb.Audio(audio.squeeze(0).detach().cpu().numpy().T, sr, name)}, step=self.step
         )
 
     def log_text(self, name, text=None):

@@ -5,16 +5,16 @@ config_dataloader = {
     # "path_to_train": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/train/",
     # "path_to_val": "/home/m4xig1/speaker_extraction_SpEx/libri_dataset/mix/val/",
     "train": {
-        "batch_size": 4,
-        "num_workers": 4,
+        "batch_size": 3,
+        "num_workers": 5,
         "create_index": True,
         # "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
         "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
         "logging_name": "train dataloader",
     },  # batch size = 16?
     "test": {
-        "batch_size": 4,
-        "num_workers": 4,
+        "batch_size": 3,
+        "num_workers": 5,
         "create_index": True,
         # "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
         "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",

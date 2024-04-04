@@ -40,12 +40,12 @@ class LibriDataset(BaseDataset):
 
         ids = np.array([self.__get_id(path) for path in mix])  # already sorted
 
-        for a, b, c in zip(mix, ref, target): # test
-            if (a.split('-')[0] != b.split('-')[0] or a.split('-')[0] != c.split('-')[0]):
-                print(a,b,c)
+        for a, b, c in zip(mix, ref, target):  # test
+            if a.split("-")[0] != b.split("-")[0] or a.split("-")[0] != c.split("-")[0]:
+                print(a, b, c)
                 exit(1)
 
-        if mix.shape != ref.shape or ref.shape != target.shape: # test
+        if mix.shape != ref.shape or ref.shape != target.shape:  # test
             self.logger.warning(f"mix.shape != ref.shape || ref.shape != target.shape")
             print(mix.shape, ref.shape, target.shape)
             return None
@@ -95,7 +95,7 @@ def collate_fn(batch: List[dict]):
     Pad data in batch here.
     """
     pad_batch = {}
-    # audio is mono: (1, N) -> (N,) -> (batch_size, N) 
+    # audio is mono: (1, N) -> (N,) -> (batch_size, N)
     pad_batch["reference"] = torch.nn.utils.rnn.pad_sequence(
         [elem["reference"].squeeze(0) for elem in batch], batch_first=True
     )
@@ -115,9 +115,19 @@ def collate_fn(batch: List[dict]):
     return pad_batch
 
 
+from itertools import repeat
+
+def inf_loop(data_loader):
+    """wrapper function for endless data loader."""
+    for loader in repeat(data_loader):
+        yield from loader
+
+
 def get_train_dataloader(config):
     dataset = LibriDataset(
-        config["train"], config["path_to_train"], create_index=config["train"]["create_index"]
+        config["train"],
+        config["path_to_train"],
+        create_index=config["train"]["create_index"],
     )
     return DataLoader(
         dataset=dataset,
@@ -130,7 +140,9 @@ def get_train_dataloader(config):
 
 def get_test_dataloader(config):
     dataset = LibriDataset(
-        config["test"], config["path_to_val"], create_index=config["test"]["create_index"]
+        config["test"],
+        config["path_to_val"],
+        create_index=config["test"]["create_index"],
     )
     return DataLoader(
         dataset=dataset,

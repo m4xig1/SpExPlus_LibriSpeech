@@ -33,7 +33,7 @@ def main():
 
     trainer = Trainer(model, metrics)
 
-    trainer.run(train_loader, test_loader, 1)
+    trainer.run(train_loader, test_loader, 50)
 
 
 if __name__ == "__main__":
