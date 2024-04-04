@@ -16,39 +16,40 @@ class WandbVisualizer:
         self.wandb = wandb
         self.step = 0  # step for log
         self.time = datetime.now()
+        self.mode = ""
         # print(f"WanDB logger, log: name_step, project: {config['project_name']}")
 
     def watch(self, model):
         self.run.watch(model)
     
-    def new_step(self, step_number):
+    def new_step(self, step_number, mode="train"):
         epoch = datetime.now() - self.time
         if (self.step != 0):
-            self.log_scalar("steps-per-sec", 1 / (epoch.total_seconds() + 1e-9))  # ?
+            self.log_scalar("steps-per-sec", 1 / (epoch.total_seconds() + 1e-9)) 
         self.step = step_number
+        self.mode = mode
         self.time = datetime.now()
 
     def _log_name(self, name):
-        return f"{name}_{self.step}"
+        return f"{name}_{self.mode}"
 
     def log_scalar(self, name, scalar):
-        self.wandb.log({f"{name}_{self.step}": scalar}, step=self.step)
+        self.wandb.log({f"{name}_{self.mode}": scalar}, step=self.step)
 
     def log_audio(self, name, audio, sr=16000):
-        # print(f"audio: {audio.squeeze(0).shape}")
         self.wandb.log(
-            {f"{name}_{self.step}": self.wandb.Audio(audio.squeeze(0).detach().cpu().numpy().T, sr, name)}, step=self.step
+            {f"{name}_{self.mode}": self.wandb.Audio(audio.squeeze(0).detach().cpu().numpy().T, sr, name)}, step=self.step
         )
 
     def log_text(self, name, text=None):
-        self.wandb.log({f"{name}_{self.step}": self.wandb.Html(name)}, step=self.step)
+        self.wandb.log({f"{name}_{self.mode}": self.wandb.Html(name)}, step=self.step)
 
     def log_hist(self, name, hist=None):
         raise NotImplementedError()
 
     def log_table(self, name, table=None):
         self.wandb.log(
-            {f"{name}_{self.step}": self.wandb.Table(dataframe=table)}, step=self.step
+            {f"{name}_{self.mode}": self.wandb.Table(dataframe=table)}, step=self.step
         )
 
 

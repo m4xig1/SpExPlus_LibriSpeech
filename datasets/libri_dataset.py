@@ -115,14 +115,6 @@ def collate_fn(batch: List[dict]):
     return pad_batch
 
 
-from itertools import repeat
-
-def inf_loop(data_loader):
-    """wrapper function for endless data loader."""
-    for loader in repeat(data_loader):
-        yield from loader
-
-
 def get_train_dataloader(config):
     dataset = LibriDataset(
         config["train"],

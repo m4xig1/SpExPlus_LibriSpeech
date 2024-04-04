@@ -21,16 +21,16 @@ import gc  # garbage collector
 
 
 def print_cuda_info():
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print('Using device:', device)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print("Using device:", device)
     print()
 
-    #Additional Info when using cuda
-    if device.type == 'cuda':
+    # Additional Info when using cuda
+    if device.type == "cuda":
         print(torch.cuda.get_device_name(0))
-        print('Memory Usage:')
-        print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3,1), 'GB')
-        print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3,1), 'GB')
+        print("Memory Usage:")
+        print("Allocated:", round(torch.cuda.memory_allocated(0) / 1024**3, 1), "GB")
+        print("Cached:   ", round(torch.cuda.memory_reserved(0) / 1024**3, 1), "GB")
 
 
 class BaseTrainer:
@@ -50,7 +50,7 @@ class BaseTrainer:
         self.logger.setLevel(config["logger"]["level"])
         self.reporter = get_visualizer()  # Wandb monitor
 
-        self.log_step = 25  # how many batches between logging
+        self.log_step = 50  # how many batches between logging
 
         if not torch.cuda.is_available():
             raise RuntimeError("no CUDA is available")
@@ -96,7 +96,7 @@ class BaseTrainer:
                 verbose=config["lrScheduler"]["verbose"],
             )
         self.epoch_len = config["epoch_len"]
-        
+
         # self.lrScheduler = ReduceLROnPlateau(**config["lrScheduler"])
         self.checkpoint_queue = deque(maxlen=self.config["nCheckpoints"])
 
@@ -120,7 +120,7 @@ class BaseTrainer:
         if isinstance(obj, dict):
             for key in obj.keys():
                 obj[key] = obj[key].to(device)
-            return {key: self.__load_batch(val, device) for key, val in obj.items()}      
+            return {key: self.__load_batch(val, device) for key, val in obj.items()}
         return self.__load_batch(obj, device)
 
     def _process_checkpoint(self, path):
@@ -185,18 +185,13 @@ class BaseTrainer:
     def train(self, dataloader):
         self.logger.info("Train mode")
         self.model.train()
-        batch_size = len(dataloader)
         logs = {}
         for step, batch in enumerate(tqdm(dataloader, desc="train")):
             try:
                 batch = self._load_to_device(batch, self.device)
-
                 self.optimizer.zero_grad()
-
                 batch = self.compute_loss(batch)
-                
                 loss = batch["loss"]
-
                 loss.backward()
                 self.optimizer.step()
 
@@ -213,19 +208,16 @@ class BaseTrainer:
             # if self.lrScheduler is not None:
             #     self.lrScheduler. # do smth?
             if step % self.log_step == 0:
+                self.reporter.new_step(step + self.cur_epoch * self.epoch_len)
                 logs = {
                     "loss": batch["loss"].detach().cpu().numpy(),  # copy?
-                    "step": (step + 1 + self.cur_epoch * batch_size),
                     "grad_norm": self.calc_grad_norm(),
-                    "progress": (step + 1 + self.cur_epoch * batch_size) / batch_size,
                 }
-                self.reporter.new_step(logs["step"])
                 self.logger.info(
-                    f"step: {logs['step']}, Loss: {logs['loss']}, Grad norm: {logs['grad_norm']}"
+                    f"step: {step + self.cur_epoch * self.epoch_len}, Loss: {logs['loss']}, Grad norm: {logs['grad_norm']}"
                 )
                 for name, x in logs.items():
                     self.reporter.log_scalar(name, x)
-                # self._log_epoch(logs)
 
         self.logger.info("force report")
 
@@ -235,7 +227,9 @@ class BaseTrainer:
         batch_size = len(dataloader)
         logs = {"loss": 0.0, "ce": 0.0, "SI-SDR": 0.0, "PesQ": 0.0}
         with torch.no_grad():
-            for step, batch in enumerate(tqdm(dataloader, desc="eval", total=self.epoch_len)):
+            for step, batch in enumerate(
+                tqdm(dataloader, desc="eval", total=len(dataloader))
+            ):
                 batch = self._load_to_device(batch, self.device)
                 metr, result, mixed = self.compute_loss(batch, is_train=False)
 
@@ -243,15 +237,15 @@ class BaseTrainer:
                     logs[key] += metr[key]
 
                 if step % self.log_step == 0:
-                    self.reporter.new_step(step)
+                    self.reporter.new_step(step + self.cur_epoch, "eval")
                     self.logger.info(
-                        f"Eval step: {step}, Loss: {metr['loss']}, CE: {metr['ce']}, SI-SDR: {metr['SI-SDR']}, PesQ: {metr['PesQ']}"  # metrics on batch
+                        f"Eval step: {step}, Loss: {metr['loss'] / (step + 1)}, CE: {metr['ce'] / (step + 1)}, SI-SDR: {metr['SI-SDR'] / (step + 1)}, PesQ: {metr['PesQ'] / (step + 1)}"  # metrics on batch
                     )
                     for key in logs:
                         self.reporter.log_scalar(key, metr[key])
 
-                    # self.reporter.log_audio("mix", mixed)
-                    # self.reporter.log_audio("predicted", result)
+                    self.reporter.log_audio("mix", mixed[0])
+                    self.reporter.log_audio("predicted", result[0])
         # force logs
         logs["loss"] /= batch_size
         return logs
