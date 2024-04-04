@@ -244,8 +244,8 @@ class BaseTrainer:
                     for key in logs:
                         self.reporter.log_scalar(key, metr[key])
 
-                    self.reporter.log_audio("mix", mixed[0])
-                    self.reporter.log_audio("predicted", result[0])
+                    # self.reporter.log_audio("mix", mixed[0])
+                    # self.reporter.log_audio("predicted", result[0])
         # force logs
         logs["loss"] /= batch_size
         return logs
