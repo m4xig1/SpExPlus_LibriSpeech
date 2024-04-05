@@ -10,7 +10,7 @@ config_trainer = {
         "min_lr": 0,
         "verbose": True,
     },
-    "epoch_len": 1000,
+    "epoch_len": 1500,
     "nCheckpoints": 10,
     # "checkpoint_path": "/home/m4xig1/speaker_extraction_SpEx/checkpoints/",
     "checkpoint_path": "/kaggle/working/SpExPlus_LibriSpeech/model/",

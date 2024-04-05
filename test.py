@@ -17,12 +17,17 @@ import numpy as np
 import os
 import logging
 import wandb
+from itertools import repeat
 
+def inf_loop(data_loader):
+    """wrapper function for endless data loader."""
+    for loader in repeat(data_loader):
+        yield from loader
 
 def main():
     # dataset_train = LibriDataset(config_dataloader, config_dataloader["path_to_train"])
     # dataset_val = LibriDataset(config_dataloader, config_dataloader["path_to_val"])
-    train_loader = get_train_dataloader(config_dataloader)
+    train_loader = inf_loop(get_train_dataloader(config_dataloader))
     test_loader = get_test_dataloader(config_dataloader)
     logger = logging.getLogger("train")
     metrics = {"SI-SDR": SiSdr(), "PesQ": Pesq()}

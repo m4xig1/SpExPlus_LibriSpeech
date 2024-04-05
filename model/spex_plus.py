@@ -115,6 +115,16 @@ class SpEx_Plus(nn.Module):
             TCNBlock(**block_kwargs, dilation=(2**b)) for b in range(1, num_blocks)
         ]
         return nn.Sequential(*blocks)
+    
+    @staticmethod
+    def __mask_pred(pred, shape):
+        """
+        Assume shape > pred.shape, we pad pred with zeroes to shape.
+        """
+        new_pred = th.zeros(shape[0], shape[1])
+        new_pred[:, : pred.shape[1]] = pred
+        return new_pred.to(pred.device)
+    
 
     def forward(self, x, aux, aux_len):
         if x.dim() >= 3:
@@ -173,9 +183,12 @@ class SpEx_Plus(nn.Module):
         S1 = w1 * m1
         S2 = w2 * m2
         S3 = w3 * m3
+
+        short = self.decoder_1d_short(S1)
+        short = F.pad(short, [0, xlen1 - short.shape[-1]])
         
         return {
-            "short": self.decoder_1d_short(S1),
+            "short": short,
             "mid": self.decoder_1d_middle(S2)[:, :xlen1],
             "long": self.decoder_1d_long(S3)[:, :xlen1],
             "logits": self.pred_linear(aux),
