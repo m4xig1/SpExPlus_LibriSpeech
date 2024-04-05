@@ -115,7 +115,7 @@ class SpEx_Plus(nn.Module):
             TCNBlock(**block_kwargs, dilation=(2**b)) for b in range(1, num_blocks)
         ]
         return nn.Sequential(*blocks)
-    
+
     @staticmethod
     def __mask_pred(pred, shape):
         """
@@ -124,12 +124,13 @@ class SpEx_Plus(nn.Module):
         new_pred = th.zeros(shape[0], shape[1])
         new_pred[:, : pred.shape[1]] = pred
         return new_pred.to(pred.device)
-    
 
     def forward(self, x, aux, aux_len):
         if x.dim() >= 3:
             raise RuntimeError(
-                "SpEx_Plus forward accept 1/2D tensor as input, but got {:d}".format(x.dim())
+                "SpEx_Plus forward accept 1/2D tensor as input, but got {:d}".format(
+                    x.dim()
+                )
             )
         # when inference, only one utt
         if x.dim() == 1:
@@ -185,8 +186,9 @@ class SpEx_Plus(nn.Module):
         S3 = w3 * m3
 
         short = self.decoder_1d_short(S1)
-        short = F.pad(short, [0, xlen1 - short.shape[-1]])
-        
+        if short.shape[-1] < xlen1:
+            short = F.pad(short, [0, xlen1 - short.shape[-1]], "constant", 0)
+            
         return {
             "short": short,
             "mid": self.decoder_1d_middle(S2)[:, :xlen1],
