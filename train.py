@@ -7,6 +7,7 @@ from datasets.libri_dataset import (
 )
 from datasets.config import config_dataloader
 from model.spex_plus import SpEx_Plus
+
 # from model.dummy_model import Dummy
 from logger.visualize import get_visualizer
 
@@ -20,21 +21,27 @@ import logging
 import wandb
 from itertools import repeat
 
+
 def inf_loop(data_loader):
     """wrapper function for endless data loader."""
     for loader in repeat(data_loader):
         yield from loader
 
+
+torch.manual_seed(42)
+np.random.seed(42)
+
+
 def main():
     train_loader, count_speakers = get_train_dataloader(config_dataloader)
-    train_loader = inf_loop(train_loader)
+    # train_loader = inf_loop(train_loader)
 
     test_loader = get_test_dataloader(config_dataloader)
     logger = logging.getLogger("train")
     metrics = {"SI-SDR": SiSdr(), "PesQ": Pesq()}
 
     # по хорошему, такие параметры, как количество спикеров для кросс-энтропии стоит вынести в отдельный конфиг, или парсить их здесь
-    
+
     model = SpEx_Plus(num_speakers=count_speakers)
     trainer = Trainer(model, metrics)
 

@@ -24,9 +24,12 @@ def inf_loop(data_loader):
     for loader in repeat(data_loader):
         yield from loader
 
+torch.manual_seed(42)
+np.random.seed(42)
+
 def main():
     train_loader, count_speakers = get_train_dataloader(config_dataloader)
-    train_loader = inf_loop(train_loader)
+    # train_loader = inf_loop(train_loader)
 
     test_loader = get_test_dataloader(config_dataloader)
 

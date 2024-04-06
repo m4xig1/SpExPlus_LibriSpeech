@@ -215,7 +215,7 @@ class BaseTrainer:
                     "grad_norm": self.calc_grad_norm(),
                 }
                 self.logger.info(
-                    f"step: {step + self.cur_epoch * self.epoch_len}, Loss: {logs['loss']}, Grad norm: {logs['grad_norm']}"
+                    f"step: {step + (self.cur_epoch - 1) * self.epoch_len}, Loss: {logs['loss']}, Grad norm: {logs['grad_norm']}"
                 )
                 for name, x in logs.items():
                     self.reporter.log_scalar(name, x)
