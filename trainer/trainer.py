@@ -22,7 +22,6 @@ class Trainer(BaseTrainer):
         self.loss = SpexPlusLoss()
         # self.loss = self._load_to_device(self.loss, self.device)
 
-
     def compute_loss(self, batch: dict, is_train=True):
         # print(batch["mix"].shape,  batch["reference"].shape, batch["ref_len"].shape)
 
@@ -35,17 +34,26 @@ class Trainer(BaseTrainer):
         metrics = {}
         pred = self.model(batch["mix"], batch["reference"], batch["ref_len"])
 
-        # if pred["short"].shape != batch["mix"].shape:
-            # maby i should pad for all of pred
-            # pred["short"] = self.__mask_pred(pred["short"], batch["mix"].shape)
+        if pred["short"].shape != batch["target"].shape:
+            self.logger.warn(
+                f"diff shapes in loss: {pred['short'].shape} vs {batch['target'].shape}"
+            )
+            
+            batch["target"] = batch["target"][:, : pred["short"].shape[-1]]
 
+        loss = self.loss(
+            pred,
+            batch["target"],
+            batch["speaker_id"],
+            is_train,
+        )
         if not is_train:
             # calc according to short
             metr = self.compute_metrics(pred["short"], batch["target"])
-            loss = self.loss(pred, batch["target"], batch["speaker_id"], is_train)
+            # тут 2 варианта, либо срез ничего плохого не сделает, т.к. все равно падинг из нулей, либо у меня модель выдает вещи неверного шейпа
             return {**metr, **loss}, pred, batch["mix"]
 
-        return self.loss(pred, batch["target"], batch["speaker_id"], is_train)
+        return loss
 
     # est_short, est_mid, est_long, pred_spk = torch.nn.parallel.data_parallel(self.model, (batch['mix'], batch['ref'], batch['len']), self.cpuid) # > 1 devices?
     # do smth to

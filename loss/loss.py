@@ -67,7 +67,6 @@ class SpexPlusLoss(nn.Module):
 
         phi = 1 - self.mid_scale - self.long_scale
         
-
         sisdr_short = sisdr(x_short, target)
         sisdr_mid = sisdr(x_mid, target)
         sisdr_long = sisdr(x_long, target)
@@ -79,6 +78,6 @@ class SpexPlusLoss(nn.Module):
 
         # norm?
         ce_loss = self.ce(pred["logits"], speaker_id)
-        # if is_train:
-        loss += self.cross_ent_scale * ce_loss
+        if is_train:
+            loss += self.cross_ent_scale * ce_loss
         return {"loss": loss, "ce": ce_loss}

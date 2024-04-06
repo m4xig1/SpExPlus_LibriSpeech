@@ -19,7 +19,7 @@ class SpEx_Plus(nn.Module):
         O=256,
         P=512,
         Q=3,
-        num_spks=251,
+        num_speakers=251,
         spk_embed_dim=256,
         causal=False,
     ):
@@ -94,7 +94,7 @@ class SpEx_Plus(nn.Module):
         self.decoder_1d_long = ConvTrans1D(
             N, 1, kernel_size=L3, stride=L1 // 2, bias=True
         )
-        self.num_spks = num_spks
+        self.num_spks = num_speakers
 
         self.spk_encoder = nn.Sequential(
             ChannelwiseLayerNorm(3 * N),
@@ -105,7 +105,7 @@ class SpEx_Plus(nn.Module):
             Conv1D(P, spk_embed_dim, 1),
         )
 
-        self.pred_linear = nn.Linear(spk_embed_dim, num_spks)
+        self.pred_linear = nn.Linear(spk_embed_dim, num_speakers)
 
     def _build_stacks(self, num_blocks, **block_kwargs):
         """

@@ -4,6 +4,7 @@ import wandb
 import numpy as np
 from .config import config_wdb
 
+
 class WandbVisualizer:
     def __init__(self, config):
 
@@ -21,11 +22,11 @@ class WandbVisualizer:
 
     def watch(self, model):
         self.run.watch(model)
-    
-    def new_step(self, step_number, mode="train"):
+
+    def set_step(self, step_number, mode="train"):
         epoch = datetime.now() - self.time
-        if (self.step != 0):
-            self.log_scalar("steps-per-sec", 1 / (epoch.total_seconds() + 1e-9)) 
+        if self.step != 0:
+            self.log_scalar("steps-per-sec", 1 / (epoch.total_seconds() + 1e-9))
         self.step = step_number
         self.mode = mode
         self.time = datetime.now()
@@ -38,7 +39,12 @@ class WandbVisualizer:
 
     def log_audio(self, name, audio, sr=16000):
         self.wandb.log(
-            {f"{name}_{self.mode}": self.wandb.Audio(audio.squeeze(0).detach().cpu().numpy().T, sr, name)}, step=self.step
+            {
+                f"{name}_{self.mode}": self.wandb.Audio(
+                    audio.squeeze(0).detach().cpu().numpy().T, sr, name
+                )
+            },
+            step=self.step,
         )
 
     def log_text(self, name, text=None):
@@ -52,9 +58,13 @@ class WandbVisualizer:
             {f"{name}_{self.mode}": self.wandb.Table(dataframe=table)}, step=self.step
         )
 
+    def log_image(self, name, image=None):
+        self.wandb.log({f"{name}_{self.mode}": self.wandb.Image(image)}, step=self.step)
+
 
 def get_visualizer():
     return WandbVisualizer(config_wdb)
+
 
 # from config import config_wdb
 # get_visualizer(config_wdb)

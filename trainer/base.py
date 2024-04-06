@@ -20,6 +20,7 @@ from trainer.DONTDELETE import GIT_GUD
 import gc  # garbage collector
 
 
+
 def print_cuda_info():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Using device:", device)
@@ -208,7 +209,7 @@ class BaseTrainer:
             # if self.lrScheduler is not None:
             #     self.lrScheduler. # do smth?
             if step % self.log_step == 0:
-                self.reporter.new_step(step + self.cur_epoch * self.epoch_len)
+                self.reporter.set_step(step + (self.cur_epoch - 1) * self.epoch_len)
                 logs = {
                     "loss": batch["loss"].detach().cpu().numpy(),  # copy?
                     "grad_norm": self.calc_grad_norm(),
@@ -234,12 +235,12 @@ class BaseTrainer:
                 metr, result, mixed = self.compute_loss(batch, is_train=False)
 
                 for key in metr:
-                    logs[key] += metr[key]
+                    logs[key] = metr[key]
 
                 if step % self.log_step == 0:
-                    self.reporter.new_step(step + self.cur_epoch, "eval")
+                    self.reporter.set_step(step + self.cur_epoch, "eval")
                     self.logger.info(
-                        f"Eval step: {step}, Loss: {metr['loss'] / (step + 1)}, CE: {metr['ce'] / (step + 1)}, SI-SDR: {metr['SI-SDR'] / (step + 1)}, PesQ: {metr['PesQ'] / (step + 1)}"  # metrics on batch
+                        f"Eval step: {step}, Loss: {metr['loss']}, CE: {metr['ce']}, SI-SDR: {metr['SI-SDR']}, PesQ: {metr['PesQ']}"  # metrics on batch
                     )
                     for key in logs:
                         self.reporter.log_scalar(key, metr[key])

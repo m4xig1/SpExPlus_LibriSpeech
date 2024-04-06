@@ -1,3 +1,4 @@
+import random
 from pyparsing import col
 import torch
 import numpy as np
@@ -13,13 +14,13 @@ from typing import List
 
 
 class LibriDataset(BaseDataset):
-    def __init__(self, config, path, is_train=True, create_index=True):
+    def __init__(self, config, path, is_train=True, create_index=True, max_len=None):
 
         self.config = config
         self.path = path
         self.logger = logging.getLogger(config["logging_name"])
         if create_index:  # create index
-            index = self._create_index(save=True)
+            index = self._create_index(save=True, max_len=max_len)
         else:
             name = "train_index.json" if "train" in self.path else "test_index.json"
             with Path(self.config["index_path"] + name).open() as f:  # load index
@@ -27,11 +28,12 @@ class LibriDataset(BaseDataset):
 
         super().__init__(config, index)
         self.pos = 0
+        self._count_speakers = 251
         self.is_train = is_train  # pretty unuseful feature
 
         # self.index = sorted(os.listdir(self.path))  # tmp solution, better 2 use index file
 
-    def _create_index(self, save=False):
+    def _create_index(self, save=False, max_len=None):
         self.logger.info(f"creating index from {self.path}")
 
         mix = np.array(sorted(glob.glob(self.path + "*-mixed.wav")))
@@ -46,9 +48,9 @@ class LibriDataset(BaseDataset):
                 exit(1)
 
         if mix.shape != ref.shape or ref.shape != target.shape:  # test
-            self.logger.warning(f"mix.shape != ref.shape || ref.shape != target.shape")
+            self.logger.info(f"mix.shape != ref.shape || ref.shape != target.shape")
             print(mix.shape, ref.shape, target.shape)
-            return None
+            exit(1)
 
         ce_ids = dict()  # ids for classification
         free_id = 0
@@ -64,6 +66,12 @@ class LibriDataset(BaseDataset):
                 "speaker_id": ce_ids[ids[i]],
             }
             index.append(triplet)
+        self._count_speakers = free_id
+
+        if max_len is not None:
+            random.seed(42)
+            random.shuffle(index)
+            index = index[:max_len]
 
         if save:
             name = "train_index.json" if "train" in self.path else "test_index.json"
@@ -88,6 +96,9 @@ class LibriDataset(BaseDataset):
         name of the file must look like path/{target_id}_{noise_id}_{triplet_id}-{mixed/target/ref}.wav
         """
         return int(name.split("/")[-1].split("_")[0])
+
+    def get_count_speakers(self):
+        return self._count_speakers
 
 
 def collate_fn(batch: List[dict]):
@@ -120,13 +131,17 @@ def get_train_dataloader(config):
         config["train"],
         config["path_to_train"],
         create_index=config["train"]["create_index"],
+        max_len=config["train"].get("max_len", None),
     )
-    return DataLoader(
-        dataset=dataset,
-        batch_size=config["train"]["batch_size"],
-        shuffle=True,
-        num_workers=config["train"]["num_workers"],
-        collate_fn=collate_fn,
+    return (
+        DataLoader(
+            dataset=dataset,
+            batch_size=config["train"]["batch_size"],
+            shuffle=True,
+            num_workers=config["train"]["num_workers"],
+            collate_fn=collate_fn,
+        ),
+        dataset.get_count_speakers(),
     )
 
 
@@ -135,6 +150,7 @@ def get_test_dataloader(config):
         config["test"],
         config["path_to_val"],
         create_index=config["test"]["create_index"],
+        max_len=config["test"].get("max_len", None),
     )
     return DataLoader(
         dataset=dataset,
@@ -143,16 +159,3 @@ def get_test_dataloader(config):
         num_workers=config["test"]["num_workers"],
         collate_fn=collate_fn,
     )
-
-
-# def get_eval_dataloader(config):
-#     dataset = LibriDataset(
-#         config["val"], config["path_to_val"], create_index=config["val"]["create_index"]
-#     )
-#     return DataLoader(
-#         dataset=dataset,
-#         batch_size=config["val"]["batch_size"],
-#         shuffle=False,
-#         num_workers=config["val"]["num_workers"],
-#         collate_fn=collate_fn,
-#     )

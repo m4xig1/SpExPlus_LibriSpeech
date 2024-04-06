@@ -7,7 +7,7 @@ from datasets.libri_dataset import (
 )
 from datasets.config import config_dataloader
 from model.spex_plus import SpEx_Plus
-from model.dummy_model import Dummy
+# from model.dummy_model import Dummy
 from logger.visualize import get_visualizer
 # from run_configs.train_config import train_config
 from metrics.metrics import SiSdr, Pesq
@@ -25,14 +25,15 @@ def inf_loop(data_loader):
         yield from loader
 
 def main():
-    # dataset_train = LibriDataset(config_dataloader, config_dataloader["path_to_train"])
-    # dataset_val = LibriDataset(config_dataloader, config_dataloader["path_to_val"])
-    train_loader = inf_loop(get_train_dataloader(config_dataloader))
+    train_loader, count_speakers = get_train_dataloader(config_dataloader)
+    train_loader = inf_loop(train_loader)
+
     test_loader = get_test_dataloader(config_dataloader)
+
     logger = logging.getLogger("train")
     metrics = {"SI-SDR": SiSdr(), "PesQ": Pesq()}
 
-    model = SpEx_Plus()
+    model = SpEx_Plus(num_speakers=count_speakers)
     # model = Dummy()
 
     
