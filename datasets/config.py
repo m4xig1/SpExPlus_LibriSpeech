@@ -11,7 +11,7 @@ config_dataloader = {
         # "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
         "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
         "logging_name": "train dataloader",
-        "max_len": 200,
+        "max_len": 1500,
     },
     "test": {
         "batch_size": 1,
@@ -20,7 +20,7 @@ config_dataloader = {
         # "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
         "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
         "logging_name": "test dataloader",
-        "max_len": 100,
+        "max_len": 500,
     },
     "sample_rate": 16000,
 }
