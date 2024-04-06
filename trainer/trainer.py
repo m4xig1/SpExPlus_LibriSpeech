@@ -38,8 +38,13 @@ class Trainer(BaseTrainer):
             self.logger.warn(
                 f"diff shapes in loss: {pred['short'].shape} vs {batch['target'].shape}"
             )
-            
-            batch["target"] = batch["target"][:, : pred["short"].shape[-1]]
+            if pred["short"].shape[-1] > batch["target"].shape[-1]:
+                batch["target"] = F.pad(
+                    batch["target"],
+                    [0, pred["short"].shape[-1] - batch["target"].shape[-1]],
+                )
+            else:
+                batch["target"] = batch["target"][:, : pred["short"].shape[-1]]
 
         loss = self.loss(
             pred,
