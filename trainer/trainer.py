@@ -44,7 +44,7 @@ class Trainer(BaseTrainer):
             self.len_epoch = len_epoch
 
         self.lr_scheduler = lr_scheduler
-        self.log_step = 50
+        self.log_step = 10
 
         self.train_metrics = MetricTracker(
             "loss", "grad_norm", *[key for key in self.metrics], writer=self.writer
@@ -228,7 +228,8 @@ class Trainer(BaseTrainer):
                 )
             self.writer.set_step(epoch * self.len_epoch, "val")
             self._log_scalars(self.evaluation_metrics)
-            self._log_predictions(**batch)
+            if batch_idx % self.log_step == 0:
+                self._log_predictions(**batch)
 
         return self.evaluation_metrics.result()
 
