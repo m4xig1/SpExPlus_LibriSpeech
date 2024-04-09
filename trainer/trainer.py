@@ -116,6 +116,8 @@ class Trainer(BaseTrainer):
         self.model.train()
         self.train_metrics.reset()
         self.writer.log_scalar("epoch", epoch)
+        last_train_metrics = None
+
         for batch_idx, batch in enumerate(
             tqdm(self.train_dataloader, desc="train", total=self.len_epoch)
         ):
@@ -136,21 +138,27 @@ class Trainer(BaseTrainer):
                     continue
                 else:
                     raise e
+
             if batch_idx % self.log_step == 0:
                 self.writer.set_step((epoch - 1) * self.len_epoch + batch_idx)
-                self.logger.debug(f"Train Epoch: {epoch} = Loss: {batch['loss'].item() :.6f}")
+                self.logger.debug(
+                    f"Train Epoch: {epoch} = Loss: {batch['loss'].item() :.6f}"
+                )
                 self._log_predictions(**batch)
                 self._log_scalars(self.train_metrics)
 
                 last_train_metrics = self.train_metrics.result()
                 self.train_metrics.reset()
 
-            if batch_idx >= self.len_epoch:  # end epoch
+            if batch_idx >= self.len_epoch:  # end train process
                 break
 
         # eval
-
         log = last_train_metrics
+        if last_train_metrics is None:
+            self.logger.warning("All batches with logging are skipped while train!")
+            log = {}
+        
         val_log = self._evaluation_epoch(epoch, self.test_dataloader)
         log.update(**{f"val_{name}": value for name, value in val_log.items()})
 
@@ -158,11 +166,10 @@ class Trainer(BaseTrainer):
             "epoch_based", False
         ):
             if self.scheduler_config.get("requires_loss", True):
-                if "val_loss" in log:
-                    self.lr_scheduler.step(log["val_loss"])
+                if "val_loss" in log: 
+                    self.lr_scheduler.step(log["val_loss"]) 
             else:
                 self.lr_scheduler.step()
-
         return log
 
     def process_batch(self, batch, batch_idx, is_train: bool, metrics: MetricTracker):
