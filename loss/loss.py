@@ -80,4 +80,5 @@ class SpexPlusLoss(nn.Module):
         ce_loss = self.ce(pred["logits"], speaker_id)
         if is_train:
             loss += self.cross_ent_scale * ce_loss
-        return {"loss": loss, "ce": ce_loss}
+        # return {"loss": loss, "ce": ce_loss}
+        return loss

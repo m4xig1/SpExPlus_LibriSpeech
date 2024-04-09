@@ -1,292 +1,159 @@
-from collections import deque
+from abc import abstractmethod
 import logging
-from multiprocessing import process
-import os
-import sys
+
 import torch
-import torch.nn.functional as F
-from tqdm import tqdm
-import torchaudio
-import logger
+from numpy import inf
 import torch.nn as nn
-from torch.optim.lr_scheduler import ReduceLROnPlateau
-
-# import config
-from .config import config_trainer
-from logger.logger import start_log
 from logger.visualize import get_visualizer
-from metrics.base import BaseMetric  # ??
-from trainer.DONTDELETE import GIT_GUD
-import gc  # garbage collector
 
-
-
-def print_cuda_info():
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print("Using device:", device)
-    print()
-
-    # Additional Info when using cuda
-    if device.type == "cuda":
-        print(torch.cuda.get_device_name(0))
-        print("Memory Usage:")
-        print("Allocated:", round(torch.cuda.memory_allocated(0) / 1024**3, 1), "GB")
-        print("Cached:   ", round(torch.cuda.memory_reserved(0) / 1024**3, 1), "GB")
+from .config import config_trainer
 
 
 class BaseTrainer:
+    """
+    Base class for all trainers
+    """
+
     def __init__(
         self,
         model: nn.Module,
-        metrics: "dict[str, BaseMetric]",
-        *args,
+        loss,
+        metrics,
+        optimizer,
+        device="cuda" if torch.cuda.is_available else "cpu",
         config=config_trainer,
-        load_checkpoint=None,  # load from
-        **kwargs,
     ):
-        start_log()  # load config to logger
+        self.device = config.get("device", "cpu")
         self.config = config
-        # self.config['logger']
-        self.logger = logging.getLogger("train logger")
-        self.logger.setLevel(config["logger"]["level"])
-        self.reporter = get_visualizer()  # Wandb monitor
+        self.logger = logging.getLogger("trainer")
 
-        self.log_step = 50  # how many batches between logging
-
-        if not torch.cuda.is_available():
-            raise RuntimeError("no CUDA is available")
-        # load gpuid
-        self.device = self.config["device"]
-        self.logger.info(f"Running trainer on {self.device}")
-
-        self.model = model.to(self.device)
-        self.reporter.watch(model)
-
-        # self.metrics = self._load_to_device(metrics, self.device)
+        self.model = model.to(device) 
+        self.loss = loss
         self.metrics = metrics
+        self.optimizer = optimizer
 
-        # self.optimizer = optimizer  # возможно, тут его загрузить надо
-        # self.lrScheduler = None
-        """
-        Temporary solution for optimizer and scheduler, better to load modules via hydra
-        """
-        self.optimizer = torch.optim.Adam(
-            params=self.model.parameters(),
-            lr=config["optimizer"]["lr"],
-            weight_decay=config["optimizer"]["weight_decay"],
-        )
-        self.lrScheduler = None
+        # for interrupt saving
+        self._last_epoch = 0
 
-        self.checkpoint_path = config["checkpoint_path"]  # saving, loading here
-        if load_checkpoint is not None:
-            checkpoint = torch.load(load_checkpoint, map_location="cpu")
-            try:
-                self.model.load_state_dict(checkpoint["model"])
-                self.optimizer.load_state_dict(checkpoint["optimizer"])  # ?
-                # load scheduler, optimizer?
-            except Exception as e:
-                self.logger.info(f"Exception while loading checkpoint: {e}")
-            self.model = self.model.to(self.device)
+        self.epochs = config["epochs"]
+        self.save_period = config["save_period"]
+        self.monitor = config.get("monitor", "off")
+
+        # configuration to monitor model performance and save best
+        if self.monitor == "off":
+            self.mnt_mode = "off"
+            self.mnt_best = 0
         else:
-            self.lrScheduler = ReduceLROnPlateau(
-                optimizer=self.optimizer,
-                mode=config["lrScheduler"]["mode"],
-                factor=config["lrScheduler"]["factor"],
-                patience=config["lrScheduler"]["patience"],
-                min_lr=config["lrScheduler"]["min_lr"],
-                verbose=config["lrScheduler"]["verbose"],
-            )
-        self.epoch_len = config["epoch_len"]
+            self.mnt_mode, self.mnt_metric = self.monitor.split()
+            assert self.mnt_mode in ["min", "max"]
 
-        # self.lrScheduler = ReduceLROnPlateau(**config["lrScheduler"])
-        self.checkpoint_queue = deque(maxlen=self.config["nCheckpoints"])
+            self.mnt_best = inf if self.mnt_mode == "min" else -inf
+            self.early_stop = config.get("no_improvment", inf)
+            if self.early_stop <= 0:
+                self.early_stop = inf
 
-        # steps before stopping the training
-        self.no_impr = self.config["no_improvment"]
-        self.args = args
-        self.kwargs = kwargs
-        self.cur_epoch = 0
-        # self.save_dir = config["save_dir"]  # ??
-        self.logger.info(GIT_GUD)
+        self.start_epoch = 1
 
-    def __load_batch(self, obj, device):
-        return obj.to(device) if isinstance(obj, torch.Tensor) else obj
+        self.checkpoint_dir = config["checkpoint_path"]
 
-    def _load_to_device(self, obj, device):
+        # setup visualization writer instance
+        self.writer = get_visualizer()
+
+    @abstractmethod
+    def _process_epoch(self, epoch):
         """
-        loads obj to device if obj contains Tensor
-        """
-        if isinstance(obj, list) or isinstance(obj, tuple):
-            return [self.__load_batch(i, device) for i in obj]
-        if isinstance(obj, dict):
-            for key in obj.keys():
-                obj[key] = obj[key].to(device)
-            return {key: self.__load_batch(val, device) for key, val in obj.items()}
-        return self.__load_batch(obj, device)
+        Training logic for an epoch
 
-    def _process_checkpoint(self, path):
-        if len(self.checkpoint_queue) == self.checkpoint_queue.maxlen:
-            os.remove(self.checkpoint_queue[0])
-        self.checkpoint_queue.append(path)
-
-    def save_checkpoint(self, name="checkpoint"):
-        """
-        Saves checkpoint in config["checkpoint_dir"]
-        """
-        check = {
-            "epoch": self.cur_epoch,
-            "model": self.model.state_dict(),
-            "optimizer": self.optimizer.state_dict(),
-        }
-        check["scheduler"] = (
-            self.lrScheduler.state_dict() if self.lrScheduler is not None else None
-        )
-
-        path = self.checkpoint_path + f"{name}.pt.tar"
-        self.logger.info(f"saving checkpoint {path}")
-        torch.save(check, path)
-        self._process_checkpoint(path)
-
-    # def _load_checkpoint(self, id):
-    #     """
-    #     Must be rewrited to load model from checkpoint and continue training.
-    #     Now model is loading checkpoint in __init__
-    #     """
-    #     checkpoint = torch.load(self.checkpoint_queue[id], map_location="cpu")
-    #     try:
-    #         self.model.load_state_dict(checkpoint["model"])
-    #     except Exception as e:
-    #         self.logger.info(f"Exception while loading checkpoint: {e}")
-    #     self.model = self.model.to(self.device)
-
-    def compute_loss(self, batch, is_train=True):
-        """
-        chunk -- batch from Dataloader with predictions
-        returns: dict[None|torch.Tensor] with loss
+        :param epoch: Current epoch number
         """
         raise NotImplementedError()
 
-    def compute_metrics(self, pred, target):
-        return {key: metric(pred, target) for key, metric in self.metrics.items()}
+    def train(self):
+        try:
+            self._train_process()
+        except KeyboardInterrupt as e:
+            self.logger.info("Saving model on keyboard interrupt")
+            self._save_checkpoint(self._last_epoch, save_best=False)
+            raise e
 
-    @torch.no_grad()
-    def calc_grad_norm(self, p_type=2):
+    def _train_process(self):
         """
-        calc L_p norm of the gradient, using to prevent grad explosions
+        Full training logic
         """
-        params = [
-            p for p in self.model.parameters() if p.grad is not None and p.requires_grad
-        ]
-        norm = torch.norm(
-            torch.stack([torch.norm(p.grad.detach(), p_type) for p in params]).cpu(),
-            p_type,
-        )
-        return norm.item()
+        no_improvment_count = 0
+        for epoch in range(self.start_epoch, self.epochs + 1):
+            self._last_epoch = epoch
+            result = self._process_epoch(epoch)
 
-    def train(self, dataloader):
-        self.logger.info("Train mode")
-        self.model.train()
-        logs = {}
-        for step, batch in enumerate(tqdm(dataloader, desc="train")):
-            try:
-                batch = self._load_to_device(batch, self.device)
-                self.optimizer.zero_grad()
-                batch = self.compute_loss(batch)
-                loss = batch["loss"]
-                loss.backward()
-                self.optimizer.step()
+            # save logged informations into log dict
+            log = {"epoch": epoch}
+            log.update(result)
 
-            except RuntimeError as e:  # oom?
-                self.logger.info(f"Out of Memory, step: {step}")
-                # print_cuda_info()
-                for param in self.model.parameters():
-                    if param.grad is not None:
-                        del param.grad
-                torch.cuda.empty_cache()
-                gc.collect()
-                continue
+            # print logged informations to the screen
+            for key, value in log.items():
+                self.logger.info("    {:15s}: {}".format(str(key), value))
 
-            # if self.lrScheduler is not None:
-            #     self.lrScheduler. # do smth?
-            if step % self.log_step == 0:
-                self.reporter.set_step(step + (self.cur_epoch - 1) * self.epoch_len)
-                logs = {
-                    "loss": batch["loss"].detach().cpu().numpy(),  # copy?
-                    "grad_norm": self.calc_grad_norm(),
-                }
-                self.logger.info(
-                    f"step: {step + (self.cur_epoch - 1) * self.epoch_len}, Loss: {logs['loss']}, Grad norm: {logs['grad_norm']}"
-                )
-                for name, x in logs.items():
-                    self.reporter.log_scalar(name, x)
-
-        self.logger.info("force report")
-
-    def eval(self, dataloader):
-        self.logger.info("Eval mode")
-        self.model.eval()
-        batch_size = len(dataloader)
-        logs = {"loss": 0.0, "ce": 0.0, "SI-SDR": 0.0, "PesQ": 0.0}
-        with torch.no_grad():
-            for step, batch in enumerate(
-                tqdm(dataloader, desc="eval", total=len(dataloader))
-            ):
-                batch = self._load_to_device(batch, self.device)
-                metr, result, mixed = self.compute_loss(batch, is_train=False)
-
-                for key in metr:
-                    logs[key] = metr[key]
-
-                if step % self.log_step == 0:
-                    self.reporter.set_step(step + self.cur_epoch, "eval")
-                    self.logger.info(
-                        f"Eval step: {step}, Loss: {metr['loss']}, CE: {metr['ce']}, SI-SDR: {metr['SI-SDR']}, PesQ: {metr['PesQ']}"  # metrics on batch
+            # evaluate model performance according to configured metric,
+            # save best checkpoint as model_best
+            best = False
+            if self.mnt_mode != "off":
+                try:
+                    # check whether model performance improved or not,
+                    # according to specified metric(mnt_metric)
+                    if self.mnt_mode == "min":
+                        improved = log[self.mnt_metric] <= self.mnt_best
+                    elif self.mnt_mode == "max":
+                        improved = log[self.mnt_metric] >= self.mnt_best
+                    else:
+                        improved = False
+                except KeyError:
+                    self.logger.warning(
+                        "Warning: Metric '{}' is not found. "
+                        "Model performance monitoring is disabled.".format(
+                            self.mnt_metric
+                        )
                     )
-                    for key in logs:
-                        self.reporter.log_scalar(key, metr[key])
+                    self.mnt_mode = "off"
+                    improved = False
 
-                    # self.reporter.log_audio("mix", mixed[0])
-                    # self.reporter.log_audio("predicted", result[0])
-        # force logs
-        logs["loss"] /= batch_size
-        return logs
+                if improved:
+                    self.mnt_best = log[self.mnt_metric]
+                    no_improvment_count = 0
+                    best = True
+                else:
+                    no_improvment_count += 1
 
-    def run(self, trainloader, testloader, nEpochs=50):
-        self.save_checkpoint("init checkpoint")
-        self.reporter.step = 0
-        best_loss = 0
-
-        logs = self.eval(testloader)
-        best_loss = logs["loss"]
-        self.logger.info(f"Start from epoch {self.cur_epoch}, Loss: {best_loss}")
-
-        no_impr = 0
-        while self.cur_epoch < nEpochs:
-            self.logger.info(f"Epoch {self.cur_epoch}...")
-            self.cur_epoch += 1
-
-            self.train(trainloader)
-            logs = self.eval(testloader)
-
-            if self.lrScheduler is not None:
-                self.lrScheduler.step(logs["loss"])
-
-            if logs["loss"] < best_loss:
-                no_impr += 1
-                self.save_checkpoint(f"epoch_{self.cur_epoch}")
-                if no_impr >= self.no_impr:
+                if no_improvment_count > self.early_stop:
                     self.logger.info(
-                        f"Stopping training, no improvment for {no_impr} epochs"
+                        "Validation performance didn't improve for {} epochs. "
+                        "Training stops.".format(self.early_stop)
                     )
                     break
-            else:
-                no_impr = 0
-                best_loss = logs["loss"]
-                self.save_checkpoint(f"improvment_epoch_{self.cur_epoch}")
-            sys.stdout.flush()
 
-        self.logger.info(f"Training for {self.cur_epoch}/{nEpochs} epoches done!")
+            if epoch % self.save_period == 0 or best:
+                self._save_checkpoint(epoch, save_best=best, only_best=True)
 
-    # 4 log
-    def _log_epoch(self, logs):
-        pass
+    def _save_checkpoint(self, epoch, save_best=False, only_best=False):
+        """
+        Saving checkpoints
+
+        :param epoch: current epoch number
+        :param save_best: if True, rename the saved checkpoint to 'model_best.pth'
+        """
+        arch = type(self.model).__name__
+        state = {
+            "arch": arch,
+            "epoch": epoch,
+            "state_dict": self.model.state_dict(),
+            "optimizer": self.optimizer.state_dict(),
+            "monitor_best": self.mnt_best,
+            "config": self.config,
+        }
+        filename = str(self.checkpoint_dir / "checkpoint-epoch{}.pth".format(epoch))
+        if not (only_best and save_best):
+            torch.save(state, filename)
+            self.logger.info("Saving checkpoint: {} ...".format(filename))
+        if save_best:
+            best_path = str(self.checkpoint_dir / "model_best.pth")
+            torch.save(state, best_path)
+            self.logger.info("Saving current best: model_best.pth ...")
