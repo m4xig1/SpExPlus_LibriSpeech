@@ -12,7 +12,7 @@ config_trainer = {
         "requires_loss": True,
         "epoch_based": True,
     },
-    "epoch_len": 1000,
+    "epoch_len": 5000,
     # "checkpoint_path": "/home/m4xig1/speaker_extraction_SpEx/checkpoints/",
     "checkpoint_path": "/kaggle/working/SpExPlus_LibriSpeech/model/",
     "device": "cuda",
