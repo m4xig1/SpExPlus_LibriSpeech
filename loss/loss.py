@@ -6,28 +6,23 @@ import numpy as np
 from metrics.metrics import SiSdr
 
 
-def sisdr(x, s, eps=1e-8):
-        """
-        Arguments:
-        x: separated signal, N x S tensor
-        s: reference signal, N x S tensor
-        Return:
-        sisdr: N tensor
-        """
+def sisdr(pred, target, eps=1e-6):
+    """
+    Arguments:
+    x: separated signal, N x S tensor
+    s: reference signal, N x S tensor
+    Return:
+    sisdr: N tensor
+    """
 
-        def l2norm(mat, keepdim=False):
-            return torch.norm(mat, dim=-1, keepdim=keepdim)
-
-        if x.shape != s.shape:
-            raise RuntimeError(
-                "Dimention mismatch when calculate si-snr, {} vs {}".format(
-                    x.shape, s.shape))
-        x_zm = x - torch.mean(x, dim=-1, keepdim=True)
-        s_zm = s - torch.mean(s, dim=-1, keepdim=True)
-        t = torch.sum(
-            x_zm * s_zm, dim=-1,
-            keepdim=True) * s_zm / (l2norm(s_zm, keepdim=True)**2 + eps)
-        return 20 * torch.log10(eps + l2norm(t) / (l2norm(x_zm - t) + eps))
+    if pred.shape != target.shape:
+        raise RuntimeError(
+            "Dimention mismatch when calculate si-snr, {} vs {}".format(
+                pred.shape, pred.shape))
+        
+    alpha = (target * pred).sum() / (torch.linalg.norm(target) ** 2 + eps)
+    return 20 * torch.log10(torch.linalg.norm(alpha * target) / (torch.linalg.norm(alpha * target - pred) + eps) + eps)
+    
 
 
 class SpexPlusLoss(nn.Module):
@@ -65,20 +60,22 @@ class SpexPlusLoss(nn.Module):
         x_mid = self.__normalize(pred["mid"].squeeze(1))
         x_long = self.__normalize(pred["long"].squeeze(1))
 
-        phi = 1 - self.mid_scale - self.long_scale
+        short_scale = 1 - self.mid_scale - self.long_scale
         
         sisdr_short = sisdr(x_short, target)
         sisdr_mid = sisdr(x_mid, target)
         sisdr_long = sisdr(x_long, target)
         loss = (
-            -phi * sisdr_short.sum()
+            -short_scale * sisdr_short.sum()
             - self.mid_scale * sisdr_mid.sum()
             - self.long_scale * sisdr_long.sum()
         ) / x_short.shape[0]
+        
 
         # norm?
-        ce_loss = self.ce(pred["logits"], speaker_id)
         if is_train:
+            ce_loss = self.ce(pred["logits"], speaker_id)
             loss += self.cross_ent_scale * ce_loss
+
         # return {"loss": loss, "ce": ce_loss}
         return loss
