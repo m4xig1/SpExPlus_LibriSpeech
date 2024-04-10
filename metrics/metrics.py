@@ -9,11 +9,16 @@ from torchmetrics.audio.pesq import PerceptualEvaluationSpeechQuality
 
 logger = logging.Logger("metrics")
 
+def normalize_audio(extracted_audio, target_loudness=20, eps=1e-6):
+    return (
+        target_loudness * extracted_audio / (extracted_audio.norm(dim=-1, keepdim=True) + eps)
+    )
+
 
 class SiSdr(BaseMetric):
     def __init__(self, device="cuda", **kwargs):
         super(SiSdr, self).__init__()
-        self.si_sdr = ScaleInvariantSignalDistortionRatio().to(device)
+        self.si_sdr = ScaleInvariantSignalDistortionRatio()
 
     def forward(self, pred, target):
         if pred.shape != target.shape:
@@ -26,7 +31,7 @@ class SiSdr(BaseMetric):
 class Pesq(BaseMetric):
     def __init__(self, sample_rate=16000, mode="wb", device="cuda", **kwargs):
         super(Pesq, self).__init__()
-        self.pesq = PerceptualEvaluationSpeechQuality(sample_rate, mode).to(device)
+        self.pesq = PerceptualEvaluationSpeechQuality(sample_rate, mode)
 
     def forward(self, pred, target):
         if pred.shape != target.shape:
@@ -34,7 +39,7 @@ class Pesq(BaseMetric):
             return 0
 
         self.metric = self.pesq.to(pred.device)  # load to device
-        return self.metric(pred, target).item()
+        return self.metric(normalize_audio(pred), target).item()
 
 
 class MetricTracker:
@@ -60,9 +65,3 @@ class MetricTracker:
 
     def keys(self):
         return self._data.total.keys()
-
-
-def normalize_audio(extracted_audio, target_loudness=20):
-    return (
-        target_loudness * extracted_audio / extracted_audio.norm(dim=-1, keepdim=True)
-    )
