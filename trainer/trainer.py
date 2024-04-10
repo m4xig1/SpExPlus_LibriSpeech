@@ -144,7 +144,7 @@ class Trainer(BaseTrainer):
                 self.logger.debug(
                     f"Train Epoch: {epoch} = Loss: {batch['loss'].item() :.6f}"
                 )
-                self._log_predictions(**batch)
+                # self._log_predictions(**batch)
                 self._log_scalars(self.train_metrics)
 
                 last_train_metrics = self.train_metrics.result()
