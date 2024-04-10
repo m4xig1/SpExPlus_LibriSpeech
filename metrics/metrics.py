@@ -11,9 +11,9 @@ logger = logging.Logger("metrics")
 
 
 class SiSdr(BaseMetric):
-    def __init__(self, **kwargs):
+    def __init__(self, device="cuda", **kwargs):
         super(SiSdr, self).__init__()
-        self.si_sdr = ScaleInvariantSignalDistortionRatio()
+        self.si_sdr = ScaleInvariantSignalDistortionRatio().to(device)
 
     def forward(self, pred, target):
         if pred.shape != target.shape:
@@ -24,9 +24,9 @@ class SiSdr(BaseMetric):
 
 
 class Pesq(BaseMetric):
-    def __init__(self, sample_rate=16000, mode="wb", **kwargs):
+    def __init__(self, sample_rate=16000, mode="wb", device="cuda", **kwargs):
         super(Pesq, self).__init__()
-        self.pesq = PerceptualEvaluationSpeechQuality(sample_rate, mode)
+        self.pesq = PerceptualEvaluationSpeechQuality(sample_rate, mode).to(device)
 
     def forward(self, pred, target):
         if pred.shape != target.shape:

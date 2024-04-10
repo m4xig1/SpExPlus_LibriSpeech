@@ -20,7 +20,7 @@ config_dataloader = {
         # "index_path": "/home/m4xig1/speaker_extraction_SpEx/datasets/",
         "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
         "logging_name": "test dataloader",
-        "max_len": None,
+        "max_len": 500,
     },
     "sample_rate": 16000,
 }

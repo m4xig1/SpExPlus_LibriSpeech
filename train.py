@@ -64,7 +64,8 @@ def main():
         dataloaders=dataloaders,
         config=config,
         lr_scheduler=lr_scheduler,
-        len_epoch=config["epoch_len"]
+        len_epoch=config["epoch_len"],
+        skip_oom=False
     )
 
     trainer.train()

@@ -30,9 +30,10 @@ class Trainer(BaseTrainer):
         device="cuda" if torch.cuda.is_available else "cpu",
         lr_scheduler=None,
         len_epoch=None,
+        skip_oom=True
     ):
         super().__init__(model, loss, metrics, optimizer, device, config)
-        # self.skip_oom = skip_oom
+        self.skip_oom = skip_oom
         self.config = config
         self.train_dataloader = dataloaders["train"]
         self.test_dataloader = dataloaders["test"]
@@ -44,7 +45,7 @@ class Trainer(BaseTrainer):
             self.len_epoch = len_epoch
 
         self.lr_scheduler = lr_scheduler
-        self.log_step = 5  # WARNING
+        self.log_step = 50
 
         self.train_metrics = MetricTracker(
             "loss", "grad_norm", *[key for key in self.metrics], writer=self.writer
@@ -129,9 +130,9 @@ class Trainer(BaseTrainer):
                     metrics=self.train_metrics,
                 )
             except RuntimeError as e:
-                if "out of memory" in str(e):
+                if "out of memory" in str(e) and self.skip_oom:
                     self.logger.warning("OOM on batch. Skipping batch.")
-                    for p in self.model.parameters():
+                    for p in self.model.parameters() :
                         if p.grad is not None:
                             del p.grad
                     torch.cuda.empty_cache()

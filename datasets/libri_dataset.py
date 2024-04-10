@@ -28,7 +28,7 @@ class LibriDataset(BaseDataset):
 
         super().__init__(config, index)
         self.pos = 0
-        self._count_speakers = 251
+        self._count_speakers = 251  # move to config
         self.is_train = is_train  # pretty unuseful feature
 
         # self.index = sorted(os.listdir(self.path))  # tmp solution, better 2 use index file
@@ -111,13 +111,22 @@ def collate_fn(batch: List[dict]):
         [elem["reference"].squeeze(0) for elem in batch], batch_first=True
     )
 
-    pad_batch["target"] = torch.nn.utils.rnn.pad_sequence(
-        [elem["target"].squeeze(0) for elem in batch], batch_first=True
-    )
+    mix = [elem["mix"].squeeze(0) for elem in batch]
+    target = [elem["target"].squeeze(0) for elem in batch]
 
-    pad_batch["mix"] = torch.nn.utils.rnn.pad_sequence(
-        [elem["mix"].squeeze(0) for elem in batch], batch_first=True
-    )
+    # pad_batch["mix"] = torch.nn.utils.rnn.pad_sequence(
+    # [elem["mix"].squeeze(0) for elem in batch], batch_first=True
+    # )
+
+    # pad_batch["target"] = torch.nn.utils.rnn.pad_sequence(
+    #     [elem["target"].squeeze(0) for elem in batch], batch_first=True
+    # )
+    
+    # mix.shape == target.shape requires
+    pad_mix_target = torch.nn.utils.rnn.pad_sequence(mix + target, batch_first=True)
+
+    pad_batch["mix"] = pad_mix_target[: len(mix)]
+    pad_batch["target"] = pad_mix_target[len(mix) :]
 
     pad_batch["speaker_id"] = torch.tensor([elem["speaker_id"] for elem in batch])
     # padded len?
