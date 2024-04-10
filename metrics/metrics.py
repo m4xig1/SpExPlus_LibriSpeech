@@ -33,7 +33,7 @@ class SiSdr(BaseMetric):
         except:
             logger.warning("Something wrong while calculating SiSdr")
             # вообще, с этим так лучше не делать, вдруг будет соблазн с помощью него считать лосс
-            return -1e9
+            return 0 # min_val
 
 
 class Pesq(BaseMetric):
@@ -51,7 +51,7 @@ class Pesq(BaseMetric):
             return self.metric(normalize_audio(pred), target).item()
         except:
             logger.warning("Something wrong while calculating Pesq")
-            return -1e9
+            return 0 # min_val
 
 
 class MetricTracker:

@@ -30,7 +30,7 @@ class Trainer(BaseTrainer):
         device="cuda" if torch.cuda.is_available else "cpu",
         lr_scheduler=None,
         len_epoch=None,
-        skip_oom=True
+        skip_oom=True,
     ):
         super().__init__(model, loss, metrics, optimizer, device, config)
         self.skip_oom = skip_oom
@@ -132,7 +132,7 @@ class Trainer(BaseTrainer):
             except RuntimeError as e:
                 if "out of memory" in str(e) and self.skip_oom:
                     self.logger.warning("OOM on batch. Skipping batch.")
-                    for p in self.model.parameters() :
+                    for p in self.model.parameters():
                         if p.grad is not None:
                             del p.grad
                     torch.cuda.empty_cache()
@@ -141,12 +141,17 @@ class Trainer(BaseTrainer):
                     raise e
 
             if batch_idx % self.log_step == 0:
-                self.writer.set_step((epoch - 1) * self.len_epoch + batch_idx)
+                self.writer.set_step(epoch * self.len_epoch + batch_idx)
                 self.logger.debug(
                     f"Train Epoch: {epoch} = Loss: {batch['loss'].item() :.6f}"
                 )
-                # self._log_predictions(**batch)
                 self._log_scalars(self.train_metrics)
+
+                # param_groups = [{"lr":..., ...}, {...}], our optimizer is 0
+                if self.lr_scheduler is not None:
+                    self.writer.log_scalar(
+                        "learning rate",  self.lr_scheduler.optimizer.param_groups[0]["lr"]
+                    )
 
                 last_train_metrics = self.train_metrics.result()
                 self.train_metrics.reset()
@@ -159,7 +164,7 @@ class Trainer(BaseTrainer):
         if last_train_metrics is None:
             self.logger.warning("All batches with logging are skipped while train!")
             log = {}
-        
+
         val_log = self._evaluation_epoch(epoch, self.test_dataloader)
         log.update(**{f"val_{name}": value for name, value in val_log.items()})
 
@@ -167,8 +172,8 @@ class Trainer(BaseTrainer):
             "epoch_based", False
         ):
             if self.scheduler_config.get("requires_loss", True):
-                if "val_loss" in log: 
-                    self.lr_scheduler.step(log["val_loss"]) 
+                if "val_loss" in log:
+                    self.lr_scheduler.step(log["val_loss"])
             else:
                 self.lr_scheduler.step()
         return log
@@ -215,6 +220,7 @@ class Trainer(BaseTrainer):
         """
         self.model.eval()
         self.evaluation_metrics.reset()
+        len_epoch = len(dataloader)
         with torch.no_grad():
             for batch_idx, batch in tqdm(
                 enumerate(dataloader),
@@ -227,10 +233,13 @@ class Trainer(BaseTrainer):
                     is_train=False,
                     metrics=self.evaluation_metrics,
                 )
-            self.writer.set_step(epoch * self.len_epoch, "val")
+
+                if batch_idx % self.log_step == 0:
+                    self.writer.set_step(epoch * len_epoch + batch_idx, "val")
+                    self._log_predictions(**batch)
+
             self._log_scalars(self.evaluation_metrics)
-            if batch_idx % self.log_step == 0:
-                self._log_predictions(**batch)
+           
 
         return self.evaluation_metrics.result()
 
@@ -251,6 +260,7 @@ class Trainer(BaseTrainer):
                 "Warning: no visualizer found for logging predicted audios"
             )
             return
+        
         rows = {}
         tuples = list(zip(reference, mix, short, target))
         shuffle(tuples)
