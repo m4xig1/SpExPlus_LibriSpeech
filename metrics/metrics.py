@@ -9,9 +9,12 @@ from torchmetrics.audio.pesq import PerceptualEvaluationSpeechQuality
 
 logger = logging.Logger("metrics")
 
+
 def normalize_audio(extracted_audio, target_loudness=20, eps=1e-6):
     return (
-        target_loudness * extracted_audio / (extracted_audio.norm(dim=-1, keepdim=True) + eps)
+        target_loudness
+        * extracted_audio
+        / (extracted_audio.norm(dim=-1, keepdim=True) + eps)
     )
 
 
@@ -25,7 +28,12 @@ class SiSdr(BaseMetric):
             logger.info(f"bad shape in Si-Sdr: {pred.shape} != {target.shape}")
             return 0
         self.metric = self.si_sdr.to(pred.device)  # load to device
-        return self.metric(pred, target).item()
+        try:
+            return self.metric(pred, target).item()
+        except:
+            logger.warning("Something wrong while calculating SiSdr")
+            # вообще, с этим так лучше не делать, вдруг будет соблазн с помощью него считать лосс
+            return -1e9
 
 
 class Pesq(BaseMetric):
@@ -39,7 +47,11 @@ class Pesq(BaseMetric):
             return 0
 
         self.metric = self.pesq.to(pred.device)  # load to device
-        return self.metric(normalize_audio(pred), target).item()
+        try:
+            return self.metric(normalize_audio(pred), target).item()
+        except:
+            logger.warning("Something wrong while calculating Pesq")
+            return -1e9
 
 
 class MetricTracker:
