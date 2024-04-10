@@ -65,7 +65,7 @@ def main():
         config=config,
         lr_scheduler=lr_scheduler,
         len_epoch=config["epoch_len"],
-        skip_oom=False
+        skip_oom=True
     )
 
     trainer.train()
