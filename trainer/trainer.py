@@ -44,7 +44,7 @@ class Trainer(BaseTrainer):
             self.len_epoch = len_epoch
 
         self.lr_scheduler = lr_scheduler
-        self.log_step = 10
+        self.log_step = 5  # WARNING
 
         self.train_metrics = MetricTracker(
             "loss", "grad_norm", *[key for key in self.metrics], writer=self.writer
@@ -241,7 +241,7 @@ class Trainer(BaseTrainer):
         mid,
         long,
         target,
-        examples_to_log=2,
+        examples_to_log=1,
         *args,
         **kwargs,
     ):
