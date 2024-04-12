@@ -29,6 +29,7 @@ cur_dir = os.getcwd()
 #     "resume_path": None
 # }
 
+# tune config
 config_trainer = {
     "logger": {"level": logging.INFO},
     "optimizer": {"lr": 1e-3, "weight_decay": 1e-5},
@@ -51,6 +52,7 @@ config_trainer = {
     "save_period": 2,
     "monitor": "min val_loss",
     "max_grad_norm": 256,
-    "resume_path": "/kaggle/input/spex-best-shot/pytorch/12epochs/1/model_best.pth"
+    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch12/1/checkpoint-epoch12.pth", 
+    "fine_tune" : False,
 }
 
