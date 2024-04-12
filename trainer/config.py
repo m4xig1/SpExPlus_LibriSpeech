@@ -51,6 +51,6 @@ config_trainer = {
     "save_period": 2,
     "monitor": "min val_loss",
     "max_grad_norm": 256,
-    "resume_path": "/kaggle/input/spex-best-shot/pytorch/12epochs/1"
+    "resume_path": "/kaggle/input/spex-best-shot/pytorch/12epochs/1/model_best.pth"
 }
 
