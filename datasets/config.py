@@ -43,8 +43,7 @@ config_dataloader = {
         "batch_size": 2, # you should config this if using more powerful system
         "num_workers": 4,
         "create_index": True,
-        "index_path": cur_dir + "/datasets/",
-        # "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
+        "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
         "logging_name": "train dataloader",
         "max_len": None,  # number of samples in dataset
     },
