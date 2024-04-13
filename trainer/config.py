@@ -48,7 +48,7 @@ config_trainer = {
     # "checkpoint_path": cur_dir + "/model/",
     "device": "cuda", # i didn't test it with multi gpu system
     "no_improvment": 20,  # epochs before stopping the training if val_loss is not decending
-    "epochs": 10,
+    "epochs": 50,
     "save_period": 2,
     "monitor": "min val_loss",
     "max_grad_norm": 256,
