@@ -16,7 +16,7 @@ cur_dir = os.getcwd()
 #         "requires_loss": True,
 #         "epoch_based": True,
 #     },
-#     "epoch_len": 6000,  # you should config this if using more powerful system
+#     "epoch_len": 20,  # you should config this if using more powerful system
 #     # "checkpoint_path": "/kaggle/working/SpExPlus_LibriSpeech/model/",
 #     "checkpoint_path": cur_dir + "/model/",
 #     "device": "cuda",  # i didn't test it with multi gpu system
@@ -25,7 +25,8 @@ cur_dir = os.getcwd()
 #     "save_period": 2,
 #     "monitor": "min val_loss",
 #     "max_grad_norm": 256,
-#     # "resume_path": cur_dir + "/checkpoints/checkpoint-epoch12.pth",
+#     "resume_path": cur_dir + "/checkpoints/checkpoint-epoch12.pth",
+#     "fine_tune" : False,
 # }
 
 # tune config
@@ -52,6 +53,6 @@ config_trainer = {
     "save_period": 2,
     "monitor": "min val_loss",
     "max_grad_norm": 128,
-    # "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch12/1/checkpoint-epoch12.pth",
-    # "fine_tune" : False,
+    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch12/1/checkpoint-epoch10.pth",
+    "fine_tune" : False, # 
 }
