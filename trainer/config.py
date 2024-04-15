@@ -53,6 +53,6 @@ config_trainer = {
     "save_period": 2,
     "monitor": "min val_loss",
     "max_grad_norm": 128,
-    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch12/1/checkpoint-epoch10.pth",
+    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch10/1/checkpoint-epoch10.pth",
     "fine_tune" : False, # 
 }
