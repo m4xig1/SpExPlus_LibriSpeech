@@ -33,7 +33,7 @@ cur_dir = os.getcwd()
 
 config_trainer = {
     "logger": {"level": logging.INFO},
-    "optimizer": {"lr": 1e-4, "weight_decay": 1e-5},
+    "optimizer": {"lr": 0.00025, "weight_decay": 1e-5},
     "lr_scheduler": {  # Reduce on plateau
         "mode": "min",
         "factor": 0.5,
@@ -53,6 +53,6 @@ config_trainer = {
     "save_period": 2,
     "monitor": "min val_loss",
     "max_grad_norm": 128,
-    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch10/1/checkpoint-epoch10.pth",
+    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch12/1/checkpoint-epoch12.pth",
     "fine_tune" : False, # 
 }

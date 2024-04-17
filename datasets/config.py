@@ -12,7 +12,7 @@ cur_dir = os.getcwd()
 #     "path_to_train": cur_dir + "/libri_dataset/train-clean-100-mixed/",
 #     "path_to_val": cur_dir + "/libri_dataset/test-clean-mixed/",
 #     "train": {
-#         "batch_size": 2, # you should config this if using more powerful system
+#         "batch_size": 1, # you should config this if using more powerful system
 #         "num_workers": 4,
 #         "create_index": True,
 #         "index_path": cur_dir + "/datasets/",
@@ -53,7 +53,7 @@ config_dataloader = {
         "create_index": True,
         "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
         "logging_name": "test dataloader",
-        "max_len": 500,
+        "max_len": 200,
     },
     "sample_rate": 16000,
 }
