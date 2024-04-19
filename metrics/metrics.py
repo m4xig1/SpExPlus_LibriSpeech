@@ -63,14 +63,18 @@ class MetricTracker:
     def reset(self):
         for col in self._data.columns:
             self._data[col].values[:] = 0
+            # self._data[col].counts = 0
 
     def update(self, key, value, n=1):
-        self._data.total[key] += value * n
-        self._data.counts += n
-        self._data.average[key] += self._data.total[key] / self._data.counts[key]
+        self._data.loc[key, "total"] += value * n
+        # self._data.total[key] += value * n
+        self._data.loc[key, "counts"] += n # type: ignore
+        # self._data.counts[key] += n
+        self._data.loc[key, "average"] = self._data.loc[key, "total"] / self._data.loc[key, "counts"] # type: ignore
+        # self._data.average[key] = self._data.total[key] / self._data.counts[key]
 
     def avg(self, key):
-        return self._data.average[key]
+        return self._data.loc[key, "average"]
 
     def result(self):
         return dict(self._data.average)
