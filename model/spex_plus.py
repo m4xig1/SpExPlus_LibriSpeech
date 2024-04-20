@@ -107,6 +107,8 @@ class SpEx_Plus(nn.Module):
 
         self.pred_linear = nn.Linear(spk_embed_dim, num_speakers)
 
+        self.aux = None
+
     def _build_stacks(self, num_blocks, **block_kwargs):
         """
         Stack B numbers of TCN block, the first TCN block takes the speaker embedding
@@ -124,8 +126,27 @@ class SpEx_Plus(nn.Module):
         new_pred = th.zeros(shape[0], shape[1])
         new_pred[:, : pred.shape[1]] = pred
         return new_pred.to(pred.device)
+    
+    def calculate_speaker_embadding(self, aux, aux_len):
+        aux_w1 = F.relu(self.encoder_1d_short(aux))
+        aux_T_shape = aux_w1.shape[-1]
+        aux_len1 = aux.shape[-1]
+        aux_len2 = (aux_T_shape - 1) * (self.L1 // 2) + self.L2
+        aux_len3 = (aux_T_shape - 1) * (self.L1 // 2) + self.L3
+        aux_w2 = F.relu(
+            self.encoder_1d_middle(F.pad(aux, (0, aux_len2 - aux_len1), "constant", 0))
+        )
+        aux_w3 = F.relu(
+            self.encoder_1d_long(F.pad(aux, (0, aux_len3 - aux_len1), "constant", 0))
+        )
 
-    def forward(self, x, aux, aux_len):
+        aux = self.spk_encoder(th.cat([aux_w1, aux_w2, aux_w3], 1))
+        aux_T = (aux_len - self.L1) // (self.L1 // 2) + 1
+        aux_T = ((aux_T // 3) // 3) // 3
+        self.aux = th.sum(aux, -1) / aux_T.view(-1, 1).float()
+
+
+    def forward(self, x, aux, aux_len, calculate_aux=True):
         if x.dim() >= 3:
             raise RuntimeError(
                 "SpEx_Plus forward accept 1/2D tensor as input, but got {:d}".format(
@@ -150,31 +171,19 @@ class SpEx_Plus(nn.Module):
         # n x O x T
         y = self.proj(y)
 
-        # speaker encoder (share params from speech encoder)
-        aux_w1 = F.relu(self.encoder_1d_short(aux))
-        aux_T_shape = aux_w1.shape[-1]
-        aux_len1 = aux.shape[-1]
-        aux_len2 = (aux_T_shape - 1) * (self.L1 // 2) + self.L2
-        aux_len3 = (aux_T_shape - 1) * (self.L1 // 2) + self.L3
-        aux_w2 = F.relu(
-            self.encoder_1d_middle(F.pad(aux, (0, aux_len2 - aux_len1), "constant", 0))
-        )
-        aux_w3 = F.relu(
-            self.encoder_1d_long(F.pad(aux, (0, aux_len3 - aux_len1), "constant", 0))
-        )
+        if calculate_aux: # speaker encoder (share params from speech encoder)
+            self.calculate_speaker_embadding(aux, aux_len)
+        
+        if self.aux is None:
+            raise RuntimeError("aux is None! You must calculate aux before processing the batch")
 
-        aux = self.spk_encoder(th.cat([aux_w1, aux_w2, aux_w3], 1))
-        aux_T = (aux_len - self.L1) // (self.L1 // 2) + 1
-        aux_T = ((aux_T // 3) // 3) // 3
-        aux = th.sum(aux, -1) / aux_T.view(-1, 1).float()
-
-        y = self.conv_block_1(y, aux)
+        y = self.conv_block_1(y, self.aux)
         y = self.conv_block_1_other(y)
-        y = self.conv_block_2(y, aux)
+        y = self.conv_block_2(y, self.aux)
         y = self.conv_block_2_other(y)
-        y = self.conv_block_3(y, aux)
+        y = self.conv_block_3(y, self.aux)
         y = self.conv_block_3_other(y)
-        y = self.conv_block_4(y, aux)
+        y = self.conv_block_4(y, self.aux)
         y = self.conv_block_4_other(y)
 
         # n x N x T
@@ -188,10 +197,10 @@ class SpEx_Plus(nn.Module):
         short = self.decoder_1d_short(S1)
         if short.shape[-1] < xlen1:
             short = F.pad(short, [0, xlen1 - short.shape[-1]], "constant", 0)
-            
+        
         return {
             "short": short,
             "mid": self.decoder_1d_middle(S2)[:, :xlen1],
             "long": self.decoder_1d_long(S3)[:, :xlen1],
-            "logits": self.pred_linear(aux),
+            "logits": self.pred_linear(self.aux),
         }
