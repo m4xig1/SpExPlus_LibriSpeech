@@ -89,7 +89,7 @@ class LibriDataset(BaseDataset):
         }
         triplet["ref_len"] = len(triplet["reference"])
         return triplet
-
+    
     @staticmethod
     def __get_id(name):
         """
@@ -113,15 +113,6 @@ def collate_fn(batch: List[dict]):
 
     mix = [elem["mix"].squeeze(0) for elem in batch]
     target = [elem["target"].squeeze(0) for elem in batch]
-
-    # pad_batch["mix"] = torch.nn.utils.rnn.pad_sequence(
-    # [elem["mix"].squeeze(0) for elem in batch], batch_first=True
-    # )
-
-    # pad_batch["target"] = torch.nn.utils.rnn.pad_sequence(
-    #     [elem["target"].squeeze(0) for elem in batch], batch_first=True
-    # )
-    
     # mix.shape == target.shape requires
     pad_mix_target = torch.nn.utils.rnn.pad_sequence(mix + target, batch_first=True)
 

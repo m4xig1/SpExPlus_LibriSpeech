@@ -1,72 +1,100 @@
-from trainer.trainer import Trainer
-from datasets.libri_dataset import (
-    LibriDataset,
-    get_train_dataloader,
-    # get_eval_dataloader,
-    get_test_dataloader,
-)
+import pandas as pd
+from tqdm import tqdm
+from loss.loss import SpexPlusLoss
+from datasets.libri_dataset import get_test_dataloader
+
 from datasets.config import config_dataloader
 from model.spex_plus import SpEx_Plus
-# from model.dummy_model import Dummy
+
 from logger.visualize import get_visualizer
-# from run_configs.train_config import train_config
-from metrics.metrics import SiSdr, Pesq
+
+from metrics.metrics import MetricTracker, SiSdr, Pesq, normalize_audio
 
 import torch
 import numpy as np
 import os
 import logging
 import wandb
-from itertools import repeat
-
-def inf_loop(data_loader):
-    """wrapper function for endless data loader."""
-    for loader in repeat(data_loader):
-        yield from loader
+from run_configs.test_streaming import stream_config
+from utils.stream import separate_sources
 
 torch.manual_seed(42)
 np.random.seed(42)
 
+
+def move_batch_to_device(batch: dict, device: torch.device):
+    for key in batch.keys():
+        if isinstance(batch[key], torch.Tensor):
+            batch[key] = batch[key].to(device)
+    return batch
+
+
 def main():
-    train_loader, count_speakers = get_train_dataloader(config_dataloader)
-    # train_loader = inf_loop(train_loader)
+    dataloader = get_test_dataloader(config_dataloader)
+    model = SpEx_Plus()
+    device = stream_config["device"]
+    checkpount = torch.load(stream_config["checkpoint_path"], device)
+    model.load_state_dict(checkpount["state_dict"])
+    model = model.to(device)
 
-    test_loader = get_test_dataloader(config_dataloader)
-
-    logger = logging.getLogger("train")
+    logger = logging.getLogger("test streaming")
+    writer = get_visualizer()
     metrics = {"SI-SDR": SiSdr(), "PesQ": Pesq()}
+    log_step = stream_config.get("log step", 20)
 
-    model = SpEx_Plus(num_speakers=count_speakers)
-    # model = Dummy()
+    metric_tracker = MetricTracker("loss", *[key for key in metrics], writer=writer)
 
+    model.eval()
+    metric_tracker.reset()
     
-    # parallel?
-    # n_gpus = torch.cuda.device_count()
-    # logger.info(f"running on {n_gpus} gpus")
+    pred_table = {}
 
-    trainer = Trainer(model, metrics)
-    trainer.train(train_loader)
-    
-    # trainer.run(train_loader, test_loader, 1)
+    with torch.no_grad():
+        for batch_idx, batch in tqdm(
+            enumerate(dataloader),
+            desc="val",
+            total=len(dataloader),
+        ):
+            batch = move_batch_to_device(batch, device)
+            outputs = separate_sources(
+                model, batch["mix"], batch["reference"], batch["ref_len"], device
+            )
+            batch.update(outputs)
+
+            for key in metrics:
+                writer.set_step(batch_idx, "val")
+                res = metrics[key](batch["short"], batch["target"])
+                writer.log_scalar(f"{key}", res)
+                metric_tracker.update(key, res, n=batch["mix"].shape[0])
+
+            if batch_idx % log_step == 0:
+                pred_table[batch_idx // log_step] = {
+                    "reference": writer.wandb.Audio(
+                        batch["reference"].squeeze(0).detach().cpu().numpy(),
+                        sample_rate=16000,
+                    ),
+                    "mix": writer.wandb.Audio(
+                        batch["mix"].squeeze(0).detach().cpu().numpy(),
+                        sample_rate=16000,
+                    ),
+                    "predicted_short": writer.wandb.Audio(
+                        normalize_audio(batch["short"].squeeze(0).detach())
+                        .cpu()
+                        .numpy(),
+                        sample_rate=16000,
+                    ),
+                    "target": writer.wandb.Audio(
+                        batch["target"].squeeze(0).detach().cpu().numpy(),
+                        sample_rate=16000,
+                    ),
+                }
+                writer.log_table("Audio", pd.DataFrame.from_dict(pred_table, orient="index"))
+
+        print("FINAL METRICS:")
+        for metric_name in metric_tracker.keys():
+            print(f"{metric_name}: {metric_tracker.avg(metric_name)}")
 
 
 if __name__ == "__main__":
     # parse args or use config?
     main()
-
-    # test the model
-    # train_loader = get_train_dataloader(config_dataloader)  
-    # for num, batch in enumerate(train_loader):
-        # print(batch['mix'].shape, batch['reference'].shape, batch['mix'].dtype, batch['reference'].dtype)
-        # result = model(batch["mix"], batch["reference"], batch["ref_len"])
-        # print(result)
-        # break 
-
-
-    # model = SpEx_Plus()
-    # mix = torch.ones(1, 1000)
-    # ref = torch.ones(1, 500)
-    # result = model(mix, ref, torch.tensor([500]))
-    # print(result)
-    # print(result["logits"].shape)
-        

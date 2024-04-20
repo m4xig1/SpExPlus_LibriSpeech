@@ -33,7 +33,7 @@ class SiSdr(BaseMetric):
         except:
             logger.warning("Something wrong while calculating SiSdr")
             # вообще, с этим так лучше не делать, вдруг будет соблазн с помощью него считать лосс
-            return 0 # min_val
+            return 0  # min_val
 
 
 class Pesq(BaseMetric):
@@ -50,8 +50,8 @@ class Pesq(BaseMetric):
         try:
             return self.metric(normalize_audio(pred), target).item()
         except:
-            logger.warning("Something wrong while calculating Pesq")
-            return 0 # min_val
+            logger.warning("Something wrong while calculating Pesq (too many zeroes)")
+            return 0  # min_val
 
 
 class MetricTracker:
@@ -63,15 +63,11 @@ class MetricTracker:
     def reset(self):
         for col in self._data.columns:
             self._data[col].values[:] = 0
-            # self._data[col].counts = 0
 
     def update(self, key, value, n=1):
         self._data.loc[key, "total"] += value * n
-        # self._data.total[key] += value * n
-        self._data.loc[key, "counts"] += n # type: ignore
-        # self._data.counts[key] += n
-        self._data.loc[key, "average"] = self._data.loc[key, "total"] / self._data.loc[key, "counts"] # type: ignore
-        # self._data.average[key] = self._data.total[key] / self._data.counts[key]
+        self._data.loc[key, "counts"] += n  # type: ignore
+        self._data.loc[key, "average"] = self._data.loc[key, "total"] / self._data.loc[key, "counts"]  # type: ignore
 
     def avg(self, key):
         return self._data.loc[key, "average"]
