@@ -144,6 +144,7 @@ class SpEx_Plus(nn.Module):
         aux_T = (aux_len - self.L1) // (self.L1 // 2) + 1
         aux_T = ((aux_T // 3) // 3) // 3
         self.aux = th.sum(aux, -1) / aux_T.view(-1, 1).float()
+        self.logits = self.pred_linear(self.aux)
 
 
     def forward(self, x, aux, aux_len, calculate_aux=True):
@@ -202,5 +203,5 @@ class SpEx_Plus(nn.Module):
             "short": short,
             "mid": self.decoder_1d_middle(S2)[:, :xlen1],
             "long": self.decoder_1d_long(S3)[:, :xlen1],
-            "logits": self.pred_linear(self.aux),
+            "logits": self.logits,
         }
