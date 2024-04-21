@@ -12,6 +12,7 @@ def separate_sources(
     overlap=0.01,
     fade_shape="linear",
     sample_rate=16000,
+    **kwargs 
 ):
     """
     Makes predictions on batch by splitting it by chunks with `segment_len` size with `overlap`
@@ -44,18 +45,15 @@ def separate_sources(
         for i in "short", "mid", "long":
             pred[i][:, start:end] += fade(chunk_pred[i])
         
-
         if start == 0:
             fade.fade_in_len = int(overlap_frames)
             start += int(chunk_len - overlap_frames)
             pred["logits"] = chunk_pred["logits"]
         else:
             start += chunk_len
-            pred["logits"] += chunk_pred["logits"]
         end += chunk_len
+
         if end >= pred_shape:
             fade.fade_out_len = 0
-
-    pred["logits"] /= batch_size  # mean of logits
     return pred
 

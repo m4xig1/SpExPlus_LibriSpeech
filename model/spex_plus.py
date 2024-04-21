@@ -107,7 +107,7 @@ class SpEx_Plus(nn.Module):
 
         self.pred_linear = nn.Linear(spk_embed_dim, num_speakers)
 
-        self.aux = None
+        self.aux, self.logits = None, None
 
     def _build_stacks(self, num_blocks, **block_kwargs):
         """
