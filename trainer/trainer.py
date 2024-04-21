@@ -3,11 +3,12 @@ from random import shuffle
 
 import PIL
 import PIL.Image
+import librosa
+import numpy as np
 import pandas as pd
 import torch
 import torch.nn.functional as F
 from torch.nn.utils.clip_grad import clip_grad_norm_
-from torchvision.transforms import ToTensor
 from tqdm import tqdm
 
 from .base import BaseTrainer
@@ -31,6 +32,7 @@ class Trainer(BaseTrainer):
         lr_scheduler=None,
         len_epoch=None,
         skip_oom=True,
+        log_step=50
     ):
         super().__init__(model, loss, metrics, optimizer, device, config)
         self.skip_oom = skip_oom
@@ -45,7 +47,7 @@ class Trainer(BaseTrainer):
             self.len_epoch = len_epoch
 
         self.lr_scheduler = lr_scheduler
-        self.log_step = 50
+        self.log_step = log_step
 
         self.train_metrics = MetricTracker(
             "loss", "grad_norm", *[key for key in self.metrics], writer=self.writer
@@ -53,12 +55,14 @@ class Trainer(BaseTrainer):
         self.evaluation_metrics = MetricTracker(
             "loss", *[key for key in self.metrics], writer=self.writer
         )
+
         self.fine_tune = config.get("fine_tune", False)
         self.scheduler_config = config.get("lr_scheduler", None)
         self.grad_accum_iters = config.get("grad_accum_iters", 1)
 
         if config.get("resume_path", None) is not None:
             self._resume_checkpoint(config["resume_path"])
+        
 
     def _resume_checkpoint(self, resume_path):
         """
@@ -81,6 +85,8 @@ class Trainer(BaseTrainer):
                 "Warning: Optimizer or lr_scheduler given in config file is different "
                 "from that of checkpoint. Optimizer parameters not being resumed."
             )
+            print(self.optimizer)
+            print(self.lr_scheduler.state_dict())
         elif not self.fine_tune:
             if self.optimizer is not None:
                 self.optimizer.load_state_dict(checkpoint["optimizer"])
@@ -93,9 +99,6 @@ class Trainer(BaseTrainer):
 
     @staticmethod
     def move_batch_to_device(batch: dict, device: torch.device):
-        """
-        move all necessary tensors to the HPU
-        """
         for key in batch.keys():
             if isinstance(batch[key], torch.Tensor):
                 batch[key] = batch[key].to(device)
@@ -150,7 +153,8 @@ class Trainer(BaseTrainer):
                 # param_groups = [{"lr":..., ...}, {...}], our optimizer is 0
                 if self.lr_scheduler is not None:
                     self.writer.log_scalar(
-                        "learning rate",  self.lr_scheduler.optimizer.param_groups[0]["lr"]
+                        "learning rate",
+                        self.lr_scheduler.optimizer.param_groups[0]["lr"],
                     )
 
                 last_train_metrics = self.train_metrics.result()
@@ -210,6 +214,7 @@ class Trainer(BaseTrainer):
             )
 
         return batch
+    
 
     def _evaluation_epoch(self, epoch, dataloader):
         """
@@ -227,19 +232,22 @@ class Trainer(BaseTrainer):
                 desc="val",
                 total=len(dataloader),
             ):
+
                 batch = self.process_batch(
                     batch,
                     batch_idx,
                     is_train=False,
                     metrics=self.evaluation_metrics,
                 )
-
+                
                 if batch_idx % self.log_step == 0:
                     self.writer.set_step(epoch * len_epoch + batch_idx, "val")
                     self._log_predictions(**batch)
+                    # if self.len_epoch == 0:  # just for test
+                    #     print(f"Loss eval on batch {batch_idx}: {batch['loss']}")
+                    #     self._log_scalars(self.evaluation_metrics)
 
             self._log_scalars(self.evaluation_metrics)
-           
 
         return self.evaluation_metrics.result()
 
@@ -260,7 +268,7 @@ class Trainer(BaseTrainer):
                 "Warning: no visualizer found for logging predicted audios"
             )
             return
-        
+
         rows = {}
         tuples = list(zip(reference, mix, short, target))
         shuffle(tuples)
