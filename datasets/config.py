@@ -11,6 +11,7 @@ cur_dir = os.getcwd()
 
 #     "path_to_train": cur_dir + "/libri_dataset/train-clean-100-mixed/",
 #     "path_to_val": cur_dir + "/libri_dataset/test-clean-mixed/",
+#     # "path_to_val": cur_dir + "/libri_dataset/test3-clean/",
 #     "train": {
 #         "batch_size": 1, # you should config this if using more powerful system
 #         "num_workers": 4,
@@ -18,7 +19,7 @@ cur_dir = os.getcwd()
 #         "index_path": cur_dir + "/datasets/",
 #         # "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
 #         "logging_name": "train dataloader",
-#         "max_len": None,  # number of samples in dataset
+#         "max_len": 2000,  # number of samples in dataset
 #     },
 #     "test": {
 #         "batch_size": 1, # you should config this if using more powerful system
@@ -27,7 +28,7 @@ cur_dir = os.getcwd()
 #         "index_path": cur_dir + "/datasets/",
 #         # "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
 #         "logging_name": "test dataloader",
-#         "max_len": None,
+#         "max_len": 500,
 #     },
 #     "sample_rate": 16000,
 # }
@@ -53,7 +54,7 @@ config_dataloader = {
         "create_index": True,
         "index_path": "/kaggle/working/SpExPlus_LibriSpeech/datasets/",
         "logging_name": "test dataloader",
-        "max_len": 200,
+        "max_len": 500,
     },
     "sample_rate": 16000,
 }

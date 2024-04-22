@@ -60,7 +60,7 @@ config_trainer = {
 
 config_stream = {
     "logger": {"level": logging.INFO},
-    "optimizer": {"lr": 1e-3, "weight_decay": 1e-5},
+    "optimizer": {"lr": 1e-4, "weight_decay": 1e-5},
     "lr_scheduler": {  # Reduce on plateau
         "mode": "min",
         "factor": 0.5,
@@ -74,13 +74,14 @@ config_stream = {
     "checkpoint_path": "/kaggle/working/SpExPlus_LibriSpeech/model/",
     # "checkpoint_path": cur_dir + "/model/",
     "device": "cuda",  # i didn't test it with multi gpu system
-    "no_improvment": 20,  # epochs before stopping the training if val_loss is not decending
+    "no_improvment": 5,  # epochs before stopping the training if val_loss is not decending
     "epochs": 50,
     "save_period": 2,
     "monitor": "min val_loss",
-    "max_grad_norm": 256,
+    "max_grad_norm": 100,
     # "resume_path": cur_dir + "/checkpoints/checkpoint-epoch20.pth",
-    # "fine_tune": False,
+    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch20/1/checkpoint-epoch20.pth",
+    "fine_tune": False,
     "stream": {
         "segment_len": 0.3,
         "overlap": 0.01,
