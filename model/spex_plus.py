@@ -127,7 +127,7 @@ class SpEx_Plus(nn.Module):
         new_pred[:, : pred.shape[1]] = pred
         return new_pred.to(pred.device)
     
-    def calculate_speaker_embadding(self, aux, aux_len):
+    def calculate_speaker_embadding(self, aux, aux_len, internal=True):
         aux_w1 = F.relu(self.encoder_1d_short(aux))
         aux_T_shape = aux_w1.shape[-1]
         aux_len1 = aux.shape[-1]
@@ -145,6 +145,9 @@ class SpEx_Plus(nn.Module):
         aux_T = ((aux_T // 3) // 3) // 3
         self.aux = th.sum(aux, -1) / aux_T.view(-1, 1).float()
         self.logits = self.pred_linear(self.aux)
+        
+        if not internal:
+            return self.aux, self.logits
 
 
     def forward(self, x, aux, aux_len, calculate_aux=True):
