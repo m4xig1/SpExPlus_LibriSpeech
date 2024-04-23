@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import torch as th
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -123,7 +123,7 @@ class SpEx_Plus(nn.Module):
         """
         Assume shape > pred.shape, we pad pred with zeroes to shape.
         """
-        new_pred = th.zeros(shape[0], shape[1])
+        new_pred = torch.zeros(shape[0], shape[1])
         new_pred[:, : pred.shape[1]] = pred
         return new_pred.to(pred.device)
     
@@ -140,10 +140,10 @@ class SpEx_Plus(nn.Module):
             self.encoder_1d_long(F.pad(aux, (0, aux_len3 - aux_len1), "constant", 0))
         )
 
-        aux = self.spk_encoder(th.cat([aux_w1, aux_w2, aux_w3], 1))
+        aux = self.spk_encoder(torch.cat([aux_w1, aux_w2, aux_w3], 1))
         aux_T = (aux_len - self.L1) // (self.L1 // 2) + 1
         aux_T = ((aux_T // 3) // 3) // 3
-        self.aux = th.sum(aux, -1) / aux_T.view(-1, 1).float()
+        self.aux = torch.sum(aux, -1) / aux_T.view(-1, 1).float()
         self.logits = self.pred_linear(self.aux)
         
         if not internal:
@@ -159,7 +159,7 @@ class SpEx_Plus(nn.Module):
             )
         # when inference, only one utt
         if x.dim() == 1:
-            x = th.unsqueeze(x, 0)
+            x = torch.unsqueeze(x, 0)
 
         # n x 1 x S => n x N x T
         w1 = F.relu(self.encoder_1d_short(x))
@@ -171,7 +171,7 @@ class SpEx_Plus(nn.Module):
         w3 = F.relu(self.encoder_1d_long(F.pad(x, (0, xlen3 - xlen1), "constant", 0)))
 
         # n x 3N x T
-        y = self.ln(th.cat([w1, w2, w3], 1))
+        y = self.ln(torch.cat([w1, w2, w3], 1))
         # n x O x T
         y = self.proj(y)
 

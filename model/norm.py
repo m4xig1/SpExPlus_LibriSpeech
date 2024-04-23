@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import torch as th
+import torch
 import torch.nn as nn
 
 
@@ -17,9 +17,9 @@ class ChannelwiseLayerNorm(nn.LayerNorm):
     def forward(self, x):
         if x.dim() != 3:
             raise RuntimeError("{} requires a 3D tensor input".format(self.__name__))
-        x = th.transpose(x, 1, 2)
+        x = torch.transpose(x, 1, 2)
         x = super().forward(x)
-        x = th.transpose(x, 1, 2)
+        x = torch.transpose(x, 1, 2)
         return x
 
 
@@ -36,8 +36,8 @@ class GlobalLayerNorm(nn.Module):
         self.normalized_dim = dim
         self.elementwise_affine = elementwise_affine
         if elementwise_affine:
-            self.beta = nn.Parameter(th.zeros(dim, 1))
-            self.gamma = nn.Parameter(th.ones(dim, 1))
+            self.beta = nn.Parameter(torch.zeros(dim, 1))
+            self.gamma = nn.Parameter(torch.ones(dim, 1))
         else:
             self.register_parameter("weight", None)
             self.register_parameter("bias", None)
@@ -46,12 +46,12 @@ class GlobalLayerNorm(nn.Module):
         if x.dim() != 3:
             raise RuntimeError("{} requires a 3D tensor input".format(self.__name__))
         # calculate the mean, variance over the channel and time dimensions
-        mean = th.mean(x, (1, 2), keepdim=True)
-        var = th.mean((x - mean) ** 2, (1, 2), keepdim=True)
+        mean = torch.mean(x, (1, 2), keepdim=True)
+        var = torch.mean((x - mean) ** 2, (1, 2), keepdim=True)
         if self.elementwise_affine:
-            x = self.gamma * (x - mean) / th.sqrt(var + self.eps) + self.beta
+            x = self.gamma * (x - mean) / torch.sqrt(var + self.eps) + self.beta
         else:
-            x = (x - mean) / th.sqrt(var + self.eps)
+            x = (x - mean) / torch.sqrt(var + self.eps)
         return x
 
     def extra_repr(self):

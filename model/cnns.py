@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import torch as th
+import torch
 import torch.nn as nn
 
 from .norm import ChannelwiseLayerNorm, GlobalLayerNorm
@@ -20,9 +20,9 @@ class Conv1D(nn.Conv1d):
     def forward(self, x, squeeze=False):
         if x.dim() not in [2, 3]:
             raise RuntimeError("{} require a 2/3D tensor input".format(self.__name__))
-        x = super().forward(x if x.dim() == 3 else th.unsqueeze(x, 1))
+        x = super().forward(x if x.dim() == 3 else torch.unsqueeze(x, 1))
         if squeeze:
-            x = th.squeeze(x)
+            x = torch.squeeze(x)
         return x
 
 
@@ -39,10 +39,10 @@ class ConvTrans1D(nn.ConvTranspose1d):
     def forward(self, x):
         if x.dim() not in [2, 3]:
             raise RuntimeError("{} require a 2/3D tensor input".format(self.__name__))
-        x = super().forward(x if x.dim() == 3 else th.unsqueeze(x, 1))
+        x = super().forward(x if x.dim() == 3 else torch.unsqueeze(x, 1))
 
         # squeeze the channel dimension 1 after reconstructing the signal
-        return th.squeeze(x, 1)
+        return torch.squeeze(x, 1)
 
 
 class TCNBlock(nn.Module):
@@ -160,9 +160,9 @@ class TCNBlock_Spk(nn.Module):
     def forward(self, x, aux):
         # Repeatedly concated speaker embedding aux to each frame of the representation x
         T = x.shape[-1]
-        aux = th.unsqueeze(aux, -1)
+        aux = torch.unsqueeze(aux, -1)
         aux = aux.repeat(1, 1, T)
-        y = th.cat([x, aux], 1)
+        y = torch.cat([x, aux], 1)
         y = self.conv1x1(y)
         y = self.norm1(self.prelu1(y))
         y = self.dconv(y)
