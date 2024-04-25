@@ -12,19 +12,19 @@ def separate_sources(
     overlap=0.01,
     fade_shape="linear",
     sample_rate=16000,
-    **kwargs 
+    **kwargs
 ):
     """
     Makes predictions on batch by splitting it by chunks with `segment_len` size with `overlap`
     """
     if mix.dim() == 1:
         mix = torch.unsqueeze(mix, 0)
-        
+
     batch_size = mix.shape[0]
     pred_shape = mix.shape[-1]
 
     chunk_len = int(sample_rate * segment_len * (1 + overlap))
-    overlap_frames = sample_rate * overlap
+    overlap_frames = sample_rate * overlap  # float!!
     start, end = 0, chunk_len
 
     fade = Fade(fade_in_len=0, fade_out_len=int(overlap_frames), fade_shape=fade_shape)
@@ -44,7 +44,7 @@ def separate_sources(
 
         for i in "short", "mid", "long":
             pred[i][:, start:end] += fade(chunk_pred[i])
-        
+
         if start == 0:
             fade.fade_in_len = int(overlap_frames)
             start += int(chunk_len - overlap_frames)
@@ -56,4 +56,3 @@ def separate_sources(
         if end >= pred_shape:
             fade.fade_out_len = 0
     return pred
-
