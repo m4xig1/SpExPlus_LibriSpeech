@@ -246,7 +246,7 @@ class Trainer(BaseTrainer):
                     # if self.len_epoch == 0:  # just for test
                     #     print(f"Loss eval on batch {batch_idx}: {batch['loss']}")
                     #     self._log_scalars(self.evaluation_metrics)
-            self.writer.set_step(epoch, "val")
+            self.writer.set_step(len_epoch * (epoch + 1), "val")
             self._log_scalars(self.evaluation_metrics)
             self._log_predictions(**batch)
 

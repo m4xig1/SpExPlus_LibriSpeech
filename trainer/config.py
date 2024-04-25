@@ -80,8 +80,8 @@ config_stream = {
     "monitor": "min val_loss",
     "max_grad_norm": 100,
     # "resume_path": cur_dir + "/checkpoints/checkpoint-epoch20.pth",
-    "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch20/1/checkpoint-epoch20.pth",
-    "fine_tune": False,
+    # "resume_path": "/kaggle/input/spex-best-shot/pytorch/checkpoint-epoch20/1/checkpoint-epoch20.pth",
+    # "fine_tune": False,
     "stream": {
         "segment_len": 0.3,
         "overlap": 0.01,
