@@ -60,7 +60,7 @@ config_trainer = {
 
 config_stream = {
     "logger": {"level": logging.INFO},
-    "optimizer": {"lr": 1e-4, "weight_decay": 1e-5},
+    "optimizer": {"lr": 0.000025, "weight_decay": 1e-5},
     "lr_scheduler": {  # Reduce on plateau
         "mode": "min",
         "factor": 0.5,
@@ -80,8 +80,9 @@ config_stream = {
     "monitor": "min val_loss",
     "max_grad_norm": 100,
     # "resume_path": cur_dir + "/checkpoints/checkpoint-epoch20.pth",
-    "resume_path": "/kaggle/input/spexlstm/pytorch/6epochs/1/spex_lstm_best.pth",
+    "resume_path": "/kaggle/input/spexlstm/pytorch/6epochs/2/spex_lstm-epoch12.pth",
     "fine_tune": False,
+    "grad_accum_iters" : 2,
     "stream": {
         "segment_len": 0.3,
         "overlap": 0.01,
