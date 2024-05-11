@@ -16,7 +16,7 @@ config_trainer = {
         "requires_loss": True,
         "epoch_based": True,
     },
-    "epoch_len": 0,  # you should config this if using more powerful system
+    "epoch_len": 6000,  # you should config this if using more powerful system
     # "checkpoint_path": "/kaggle/working/SpExPlus_LibriSpeech/model/",
     "checkpoint_path": cur_dir + "/model/",
     "device": "cuda",  # i didn't test it with multi gpu system
@@ -60,7 +60,7 @@ config_trainer = {
 
 config_stream = {
     "logger": {"level": logging.INFO},
-    "optimizer": {"lr": 0.000025, "weight_decay": 1e-5},
+    "optimizer": {"lr": 1e-4, "weight_decay": 1e-2},
     "lr_scheduler": {  # Reduce on plateau
         "mode": "min",
         "factor": 0.5,
@@ -78,9 +78,9 @@ config_stream = {
     "epochs": 50,
     "save_period": 2,
     "monitor": "min val_loss",
-    "max_grad_norm": 100,
+    "max_grad_norm": 128,
     # "resume_path": cur_dir + "/checkpoints/checkpoint-epoch20.pth",
-    "resume_path": "/kaggle/input/spexlstm/pytorch/6epochs/2/spex_lstm-epoch12.pth",
+    "resume_path": "/kaggle/input/spexlstm/pytorch/spex_lstm-epoch16/1/spex_lstm-epoch16.pth",
     "fine_tune": False,
     "grad_accum_iters" : 2,
     "stream": {
